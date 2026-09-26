@@ -2,17 +2,11 @@ name: crypto-supertrend-scan
 
 on:
   schedule:
-    # Every 4 hours, 7 minutes after each UTC 4H candle closes (00, 04, 08, 12, 16, 20).
-    # The 00:07 run also closes the Daily bar (and the Weekly bar on Mondays),
-    # and is the daily digest. GitHub may start scheduled runs late; the scan
-    # handles that because it checks every bar closed since the last run.
-    - cron: "7 0,4,8,12,16,20 * * *"
+    # Once a day at 00:30 UTC, 30 minutes after the Daily candle closes.
+    # That run also closes the Weekly bar on Mondays and picks up every
+    # 4H bar closed in the previous 24 hours.
+    - cron: "30 0 * * *"
   workflow_dispatch:
-    inputs:
-      force_digest:
-        description: "Include the full coin table and send an email even without flips"
-        type: boolean
-        default: false
 
 permissions:
   contents: write
@@ -44,18 +38,14 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
-        run: |
-          if [ "${{ github.event.inputs.force_digest }}" = "true" ]; then
-            python run_scan.py --force-digest
-          else
-            python run_scan.py
-          fi
+        run: python run_scan.py
 
+      # reports/ keeps only the newest 30 files; `git add -A` stages the deletions too
       - name: Commit state and reports
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data reports
+          git add -A data reports
           if git diff --cached --quiet; then
             echo "Nothing to commit"
           else

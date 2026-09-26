@@ -1,28 +1,19 @@
 """
-State persisted as committed files in the repo (same pattern as the US tool;
-the commits also keep GitHub Actions from auto-disabling the schedule).
+Everything persisted in the repo (committed by the workflow, which also keeps
+GitHub Actions from auto-disabling the schedule).
 
-data/state.json
-  {
-    "last_run": "...",
-    "last_digest_date": "YYYY-MM-DD",
-    "universe": ["BTC", "ETH", ...],
-    "coins": {
-      "BTC": {
-        "ticker": "BTC-USD",
-        "1W": {"last_bar": iso, "trend": 1, "last_flip": iso, "last_flip_dir": "buy"},
-        "1D": {...},
-        "4H": {...}
-      }
-    }
-  }
-
-data/signal_log.csv  one row per flip ever emitted, for later score validation.
+data/state.json       last processed bar + trend per coin and timeframe
+data/flip_log.json    rolling flip history (pruned to FLIP_LOG_KEEP_DAYS); feeds the
+                      "Recent Buy Flips (Last 7 Days)" panel
+data/signal_log.csv   append-only flip history, for validating the quality score later
+reports/              dated HTML reports, capped at REPORT_RETENTION files
+input/portfolio.csv   optional holdings (Symbol, Entry_Price, Quantity)
 """
 from __future__ import annotations
 
 import csv
 import json
+from datetime import datetime, timedelta
 
 import settings
 
@@ -32,10 +23,13 @@ LOG_FIELDS = [
 ]
 
 
+# ---------------------------------------------------------------- state
 def load_state(path=settings.STATE_FILE) -> dict:
     if path.exists():
-        return json.loads(path.read_text())
-    return {"coins": {}, "universe": [], "last_digest_date": None, "last_run": None}
+        st = json.loads(path.read_text())
+        st.setdefault("coins", {})
+        return st
+    return {"coins": {}, "universe": [], "last_run": None}
 
 
 def save_state(state: dict, path=settings.STATE_FILE) -> None:
@@ -43,6 +37,33 @@ def save_state(state: dict, path=settings.STATE_FILE) -> None:
     path.write_text(json.dumps(state, indent=2, sort_keys=True, default=str))
 
 
+# ---------------------------------------------------------------- flip log
+def load_flip_log(path=settings.FLIP_LOG_FILE) -> list[dict]:
+    if path.exists():
+        return json.loads(path.read_text())
+    return []
+
+
+def flip_key(e: dict) -> str:
+    return f"{e['symbol']}|{e['tf']}|{e['bar_time']}"
+
+
+def merge_flip_log(log: list[dict], new: list[dict], now: datetime) -> list[dict]:
+    """Add new flips (deduplicated) and drop anything older than FLIP_LOG_KEEP_DAYS."""
+    by_key = {flip_key(e): e for e in log}
+    for e in new:
+        by_key.setdefault(flip_key(e), e)
+    cutoff = (now - timedelta(days=settings.FLIP_LOG_KEEP_DAYS)).strftime("%Y-%m-%d")
+    kept = [e for e in by_key.values() if e["close_date"] >= cutoff]
+    return sorted(kept, key=lambda e: (e["close_date"], e["bar_time"], e["symbol"]))
+
+
+def save_flip_log(log: list[dict], path=settings.FLIP_LOG_FILE) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(log, indent=1, default=str))
+
+
+# ---------------------------------------------------------------- signal log (csv)
 def append_signal_log(rows: list[dict], run_utc: str, path=settings.SIGNAL_LOG_CSV) -> None:
     if not rows:
         return
@@ -54,23 +75,52 @@ def append_signal_log(rows: list[dict], run_utc: str, path=settings.SIGNAL_LOG_C
             w.writeheader()
         for r in rows:
             w.writerow({
-                "run_utc": run_utc,
-                "symbol": r["symbol"],
-                "ticker": r["ticker"],
-                "timeframe": r["tf"],
-                "direction": r["direction"],
-                "bar_time": r["bar_time"],
-                "entry": _fmt(r.get("entry")),
-                "stop": _fmt(r.get("stop")),
-                "tp1": _fmt(r.get("tp1")),
-                "tp2": _fmt(r.get("tp2")),
-                "risk_pct": _fmt(r.get("risk_pct"), 2),
-                "score": r.get("score", ""),
-                "grade": r.get("grade", ""),
+                "run_utc": run_utc, "symbol": r["symbol"], "ticker": r["ticker"],
+                "timeframe": r["tf"], "direction": r["direction"], "bar_time": r["bar_time"],
+                "entry": _g(r.get("close")), "stop": _g(r.get("stop")),
+                "tp1": _g(r.get("tp1")), "tp2": _g(r.get("tp2")),
+                "risk_pct": "" if r.get("risk_pct") is None else f"{r['risk_pct']:.2f}",
+                "score": r.get("score", ""), "grade": r.get("grade", ""),
             })
 
 
-def _fmt(v, nd=8):
-    if v is None:
-        return ""
-    return f"{v:.{nd}g}" if nd > 2 else f"{v:.{nd}f}"
+def _g(v):
+    return "" if v is None else f"{v:.8g}"
+
+
+# ---------------------------------------------------------------- portfolio
+def load_portfolio(path=settings.PORTFOLIO_CSV) -> dict[str, dict]:
+    """symbol -> {"entry": float|None, "qty": float|None}. Missing file = no holdings."""
+    out: dict[str, dict] = {}
+    if not path.exists():
+        return out
+    with open(path, newline="", encoding="utf-8-sig") as fh:
+        for row in csv.DictReader(line for line in fh if not line.startswith("#")):
+            low = {k.strip().lower(): (v or "").strip() for k, v in row.items() if k}
+            sym = low.get("symbol", "").upper()
+            if not sym:
+                continue
+            out[sym] = {"entry": _num(low.get("entry_price")), "qty": _num(low.get("quantity"))}
+    return out
+
+
+def _num(v):
+    try:
+        return float(v) if v not in (None, "") else None
+    except ValueError:
+        return None
+
+
+# ---------------------------------------------------------------- report retention
+def cleanup_reports(keep: int = settings.REPORT_RETENTION, folder=settings.REPORTS_DIR) -> list[str]:
+    """
+    Keep only the newest `keep` report files. Report names carry the date
+    (crypto_supertrend_YYYY-MM-DD.html) so name order = date order.
+    Returns the names that were deleted.
+    """
+    files = sorted(folder.glob(f"{settings.REPORT_PREFIX}*.html"), key=lambda p: p.name, reverse=True)
+    deleted = []
+    for p in files[keep:]:
+        p.unlink()
+        deleted.append(p.name)
+    return deleted

@@ -1,0 +1,3 @@
+# Optional: coins you hold. Enables the Held / Position P/L columns, the My Portfolio filter and the held-bearish alert.
+# Example row: SOL,142.50,10   (Quantity can be left blank)
+Symbol,Entry_Price,Quantity

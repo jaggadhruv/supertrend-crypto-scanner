@@ -13,8 +13,10 @@ ROOT = Path(__file__).resolve().parent
 # Paths
 # --------------------------------------------------------------------------
 UNIVERSE_CSV = ROOT / "input" / "crypto_universe.csv"
+PORTFOLIO_CSV = ROOT / "input" / "portfolio.csv"
 TICKER_OVERRIDES_CSV = ROOT / "config" / "ticker_overrides.csv"
 STATE_FILE = ROOT / "data" / "state.json"
+FLIP_LOG_FILE = ROOT / "data" / "flip_log.json"
 RESOLVED_TICKERS_FILE = ROOT / "data" / "resolved_tickers.json"
 SIGNAL_LOG_CSV = ROOT / "data" / "signal_log.csv"
 REPORTS_DIR = ROOT / "reports"
@@ -80,11 +82,18 @@ VOLUME_LOOKBACK_BARS = 20
 GRADES = [(75, "A"), (60, "B"), (45, "C"), (0, "D")]
 
 # --------------------------------------------------------------------------
-# Email
-#   An email goes out when there is at least one new flip, and once per UTC
-#   day as a digest (first run after 00:00 UTC) with the full state table.
+# Daily run, report and retention
+#   The scan runs once a day (00:30 UTC, after the Daily candle closes).
+#   4H buy flips from the whole previous 24 hours are picked up in that run.
 # --------------------------------------------------------------------------
-EMAIL_ON_NO_FLIPS = False          # set True to get an email on every 4H run
-DIGEST_INCLUDE_FULL_STATE = True
+FRESH_4H_HOURS = 24          # 4H buy flips closed within this window count as "fresh"
+RECENT_DAYS = 7              # "Recent Buy Flips" panel window
+FLIP_LOG_KEEP_DAYS = 30      # flip_log.json prunes entries older than this
+REPORT_PREFIX = "crypto_supertrend_"
+REPORT_RETENTION = 30        # max report files kept in reports/; oldest deleted first
+
+# --------------------------------------------------------------------------
+# Email (Gmail SMTP). Summary in the body, full report attached.
+# --------------------------------------------------------------------------
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 465

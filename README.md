@@ -6,28 +6,32 @@ the repo), adapted for a 24/7 market.
 
 ## What it does
 
-Every 4 hours it scans the coins in `input/crypto_universe.csv` on three timeframes:
+Once a day (00:30 UTC, after the Daily candle closes) it scans the coins in
+`input/crypto_universe.csv` on three timeframes and writes one report in the same
+"Supertrend Combined Scanner" layout as the US tool.
 
 | Timeframe | Buy flips | Sell flips |
 |---|---|---|
-| Weekly (Mon 00:00 UTC weeks) | Card with SL / TP + quality score | Exit alert |
-| Daily (00:00 UTC) | Card with SL / TP + quality score | Exit alert |
-| 4-hour (00/04/08/12/16/20 UTC) | Card with SL / TP + quality score | Not reported |
+| Weekly (Mon 00:00 UTC weeks) | Card with SL / TP + quality score | Signal + held-bearish alert |
+| Daily (00:00 UTC) | Card with SL / TP + quality score | Signal + held-bearish alert |
+| 4H (00/04/08/12/16/20 UTC) | Card with SL / TP + quality score, every 4H bar of the last 24h | Not reported |
 
-Only closed bars are used. A flip is reported once, on the first run after its bar closes.
+Only closed bars are used. Every flip since the previous run is written to `data/flip_log.json`,
+so a missed day loses nothing. The first run back-fills 7 days.
 
-**Trade levels on each buy card**
+**Report sections** (same order and styling as the US report): held-bearish alert banner,
+Recent Buy Flips (last 7 days, grouped by day, ★ on the top 3), stats row, Buying Opportunities
+(confluence = fresh buy on 2+ timeframes, then Weekly, Daily, 4H), data notes, and the full
+watchlist with Weekly / Daily / 4H side by side, filters, search and sortable columns.
 
-- Entry: close of the flip bar (the card also shows the current price and move since)
-- Stop loss: the Supertrend line on the flip bar
-- TP1 = 2R, TP2 = 3R, where R = entry minus stop
-- If price is already below the stop or past a target when the email goes out, the card says so
+**Trade levels on every buy card**: Entry = flip-bar close, SL = Supertrend line on the flip bar,
+TP1 = 2R, TP2 = 3R. Cards say so if price is already below the stop or past TP1.
 
 **Quality score (0-100, graded A/B/C/D)**
 
 | Component | Points | What it rewards |
 |---|---|---|
-| Trend alignment | 30 | 4H: Daily and Weekly Supertrend up. 1D: Weekly up, above 200-day SMA. 1W: above a rising 50-week SMA |
+| Trend alignment | 30 | 4H: Daily and Weekly up. 1D: Weekly up, above 200-day SMA. 1W: above a rising 50-week SMA |
 | Market regime | 15 | BTC Daily Supertrend up, BTC above its 200-day SMA |
 | Volume | 15 | Flip-bar volume vs 20-bar average (1.0x = 0, 2.0x+ = full) |
 | Stop distance | 15 | Stop % relative to the timeframe cap (4H 8%, 1D 15%, 1W 30%) |
@@ -36,13 +40,19 @@ Only closed bars are used. A flip is reported once, on the first run after its b
 | Cleanliness | 5 | Few flips in the prior 30 bars (no chop) |
 | Liquidity penalty | -10 | 30-day average daily $ volume under $5M |
 
-Every card shows the breakdown. The weights are a starting hypothesis; every flip is appended to
-`data/signal_log.csv` so the grades can be checked against outcomes after a few months.
+Hover a quality badge for the breakdown. Every flip is also appended to `data/signal_log.csv`
+so the grades can be checked against outcomes later.
 
-**Email sections**: new buy flips ranked by score, exit alerts, list changes, all coins (daily
-digest only), run summary. An email goes out when there is at least one new flip, plus one digest
-per UTC day (the 00:07 run). `reports/latest.html` always holds the full report and
-`reports/daily/` keeps one per day.
+**Retention**: reports are saved as `reports/crypto_supertrend_YYYY-MM-DD.html`. After each run,
+only the newest 30 are kept (`REPORT_RETENTION` in `settings.py`); older files are deleted and the
+deletion is committed. `data/flip_log.json` keeps 30 days. Deleted files still exist in git history,
+so the `.git` folder grows slowly (a few hundred KB a month); the working tree stays capped.
+
+**Email**: one per run. Gmail strips `<style>` blocks, so the body is an inline-styled summary
+(held alerts, ranked fresh buys with Entry / SL / TP) and the full report is attached.
+
+**Portfolio (optional)**: add rows to `input/portfolio.csv` (`Symbol,Entry_Price,Quantity`) to fill
+the Held and Position P/L columns, the My Portfolio filter and the red held-bearish banner.
 
 ## Setup
 
@@ -59,10 +69,10 @@ python tests/make_golden_template.py BTC-USD 1D
 python tests/make_golden_template.py BTC-USD 4H
 # fill tv_ columns from TradingView (tests/golden/README.md), then:
 pytest tests -q
-python run_scan.py --no-email           # writes reports/latest.html
+python run_scan.py --no-email           # writes reports/crypto_supertrend_<date>.html
 ```
 
-5. Actions tab > crypto-supertrend-scan > Run workflow (tick "force digest" for a full first email).
+5. Actions tab > crypto-supertrend-scan > Run workflow for the first report. After that it runs daily.
 
 ## Coin list
 
@@ -79,8 +89,9 @@ replacement under List changes. Stablecoins are skipped by name and by a 90-day 
 | `data.py` | Universe, ticker resolution, fetching, 4H/weekly resampling, closed-bar filter |
 | `scoring.py` | SL / TP levels and the quality score |
 | `run_scan.py` | Orchestration, flip detection, state |
-| `report.py` | HTML email / report |
+| `report.py` | HTML report (US scanner layout) and email summary |
+| `report_assets/` | Report CSS and JS, inlined into each report |
 | `emailer.py` | Gmail SMTP |
-| `state.py` | `data/state.json` and `data/signal_log.csv` |
+| `state.py` | State, flip log, signal log, portfolio, report retention |
 | `validate_tickers.py` | Ticker health check |
 | `tests/` | Supertrend + resampling tests, golden-file gate |

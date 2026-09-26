@@ -1,15 +1,17 @@
 """
-Crypto Supertrend scan. Runs every 4 hours via GitHub Actions.
+Crypto Supertrend daily scan (GitHub Actions, 00:30 UTC).
 
-    python run_scan.py                 # normal run (email if secrets are set)
-    python run_scan.py --no-email      # write report only
-    python run_scan.py --dry-run       # no email, no state/log writes
-    python run_scan.py --force-digest  # include full state table and send even without flips
+    python run_scan.py              # normal run: report + email (if secrets are set)
+    python run_scan.py --no-email   # report only
+    python run_scan.py --dry-run    # nothing written, nothing sent
 
-Flow per coin:
-  resolve Yahoo ticker -> fetch 1d + 1h -> build closed 1W / 1D / 4H bars
-  -> Supertrend on each -> find flips on bars newer than last run
-  -> BUY flips get SL / TP + quality score, SELL flips (1W / 1D only) become exit alerts
+Per coin:
+  resolve Yahoo ticker -> fetch 1d + 1h -> closed Weekly / Daily / 4H bars -> Supertrend
+  Fresh signals:
+    Weekly / Daily : a flip on the latest closed bar (buy or sell)
+    4H             : BUY flips on any 4H bar closed in the last 24 hours (4H sells ignored)
+  Every flip on a bar closed since the previous run goes into data/flip_log.json, so a
+  skipped day loses nothing. On the very first run the log is back-filled with 7 days.
 """
 from __future__ import annotations
 
@@ -32,6 +34,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 log = logging.getLogger("scan")
 
 MIN_BARS = settings.ATR_PERIOD + 5
+BAR_LEN = {"1W": pd.Timedelta(days=7), "1D": pd.Timedelta(days=1), "4H": pd.Timedelta(hours=4)}
 
 
 def add_indicators(bars: pd.DataFrame) -> pd.DataFrame | None:
@@ -42,48 +45,10 @@ def add_indicators(bars: pd.DataFrame) -> pd.DataFrame | None:
     return out
 
 
-def last_flip(bars: pd.DataFrame):
-    flips = bars.index[bars["buy"] | bars["sell"]]
-    if len(flips) == 0:
-        return None, None
-    ts = flips[-1]
-    return ts, ("buy" if bars.at[ts, "buy"] else "sell")
-
-
 def sma_flag(close: pd.Series, n: int):
     if len(close) < n:
         return None
     return bool(close.iloc[-1] > close.rolling(n).mean().iloc[-1])
-
-
-def build_frames(daily_raw: pd.DataFrame, hourly_raw: pd.DataFrame, now) -> dict:
-    d = data.closed_daily(daily_raw, now)
-    frames = {
-        "1D": add_indicators(d),
-        "1W": add_indicators(data.to_weekly(d, now)),
-        "4H": add_indicators(data.to_4h(hourly_raw, now)),
-    }
-    frames["_daily_closed"] = d
-    return frames
-
-
-def coin_context(frames: dict, btc_ctx: dict) -> dict:
-    d = frames["_daily_closed"]
-    w = frames["1W"]
-    ctx = dict(btc_ctx)
-    ctx["trend_1D"] = int(frames["1D"]["trend"].iloc[-1]) if frames["1D"] is not None else None
-    ctx["trend_1W"] = int(w["trend"].iloc[-1]) if w is not None else None
-    ctx["above_sma200d"] = sma_flag(d["Close"], 200)
-    if w is not None and len(w) >= 54:
-        sma50 = w["Close"].rolling(50).mean()
-        ctx["above_sma50w"] = bool(w["Close"].iloc[-1] > sma50.iloc[-1])
-        ctx["sma50w_rising"] = bool(sma50.iloc[-1] > sma50.iloc[-5])
-    else:
-        ctx["above_sma50w"] = None
-        ctx["sma50w_rising"] = None
-    tail = d.tail(30)
-    ctx["dollar_volume_30d"] = float((tail["Close"] * tail["Volume"]).mean()) if len(tail) else None
-    return ctx
 
 
 def is_stable(daily: pd.DataFrame) -> bool:
@@ -93,27 +58,105 @@ def is_stable(daily: pd.DataFrame) -> bool:
     return (tail.max() - tail.min()) / tail.mean() * 100 < settings.STABLE_RANGE_PCT
 
 
+def build_frames(daily_raw: pd.DataFrame, hourly_raw: pd.DataFrame, now) -> dict:
+    d = data.closed_daily(daily_raw, now)
+    return {
+        "1D": add_indicators(d),
+        "1W": add_indicators(data.to_weekly(d, now)),
+        "4H": add_indicators(data.to_4h(hourly_raw, now)),
+        "_daily_closed": d,
+    }
+
+
+def coin_context(frames: dict, btc_ctx: dict) -> dict:
+    d, w = frames["_daily_closed"], frames["1W"]
+    ctx = dict(btc_ctx)
+    ctx["trend_1D"] = int(frames["1D"]["trend"].iloc[-1]) if frames["1D"] is not None else None
+    ctx["trend_1W"] = int(w["trend"].iloc[-1]) if w is not None else None
+    ctx["above_sma200d"] = sma_flag(d["Close"], 200)
+    if w is not None and len(w) >= 54:
+        sma50 = w["Close"].rolling(50).mean()
+        ctx["above_sma50w"] = bool(w["Close"].iloc[-1] > sma50.iloc[-1])
+        ctx["sma50w_rising"] = bool(sma50.iloc[-1] > sma50.iloc[-5])
+    else:
+        ctx["above_sma50w"] = ctx["sma50w_rising"] = None
+    tail = d.tail(30)
+    ctx["dollar_volume_30d"] = float((tail["Close"] * tail["Volume"]).mean()) if len(tail) else None
+    return ctx
+
+
+def flip_entry(sym, ticker, tf, bars, pos, ctx, run_utc) -> dict:
+    """One flip on one bar, as stored in flip_log.json and shown on cards."""
+    ts = bars.index[pos]
+    row = bars.iloc[pos]
+    close_time = ts + BAR_LEN[tf]
+    e = {
+        "symbol": sym, "ticker": ticker, "tf": tf,
+        "direction": "buy" if bool(row["buy"]) else "sell",
+        "bar_time": ts.isoformat(),
+        "close_date": close_time.strftime("%Y-%m-%d"),
+        "close": float(row["Close"]),
+        "st": float(row["st_line"]),
+        "logged_utc": run_utc,
+    }
+    if e["direction"] == "buy":
+        sc = scoring.score_buy_flip(tf, bars, pos, ctx)
+        e.update({k: sc[k] for k in ("stop", "tp1", "tp2", "risk_pct", "tp1_pct", "tp2_pct", "score", "grade")})
+        e["parts"] = sc["parts"]
+        e["penalty"] = sc["penalty"]
+        e["notes"] = sc["notes"]
+        e["vol_ratio"] = None if np.isnan(sc["vol_ratio"]) else round(sc["vol_ratio"], 2)
+        e["rsi"] = None if np.isnan(sc["rsi"]) else round(sc["rsi"], 1)
+    return e
+
+
+def tf_snapshot(bars: pd.DataFrame, tf: str, prev: dict, now) -> dict:
+    """Current direction / signal / in-trend for the watchlist table."""
+    trend = int(bars["trend"].iloc[-1])
+    last = bars.index[-1]
+    if tf == "4H":
+        window = bars[bars.index + BAR_LEN[tf] >= now - pd.Timedelta(hours=settings.FRESH_4H_HOURS)]
+        signal = "buy" if bool(window["buy"].any()) else "none"
+    else:
+        signal = "buy" if bool(bars["buy"].iloc[-1]) else "sell" if bool(bars["sell"].iloc[-1]) else "none"
+
+    # consecutive bars in the current direction, including the latest one
+    changes = np.flatnonzero(bars["trend"].to_numpy() != trend)
+    start_pos = changes[-1] + 1 if len(changes) else 0
+    in_trend = len(bars) - start_pos
+    since = bars.index[start_pos]
+    prev_trend = prev.get("trend")
+    changed = signal == "none" and prev_trend is not None and prev_trend != trend
+    return {
+        "trend": trend, "signal": signal, "changed": changed, "prev_trend": prev_trend,
+        "in_trend": int(in_trend), "since": since.strftime("%Y-%m-%d %H:%M" if tf == "4H" else "%Y-%m-%d"),
+        "st": float(bars["st_line"].iloc[-1]), "bar": last.strftime("%Y-%m-%d %H:%M" if tf == "4H" else "%Y-%m-%d"),
+    }
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-email", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--force-digest", action="store_true")
     args = ap.parse_args(argv)
 
     now = data.utcnow()
+    now_ts = pd.Timestamp(now)
     run_utc = now.strftime("%Y-%m-%d %H:%M UTC")
     today = now.strftime("%Y-%m-%d")
 
     universe = data.load_universe()
     overrides = data.load_overrides()
     resolved = data.load_resolved()
+    portfolio = state_mod.load_portfolio()
     st = state_mod.load_state()
-    first_run = not st.get("coins")
+    flip_log = state_mod.load_flip_log()
+    first_run = not st["coins"]
 
     excluded, failures, replacements = [], [], []
-    signals, exits, full_rows = [], [], []
+    new_flips, fresh, rows = [], [], []
 
-    # ---- BTC regime first (always, even if BTC isn't in the CSV) ----------
+    # ---- BTC regime ------------------------------------------------------
     btc_coin = next((c for c in universe if c["symbol"] == "BTC"),
                     {"symbol": "BTC", "csv_ticker": "BTC-USD", "rank": 0})
     btc_ticker, btc_daily, _ = data.resolve_and_fetch_daily(btc_coin, overrides, resolved, now)
@@ -130,10 +173,8 @@ def main(argv=None) -> int:
         if sym in settings.STABLECOINS:
             excluded.append((sym, "Stablecoin (explicit list)"))
             continue
-
         if sym in cache:
-            ticker, daily_raw = cache[sym]
-            note = ""
+            ticker, daily_raw, note = *cache[sym], ""
         else:
             ticker, daily_raw, note = data.resolve_and_fetch_daily(coin, overrides, resolved, now)
         if not ticker:
@@ -143,7 +184,6 @@ def main(argv=None) -> int:
         if note:
             replacements.append((sym, note))
         resolved[sym] = {"ticker": ticker, "checked": today}
-
         if is_stable(daily_raw):
             excluded.append((sym, f"Stablecoin (90-day range under {settings.STABLE_RANGE_PCT:.0f}%)"))
             continue
@@ -155,134 +195,100 @@ def main(argv=None) -> int:
             continue
 
         ctx = coin_context(frames, btc_ctx)
-        last_price = float(hourly_raw["Close"].iloc[-1]) if not hourly_raw.empty else float(daily_raw["Close"].iloc[-1])
         coin_state = st["coins"].get(sym, {})
-        new_coin_state = {"ticker": ticker}
-        row = {"symbol": sym, "rank": coin["rank"], "ticker": ticker, "price": last_price, "tf": {}}
+        new_state = {"ticker": ticker}
+        row = {"symbol": sym, "rank": coin["rank"], "ticker": ticker,
+               "close": float(frames["1D"]["Close"].iloc[-1]),
+               "last_price": float(hourly_raw["Close"].iloc[-1]) if not hourly_raw.empty else None,
+               "tf": {}, "held": sym in portfolio}
+        if row["held"]:
+            entry = portfolio[sym]["entry"]
+            row["entry"] = entry
+            row["pnl_pct"] = (row["close"] / entry - 1) * 100 if entry else None
 
         for tf in settings.TIMEFRAME_ORDER:
             bars = frames[tf]
             if bars is None:
                 row["tf"][tf] = None
                 continue
-            prev_last = coin_state.get(tf, {}).get("last_bar")
-            if prev_last is None:
-                new_idx = bars.index[-1:]      # first sight of this coin/TF: only the latest bar counts
+            prev = coin_state.get(tf, {})
+            buy_only = settings.TIMEFRAMES[tf]["buy_only"]
+
+            # 1) flips since last run -> flip log
+            if prev.get("last_bar"):
+                new_mask = bars.index > pd.Timestamp(prev["last_bar"])
+            else:  # first sight: back-fill the recent window
+                new_mask = bars.index + BAR_LEN[tf] >= now_ts - pd.Timedelta(days=settings.RECENT_DAYS)
+            for pos in np.flatnonzero(new_mask & (bars["buy"] | (bars["sell"] & (not buy_only))).to_numpy()):
+                new_flips.append(flip_entry(sym, ticker, tf, bars, int(pos), ctx, run_utc))
+
+            # 2) fresh signals for the Buying Opportunities panel / stats
+            if tf == "4H":
+                fresh_mask = bars.index + BAR_LEN[tf] >= now_ts - pd.Timedelta(hours=settings.FRESH_4H_HOURS)
+                fresh_pos = np.flatnonzero((fresh_mask & bars["buy"]).to_numpy())
             else:
-                new_idx = bars.index[bars.index > pd.Timestamp(prev_last)]
+                last = len(bars) - 1
+                fresh_pos = [last] if bars["buy"].iloc[-1] or bars["sell"].iloc[-1] else []
+            for pos in fresh_pos:
+                fresh.append(flip_entry(sym, ticker, tf, bars, int(pos), ctx, run_utc))
 
-            for ts in new_idx:
-                pos = bars.index.get_loc(ts)
-                is_buy, is_sell = bool(bars.at[ts, "buy"]), bool(bars.at[ts, "sell"])
-                base = {"symbol": sym, "rank": coin["rank"], "ticker": ticker, "tf": tf,
-                        "bar_time": ts.isoformat(), "last_price": last_price}
-                if is_buy:
-                    sc = scoring.score_buy_flip(tf, bars, pos, ctx)
-                    signals.append({**base, **sc, "direction": "buy",
-                                    "move_since": (last_price / sc["entry"] - 1) * 100,
-                                    "status": _status(last_price, sc)})
-                elif is_sell and not settings.TIMEFRAMES[tf]["buy_only"]:
-                    close = float(bars.at[ts, "Close"])
-                    exits.append({**base, "direction": "sell", "entry": close,
-                                  "st_line": float(bars.at[ts, "st_line"]),
-                                  "move_since": (last_price / close - 1) * 100})
+            snap = tf_snapshot(bars, tf, prev, now_ts)
+            row["tf"][tf] = snap
+            new_state[tf] = {"last_bar": bars.index[-1].isoformat(), "trend": snap["trend"]}
 
-            lf_ts, lf_dir = last_flip(bars)
-            trend = int(bars["trend"].iloc[-1])
-            st_line = float(bars["st_line"].iloc[-1])
-            new_coin_state[tf] = {
-                "last_bar": bars.index[-1].isoformat(),
-                "trend": trend,
-                "last_flip": lf_ts.isoformat() if lf_ts is not None else None,
-                "last_flip_dir": lf_dir,
-            }
-            row["tf"][tf] = {
-                "trend": trend,
-                "since": lf_ts,
-                "bars_since": (len(bars) - 1 - bars.index.get_loc(lf_ts)) if lf_ts is not None else None,
-                "dist_pct": (last_price / st_line - 1) * 100 if st_line else np.nan,
-            }
-        st["coins"][sym] = new_coin_state
-        full_rows.append(row)
+        st["coins"][sym] = new_state
+        rows.append(row)
         log.info("%-6s %-14s ok", sym, ticker)
 
-    # ---- list changes ---------------------------------------------------
-    prev_universe = set(st.get("universe") or [])
+    # ---- list changes ----------------------------------------------------
     cur_universe = {c["symbol"] for c in universe if c["symbol"] not in settings.STABLECOINS}
-    added = sorted(cur_universe - prev_universe) if prev_universe else []
+    prev_universe = set(st.get("universe") or [])
     removed = sorted(prev_universe - cur_universe)
     for sym in removed:
         st["coins"].pop(sym, None)
 
-    signals.sort(key=lambda s: (-s["score"], s["rank"]))
-    exits.sort(key=lambda s: (settings.TIMEFRAME_ORDER.index(s["tf"]), s["rank"]))
+    # ---- held-bearish alerts ---------------------------------------------
+    alerts = []
+    held = {r["symbol"]: r for r in rows if r["held"]}
+    for f in fresh:
+        if f["direction"] == "sell" and f["symbol"] in held:
+            alerts.append({**f, "entry": held[f["symbol"]].get("entry"),
+                           "pnl_pct": held[f["symbol"]].get("pnl_pct")})
 
-    is_digest = args.force_digest or st.get("last_digest_date") != today
-    breadth = {
-        tf: _breadth(full_rows, tf) for tf in settings.TIMEFRAME_ORDER
-    }
+    flip_log = state_mod.merge_flip_log(flip_log, new_flips, now)
+
     ctx_out = {
-        "run_utc": run_utc,
-        "is_digest": is_digest,
-        "first_run": first_run,
-        "signals": signals,
-        "exits": exits,
-        "full_rows": sorted(full_rows, key=lambda r: r["rank"]),
-        "btc": btc_ctx,
-        "breadth": breadth,
-        "changes": {"added": added, "removed": removed, "replacements": replacements,
+        "run_utc": run_utc, "today": today, "first_run": first_run,
+        "fresh": fresh, "alerts": alerts, "rows": rows,
+        "flip_log": flip_log, "btc": btc_ctx, "has_portfolio": bool(portfolio),
+        "changes": {"added": sorted(cur_universe - prev_universe) if prev_universe else [],
+                    "removed": removed, "replacements": replacements,
                     "failures": failures, "excluded": excluded},
-        "summary": {
-            "universe": len(universe),
-            "scanned": len(full_rows),
-            "excluded": len(excluded),
-            "failed": len(failures),
-            "buy_flips": len(signals),
-            "exit_alerts": len(exits),
-        },
+        "universe_size": len(universe),
     }
 
-    html_full = report.build_html(ctx_out, include_full_state=True)
-    settings.REPORTS_DIR.mkdir(exist_ok=True)
+    html = report.build_html(ctx_out)
+    report_path = settings.REPORTS_DIR / f"{settings.REPORT_PREFIX}{today}.html"
     if not args.dry_run:
-        (settings.REPORTS_DIR / "latest.html").write_text(html_full, encoding="utf-8")
-        if is_digest:
-            daily_dir = settings.REPORTS_DIR / "daily"
-            daily_dir.mkdir(exist_ok=True)
-            (daily_dir / f"{today}.html").write_text(html_full, encoding="utf-8")
+        settings.REPORTS_DIR.mkdir(exist_ok=True)
+        report_path.write_text(html, encoding="utf-8")
+        deleted = state_mod.cleanup_reports()
+        if deleted:
+            log.info("Retention: deleted %d old report(s): %s", len(deleted), ", ".join(deleted))
 
-    should_email = bool(signals or exits) or is_digest or settings.EMAIL_ON_NO_FLIPS
-    if should_email and not (args.no_email or args.dry_run):
-        html_mail = report.build_html(ctx_out, include_full_state=is_digest and settings.DIGEST_INCLUDE_FULL_STATE)
-        emailer.send(report.subject(ctx_out), html_mail)
+    if not (args.no_email or args.dry_run):
+        emailer.send(report.subject(ctx_out), report.email_summary(ctx_out), html, report_path.name)
 
     if not args.dry_run:
         st["universe"] = sorted(cur_universe)
         st["last_run"] = run_utc
-        if is_digest:
-            st["last_digest_date"] = today
         state_mod.save_state(st)
+        state_mod.save_flip_log(flip_log)
         data.save_resolved(resolved)
-        state_mod.append_signal_log(signals + exits, run_utc)
+        state_mod.append_signal_log(new_flips, run_utc)
 
-    log.info("Done: %d buy flips, %d exit alerts, %d failures", len(signals), len(exits), len(failures))
+    log.info("Done: %d fresh signals, %d new flips logged, %d failures", len(fresh), len(new_flips), len(failures))
     return 0
-
-
-def _status(last_price: float, sc: dict) -> str:
-    if last_price <= sc["stop"]:
-        return "Below stop now"
-    if last_price >= sc["tp2"]:
-        return "TP2 already reached"
-    if last_price >= sc["tp1"]:
-        return "TP1 already reached"
-    return "Live"
-
-
-def _breadth(rows: list[dict], tf: str) -> dict:
-    vals = [r["tf"][tf]["trend"] for r in rows if r["tf"].get(tf)]
-    up = sum(1 for v in vals if v == 1)
-    return {"up": up, "total": len(vals), "pct": up / len(vals) * 100 if vals else 0.0}
 
 
 if __name__ == "__main__":
