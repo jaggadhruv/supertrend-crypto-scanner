@@ -3,20 +3,14 @@
     "1INCH": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-07-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-10-06T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "1INCH-USD"
@@ -24,20 +18,14 @@
     "AAVE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "AAVE-USD"
@@ -45,20 +33,14 @@
     "ADA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ADA-USD"
@@ -66,20 +48,14 @@
     "AERO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-11T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-06-02T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "AERO-USD"
@@ -87,20 +63,14 @@
     "ALGO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-06T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ALGO-USD"
@@ -108,20 +78,14 @@
     "ANKR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ANKR-USD"
@@ -129,20 +93,14 @@
     "APT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-20T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "APT21794-USD"
@@ -150,20 +108,14 @@
     "AR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "AR-USD"
@@ -171,20 +123,14 @@
     "ARB": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-01-02T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-12-29T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-07-30T16:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "ARB-USD"
@@ -192,20 +138,14 @@
     "ATOM": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-26T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ATOM-USD"
@@ -213,20 +153,14 @@
     "AVAX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T08:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "AVAX-USD"
@@ -234,20 +168,14 @@
     "AXS": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-03-16T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "AXS-USD"
@@ -255,41 +183,29 @@
     "BAT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-01-26T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T20:00:00+00:00",
-        "last_flip_dir": "sell",
-        "trend": -1
+        "trend": 1
       },
       "ticker": "BAT-USD"
     },
     "BCH": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-02-23T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "BCH-USD"
@@ -297,20 +213,14 @@
     "BGB": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "BGB-USD"
@@ -318,20 +228,14 @@
     "BLUR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "BLUR-USD"
@@ -339,20 +243,14 @@
     "BNB": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-08T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "BNB-USD"
@@ -360,20 +258,14 @@
     "BONK": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-10-06T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "BONK-USD"
@@ -381,20 +273,14 @@
     "BSV": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-08T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-21T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "BSV-USD"
@@ -402,20 +288,14 @@
     "BTC": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-07-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "BTC-USD"
@@ -423,20 +303,14 @@
     "CAKE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-06-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-24T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-20T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "CAKE-USD"
@@ -444,20 +318,14 @@
     "CHZ": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-02-16T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "CHZ-USD"
@@ -465,20 +333,14 @@
     "COMP": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "COMP5692-USD"
@@ -486,20 +348,14 @@
     "CORE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "CORE-USD"
@@ -507,20 +363,14 @@
     "CRO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-10-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "CRO-USD"
@@ -528,20 +378,14 @@
     "CRV": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "CRV-USD"
@@ -549,20 +393,14 @@
     "DOGE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "DOGE-USD"
@@ -570,20 +408,14 @@
     "DOT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "DOT-USD"
@@ -591,20 +423,14 @@
     "DYDX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-05-25T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-26T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "DYDX-USD"
@@ -612,20 +438,14 @@
     "EGLD": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-25T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "EGLD-USD"
@@ -633,20 +453,14 @@
     "ENJ": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-04T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-06-01T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ENJ-USD"
@@ -654,20 +468,14 @@
     "ENS": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "ENS-USD"
@@ -675,20 +483,14 @@
     "EOS": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-09-22T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "EOS-USD"
@@ -696,20 +498,14 @@
     "ETC": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T04:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ETC-USD"
@@ -717,20 +513,14 @@
     "ETH": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-07-04T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "ETH-USD"
@@ -738,20 +528,14 @@
     "FET": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-21T04:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "FET-USD"
@@ -759,20 +543,14 @@
     "FIL": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-12-01T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "FIL-USD"
@@ -780,20 +558,14 @@
     "FLOKI": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-10-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "FLOKI-USD"
@@ -801,20 +573,14 @@
     "FLOW": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "FLOW-USD"
@@ -822,20 +588,14 @@
     "FTM": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": null,
-        "last_flip_dir": null,
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "S32684-USD"
@@ -843,20 +603,14 @@
     "GLM": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-02-16T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "GLM-USD"
@@ -864,20 +618,14 @@
     "GMX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "GMX11857-USD"
@@ -885,20 +633,14 @@
     "GRT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "GRT6719-USD"
@@ -906,20 +648,14 @@
     "HBAR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "HBAR-USD"
@@ -927,20 +663,14 @@
     "ICP": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-12-15T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ICP-USD"
@@ -948,20 +678,14 @@
     "ILV": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-08T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-20T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ILV-USD"
@@ -969,20 +693,14 @@
     "IMX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "IMX10603-USD"
@@ -990,20 +708,14 @@
     "INJ": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-05-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "INJ-USD"
@@ -1011,20 +723,14 @@
     "IOTA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2024-12-16T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "IOTA-USD"
@@ -1032,20 +738,14 @@
     "JUP": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-24T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-03-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "JUP-USD"
@@ -1053,20 +753,14 @@
     "KAS": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "KAS-USD"
@@ -1074,20 +768,14 @@
     "KAVA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-07T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-22T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "KAVA-USD"
@@ -1095,20 +783,14 @@
     "LDO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-10T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "LDO-USD"
@@ -1116,20 +798,14 @@
     "LINK": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "LINK-USD"
@@ -1137,20 +813,14 @@
     "LTC": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-05T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "LTC-USD"
@@ -1158,20 +828,14 @@
     "MANA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-07-08T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "MANA-USD"
@@ -1179,20 +843,14 @@
     "MASK": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-10-06T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "MASK8536-USD"
@@ -1200,20 +858,14 @@
     "MINA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-24T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "MINA-USD"
@@ -1221,20 +873,14 @@
     "MKR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-05-05T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "MKR-USD"
@@ -1242,20 +888,14 @@
     "MNT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-07-28T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-24T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-07-09T08:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "MNT-USD"
@@ -1263,20 +903,14 @@
     "NEAR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-14T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "NEAR-USD"
@@ -1284,20 +918,14 @@
     "NEO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "NEO-USD"
@@ -1305,20 +933,14 @@
     "OCEAN": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "OCEAN-USD"
@@ -1326,20 +948,14 @@
     "ONDO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-05-04T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ONDO-USD"
@@ -1347,20 +963,14 @@
     "OP": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-05T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "OP-USD"
@@ -1368,20 +978,14 @@
     "PENDLE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-05-04T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-22T04:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "PENDLE-USD"
@@ -1389,20 +993,14 @@
     "PEPE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-23T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "PEPE24478-USD"
@@ -1410,20 +1008,14 @@
     "POL": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T04:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "POL28321-USD"
@@ -1431,20 +1023,14 @@
     "PYTH": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "PYTH-USD"
@@ -1452,20 +1038,14 @@
     "QNT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-10-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "QNT-USD"
@@ -1473,20 +1053,14 @@
     "RNDR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "RENDER-USD"
@@ -1494,20 +1068,14 @@
     "ROSE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-13T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "ROSE-USD"
@@ -1515,20 +1083,14 @@
     "RUNE": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "RUNE-USD"
@@ -1536,20 +1098,14 @@
     "SAND": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-01-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T04:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "SAND-USD"
@@ -1557,20 +1113,14 @@
     "SEI": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-03T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "SEI-USD"
@@ -1578,20 +1128,14 @@
     "SHIB": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "SHIB-USD"
@@ -1599,20 +1143,14 @@
     "SNX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-03T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "SNX-USD"
@@ -1620,20 +1158,14 @@
     "SOL": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-24T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "SOL-USD"
@@ -1641,20 +1173,14 @@
     "STRK": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-05T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-03-31T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-22T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "STRK-USD"
@@ -1662,20 +1188,14 @@
     "STX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-26T04:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "STX4847-USD"
@@ -1683,20 +1203,14 @@
     "SUI": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-11-03T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-17T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "SUI20947-USD"
@@ -1704,20 +1218,14 @@
     "TAO": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-05-04T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T20:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "TAO22974-USD"
@@ -1725,20 +1233,14 @@
     "THETA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-09T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T16:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "THETA-USD"
@@ -1746,20 +1248,14 @@
     "TIA": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2024-04-15T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "TIA-USD"
@@ -1767,20 +1263,14 @@
     "TON": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2025-05-05T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-22T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "TON-USD"
@@ -1788,20 +1278,14 @@
     "TRX": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-08T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-06-08T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-22T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "TRX-USD"
@@ -1809,20 +1293,14 @@
     "TWT": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T12:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "TWT-USD"
@@ -1830,20 +1308,14 @@
     "UNI": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-20T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-07-27T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "UNI7083-USD"
@@ -1851,20 +1323,14 @@
     "VET": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-24T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T16:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "VET-USD"
@@ -1872,20 +1338,14 @@
     "WIF": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-18T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-31T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-23T12:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "WIF-USD"
@@ -1893,20 +1353,14 @@
     "WLD": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-07-27T00:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "WLD-USD"
@@ -1914,20 +1368,14 @@
     "XMR": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-06-11T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-24T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T08:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "XMR-USD"
@@ -1935,20 +1383,14 @@
     "XRP": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-21T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-08-17T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-25T08:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "XRP-USD"
@@ -1956,20 +1398,14 @@
     "XTZ": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-09-06T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-09-14T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-18T04:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "ticker": "XTZ-USD"
@@ -1977,27 +1413,21 @@
     "ZEC": {
       "1D": {
         "last_bar": "2026-09-25T00:00:00+00:00",
-        "last_flip": "2026-08-19T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "1W": {
         "last_bar": "2026-09-14T00:00:00+00:00",
-        "last_flip": "2026-05-04T00:00:00+00:00",
-        "last_flip_dir": "buy",
         "trend": 1
       },
       "4H": {
         "last_bar": "2026-09-26T08:00:00+00:00",
-        "last_flip": "2026-09-24T08:00:00+00:00",
-        "last_flip_dir": "sell",
         "trend": -1
       },
       "ticker": "ZEC-USD"
     }
   },
   "last_digest_date": "2026-09-26",
-  "last_run": "2026-09-26 15:29 UTC",
+  "last_run": "2026-09-26 15:58 UTC",
   "universe": [
     "1INCH",
     "AAVE",
