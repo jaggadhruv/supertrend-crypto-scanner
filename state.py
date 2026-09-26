@@ -6,13 +6,14 @@ data/state.json       last processed bar + trend per coin and timeframe
 data/flip_log.json    rolling flip history (pruned to FLIP_LOG_KEEP_DAYS); feeds the
                       "Recent Buy Flips (Last 7 Days)" panel
 data/signal_log.csv   append-only flip history, for validating the quality score later
-reports/              dated HTML reports, capped at REPORT_RETENTION files
+docs/                 the website (index.html + reports/), see write_site()
 input/portfolio.csv   optional holdings (Symbol, Entry_Price, Quantity)
 """
 from __future__ import annotations
 
 import csv
 import json
+import shutil
 from datetime import datetime, timedelta
 
 import settings
@@ -124,3 +125,37 @@ def cleanup_reports(keep: int = settings.REPORT_RETENTION, folder=settings.REPOR
         p.unlink()
         deleted.append(p.name)
     return deleted
+
+
+# ---------------------------------------------------------------- website (docs/)
+def migrate_legacy_reports(legacy=settings.LEGACY_REPORTS_DIR, target=settings.REPORTS_DIR) -> list[str]:
+    """One-off: move reports from the old top-level reports/ folder into docs/reports/, then remove it."""
+    if not legacy.exists():
+        return []
+    target.mkdir(parents=True, exist_ok=True)
+    moved = []
+    for p in legacy.glob(f"{settings.REPORT_PREFIX}*.html"):
+        dest = target / p.name
+        if not dest.exists():
+            shutil.move(str(p), dest)
+            moved.append(p.name)
+    shutil.rmtree(legacy, ignore_errors=True)   # old index.html, .nojekyll, .gitkeep, daily/
+    return moved
+
+
+def write_site(report_html: str, today: str, report_mod) -> tuple[str, list[str]]:
+    """
+    Writes the whole website and applies retention:
+      docs/reports/crypto_supertrend_<today>.html   (with a link back to the latest report)
+      docs/index.html                                (newest report + archive picker)
+      docs/.nojekyll
+    Returns (dated report file name, deleted file names).
+    """
+    settings.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    name = f"{settings.REPORT_PREFIX}{today}.html"
+    (settings.REPORTS_DIR / name).write_text(report_mod.build_archived(report_html), encoding="utf-8")
+    deleted = cleanup_reports()
+    kept = [p.name for p in settings.REPORTS_DIR.glob(f"{settings.REPORT_PREFIX}*.html")]
+    (settings.SITE_DIR / "index.html").write_text(report_mod.build_index(report_html, kept), encoding="utf-8")
+    (settings.SITE_DIR / ".nojekyll").touch()
+    return name, deleted

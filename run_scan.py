@@ -268,19 +268,18 @@ def main(argv=None) -> int:
     }
 
     html = report.build_html(ctx_out)
-    report_path = settings.REPORTS_DIR / f"{settings.REPORT_PREFIX}{today}.html"
+    report_name = f"{settings.REPORT_PREFIX}{today}.html"
     if not args.dry_run:
-        settings.REPORTS_DIR.mkdir(exist_ok=True)
-        report_path.write_text(html, encoding="utf-8")
-        deleted = state_mod.cleanup_reports()
+        moved = state_mod.migrate_legacy_reports()
+        if moved:
+            log.info("Moved %d report(s) from reports/ to docs/reports/", len(moved))
+        report_name, deleted = state_mod.write_site(html, today, report)
         if deleted:
             log.info("Retention: deleted %d old report(s): %s", len(deleted), ", ".join(deleted))
-        kept = [p.name for p in settings.REPORTS_DIR.glob(f"{settings.REPORT_PREFIX}*.html")]
-        (settings.REPORTS_DIR / "index.html").write_text(report.build_index(html, kept), encoding="utf-8")
-        (settings.REPORTS_DIR / ".nojekyll").touch()
+        log.info("Website written: docs/index.html + docs/reports/%s", report_name)
 
     if not (args.no_email or args.dry_run):
-        emailer.send(report.subject(ctx_out), report.email_summary(ctx_out), html, report_path.name)
+        emailer.send(report.subject(ctx_out), report.email_summary(ctx_out), html, report_name)
 
     if not args.dry_run:
         st["universe"] = sorted(cur_universe)

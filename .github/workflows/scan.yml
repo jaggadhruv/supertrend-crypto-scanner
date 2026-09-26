@@ -1,16 +1,19 @@
 name: crypto-supertrend-scan
 
+# Pages setting required: Settings > Pages > Build and deployment > Source = "GitHub Actions".
+# ("Deploy from a branch" does not work here: commits pushed with GITHUB_TOKEN never
+#  trigger a branch-based Pages build, so the site would never update.)
+
 on:
   schedule:
     # Once a day at 00:30 UTC, 30 minutes after the Daily candle closes.
-    # That run also closes the Weekly bar on Mondays and picks up every
-    # 4H bar closed in the previous 24 hours.
+    # Also closes the Weekly bar on Mondays and picks up every 4H bar of the last 24h.
     - cron: "30 0 * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write     # commit state + reports back to the repo
-  pages: write        # publish reports/ to GitHub Pages
+  contents: write     # commit data/ and docs/ back to the repo
+  pages: write        # publish docs/ to GitHub Pages
   id-token: write     # required by actions/deploy-pages
 
 concurrency:
@@ -35,19 +38,24 @@ jobs:
       - name: Unit tests (gate)
         run: pytest tests -q
 
-      - name: Scan
+      - name: Scan and build website (docs/)
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: python run_scan.py
 
-      # reports/ keeps only the newest 30 files; `git add -A` stages the deletions too
-      - name: Commit state and reports
+      - name: Check website files
+        run: |
+          test -f docs/index.html || { echo "docs/index.html missing"; exit 1; }
+          ls -la docs docs/reports | head -50
+
+      # `git add -A` also stages deleted reports (retention) and the removal of the old reports/ folder
+      - name: Commit data and docs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data reports
+          git add -A
           if git diff --cached --quiet; then
             echo "Nothing to commit"
           else
@@ -56,11 +64,10 @@ jobs:
             git push
           fi
 
-      # Publish reports/ as the website. index.html = newest report + archive picker.
-      - name: Package reports for GitHub Pages
+      - name: Package docs/ for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: reports
+          path: docs
 
   deploy:
     needs: scan

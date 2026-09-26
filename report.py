@@ -513,15 +513,27 @@ def email_summary(ctx: dict) -> str:
 </div></body></html>"""
 
 
-# ------------------------------------------------------------------ index page (GitHub Pages)
+# ------------------------------------------------------------------ website pages (docs/)
+_TOPBAR_END = "</div>\n  </div>"   # closes .params, then .topbar
+
+
+def _after_topbar(page: str, snippet: str) -> str:
+    start = page.find('<div class="topbar">')
+    end = page.find(_TOPBAR_END, start)
+    if start == -1 or end == -1:
+        return page
+    at = end + len(_TOPBAR_END)
+    return page[:at] + snippet + page[at:]
+
+
 def build_index(latest_html: str, report_names: list[str]) -> str:
     """
-    reports/index.html = the newest report plus a picker for every report still kept.
-    GitHub Pages serves reports/ as the site, so the site root always opens today's report.
+    docs/index.html: the newest report plus a picker for every report still kept.
+    Links point into docs/reports/, so they work on GitHub Pages and when opened locally.
     """
     names = sorted(report_names, reverse=True)
     options = "".join(
-        f'<option value="{escape(n)}">{escape(n[len(settings.REPORT_PREFIX):-5])}'
+        f'<option value="reports/{escape(n)}">{escape(n[len(settings.REPORT_PREFIX):-5])}'
         f'{" (latest, shown)" if i == 0 else ""}</option>'
         for i, n in enumerate(names)
     )
@@ -533,10 +545,14 @@ def build_index(latest_html: str, report_names: list[str]) -> str:
     </select>
     <span class="archive-note">Newest {settings.REPORT_RETENTION} reports are kept; older ones are deleted automatically.</span>
   </div>"""
-    marker = '<div class="topbar">'
-    start = latest_html.find(marker)
-    end = latest_html.find("</div>\n  </div>", start)  # close of .params + .topbar
-    if start == -1 or end == -1:
-        return latest_html
-    insert_at = end + len("</div>\n  </div>")
-    return latest_html[:insert_at] + bar + latest_html[insert_at:]
+    return _after_topbar(latest_html, bar)
+
+
+def build_archived(report_html: str) -> str:
+    """Dated copy in docs/reports/: same report with a link back to the site root."""
+    bar = """
+  <div class="archive-bar">
+    <span class="archive-label">Archived report</span>
+    <a class="chip-btn" href="../index.html" style="text-decoration:none">Open the latest report</a>
+  </div>"""
+    return _after_topbar(report_html, bar)

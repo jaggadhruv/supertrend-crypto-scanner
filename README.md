@@ -43,14 +43,25 @@ TP1 = 2R, TP2 = 3R. Cards say so if price is already below the stop or past TP1.
 Hover a quality badge for the breakdown. Every flip is also appended to `data/signal_log.csv`
 so the grades can be checked against outcomes later.
 
-**Retention**: reports are saved as `reports/crypto_supertrend_YYYY-MM-DD.html`. After each run,
-only the newest 30 are kept (`REPORT_RETENTION` in `settings.py`); older files are deleted and the
-deletion is committed. `data/flip_log.json` keeps 30 days. Deleted files still exist in git history,
-so the `.git` folder grows slowly (a few hundred KB a month); the working tree stays capped.
+**Website (GitHub Pages)**: each run writes the site into `docs/`:
 
-**Website (GitHub Pages)**: every run publishes the `reports/` folder as a site. The site root
-(`reports/index.html`) is always the newest report, with a "Report archive" picker to open any of the
-30 kept reports. GitHub shows `.html` files in the repo as source code, so use the Pages link to read them.
+```
+docs/
+  index.html                          newest report + "Report archive" picker (the site's home page)
+  .nojekyll                           tells Pages not to run Jekyll (only used by branch deploys)
+  reports/
+    crypto_supertrend_YYYY-MM-DD.html   dated reports, newest 30 kept, each links back to index.html
+```
+
+The workflow then publishes `docs/` with GitHub's official Pages actions, so the Pages source must be
+**GitHub Actions** (see Setup). GitHub shows `.html` files inside the repo as source code, so always
+read reports through the Pages link.
+
+**Retention**: after each run only the newest 30 dated reports are kept (`REPORT_RETENTION` in
+`settings.py`); older ones are deleted and the deletion is committed. `data/flip_log.json` keeps
+30 days. Deleted files remain in git history, so `.git` grows slowly (a few hundred KB a month).
+If an older version of this repo left a top-level `reports/` folder, the next run moves those
+reports into `docs/reports/` and removes the old folder.
 
 **Email**: one per run. Gmail strips `<style>` blocks, so the body is an inline-styled summary
 (held alerts, ranked fresh buys with Entry / SL / TP) and the full report is attached.
@@ -64,8 +75,9 @@ the Held and Position P/L columns, the My Portfolio filter and the red held-bear
 2. Add repository secrets (Settings > Secrets and variables > Actions):
    `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `EMAIL_TO` (same values as the US tool).
 3. Settings > Actions > General > Workflow permissions: **Read and write**.
-   Settings > Pages > Build and deployment > Source: **GitHub Actions** (not "Deploy from a branch",
-   which only shows this README). The site URL appears there after the first run.
+   Settings > Pages > Build and deployment > **Source: GitHub Actions**. Do not use
+   "Deploy from a branch" (main / root or main / docs): commits made by the workflow's GITHUB_TOKEN
+   never trigger a branch-based Pages build, so the site would stay stuck on the README or an old report.
    Pages needs a public repo on the free GitHub plan; a public repo also makes `input/portfolio.csv`
    and every report readable by anyone.
 4. Locally, check the tickers and run the gate before trusting any signal:
@@ -77,10 +89,11 @@ python tests/make_golden_template.py BTC-USD 1D
 python tests/make_golden_template.py BTC-USD 4H
 # fill tv_ columns from TradingView (tests/golden/README.md), then:
 pytest tests -q
-python run_scan.py --no-email           # writes reports/crypto_supertrend_<date>.html
+python run_scan.py --no-email           # writes docs/index.html + docs/reports/crypto_supertrend_<date>.html
 ```
 
-5. Actions tab > crypto-supertrend-scan > Run workflow for the first report. After that it runs daily.
+5. Actions tab > crypto-supertrend-scan > Run workflow. When both jobs (scan, deploy) are green, the
+   deploy job shows the site URL (`https://<user>.github.io/<repo>/`). After that it runs daily.
 
 ## Coin list
 
@@ -99,6 +112,7 @@ replacement under List changes. Stablecoins are skipped by name and by a 90-day 
 | `run_scan.py` | Orchestration, flip detection, state |
 | `report.py` | HTML report (US scanner layout) and email summary |
 | `report_assets/` | Report CSS and JS, inlined into each report |
+| `docs/` | The website GitHub Pages publishes (generated, committed by the workflow) |
 | `emailer.py` | Gmail SMTP |
 | `state.py` | State, flip log, signal log, portfolio, report retention |
 | `validate_tickers.py` | Ticker health check |

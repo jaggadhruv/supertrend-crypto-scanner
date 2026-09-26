@@ -19,7 +19,13 @@ STATE_FILE = ROOT / "data" / "state.json"
 FLIP_LOG_FILE = ROOT / "data" / "flip_log.json"
 RESOLVED_TICKERS_FILE = ROOT / "data" / "resolved_tickers.json"
 SIGNAL_LOG_CSV = ROOT / "data" / "signal_log.csv"
-REPORTS_DIR = ROOT / "reports"
+# Website published by GitHub Pages (Settings > Pages > Source: GitHub Actions)
+#   docs/index.html            newest report + archive picker  (site root)
+#   docs/.nojekyll             only matters if Pages is ever switched to "Deploy from a branch"
+#   docs/reports/*.html        dated reports, newest REPORT_RETENTION kept
+SITE_DIR = ROOT / "docs"
+REPORTS_DIR = SITE_DIR / "reports"
+LEGACY_REPORTS_DIR = ROOT / "reports"   # old location; migrated into docs/reports automatically
 
 # --------------------------------------------------------------------------
 # Supertrend
@@ -90,7 +96,7 @@ FRESH_4H_HOURS = 24          # 4H buy flips closed within this window count as "
 RECENT_DAYS = 7              # "Recent Buy Flips" panel window
 FLIP_LOG_KEEP_DAYS = 30      # flip_log.json prunes entries older than this
 REPORT_PREFIX = "crypto_supertrend_"
-REPORT_RETENTION = 30        # max report files kept in reports/; oldest deleted first
+REPORT_RETENTION = 30        # max dated reports kept in docs/reports/; oldest deleted first
 
 # --------------------------------------------------------------------------
 # Email (Gmail SMTP). Summary in the body, full report attached.
