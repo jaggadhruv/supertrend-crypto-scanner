@@ -1,0 +1,28 @@
+# Alternate Yahoo tickers, tried in order when the CSV ticker returns no fresh data.
+# Yahoo appends a CoinMarketCap id when a symbol is shared (e.g. TON11419-USD),
+# and some coins were renamed or migrated. These candidates are UNVERIFIED:
+# run `python validate_tickers.py` and keep what resolves. Yahoo search is the
+# final automatic fallback, so a wrong line here costs one failed request, nothing more.
+symbol,alternate_ticker,reason
+TON,TON11419-USD,symbol clash on Yahoo
+UNI,UNI7083-USD,symbol clash on Yahoo
+APT,APT21794-USD,symbol clash on Yahoo
+STX,STX4847-USD,symbol clash on Yahoo
+MNT,MNT27075-USD,symbol clash on Yahoo
+ARB,ARB11841-USD,symbol clash on Yahoo
+GRT,GRT6719-USD,symbol clash on Yahoo
+IMX,IMX10603-USD,symbol clash on Yahoo
+TIA,TIA22861-USD,symbol clash on Yahoo
+PEPE,PEPE24478-USD,symbol clash on Yahoo
+SUI,SUI20947-USD,symbol clash on Yahoo
+TAO,TAO22974-USD,symbol clash on Yahoo
+STRK,STRK22691-USD,symbol clash on Yahoo
+CORE,CORE23254-USD,symbol clash on Yahoo
+AERO,AERO29270-USD,symbol clash on Yahoo
+JUP,JUP29210-USD,symbol clash on Yahoo
+GMX,GMX11857-USD,symbol clash on Yahoo
+MASK,MASK8536-USD,symbol clash on Yahoo
+COMP,COMP5692-USD,symbol clash on Yahoo
+POL,POL28321-USD,symbol clash on Yahoo
+RNDR,RENDER-USD,renamed RNDR -> RENDER
+FTM,S32684-USD,migrated Fantom -> Sonic (S)

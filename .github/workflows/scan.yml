@@ -1,0 +1,65 @@
+name: crypto-supertrend-scan
+
+on:
+  schedule:
+    # Every 4 hours, 7 minutes after each UTC 4H candle closes (00, 04, 08, 12, 16, 20).
+    # The 00:07 run also closes the Daily bar (and the Weekly bar on Mondays),
+    # and is the daily digest. GitHub may start scheduled runs late; the scan
+    # handles that because it checks every bar closed since the last run.
+    - cron: "7 0,4,8,12,16,20 * * *"
+  workflow_dispatch:
+    inputs:
+      force_digest:
+        description: "Include the full coin table and send an email even without flips"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crypto-supertrend-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Unit tests (gate)
+        run: pytest tests -q
+
+      - name: Scan
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          if [ "${{ github.event.inputs.force_digest }}" = "true" ]; then
+            python run_scan.py --force-digest
+          else
+            python run_scan.py
+          fi
+
+      - name: Commit state and reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data reports
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "scan $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git pull --rebase
+            git push
+          fi
