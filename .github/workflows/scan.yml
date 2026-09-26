@@ -9,7 +9,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write     # commit state + reports back to the repo
+  pages: write        # publish reports/ to GitHub Pages
+  id-token: write     # required by actions/deploy-pages
 
 concurrency:
   group: crypto-supertrend-scan
@@ -53,3 +55,20 @@ jobs:
             git pull --rebase
             git push
           fi
+
+      # Publish reports/ as the website. index.html = newest report + archive picker.
+      - name: Package reports for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports
+
+  deploy:
+    needs: scan
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

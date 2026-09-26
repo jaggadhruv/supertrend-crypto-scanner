@@ -48,6 +48,10 @@ only the newest 30 are kept (`REPORT_RETENTION` in `settings.py`); older files a
 deletion is committed. `data/flip_log.json` keeps 30 days. Deleted files still exist in git history,
 so the `.git` folder grows slowly (a few hundred KB a month); the working tree stays capped.
 
+**Website (GitHub Pages)**: every run publishes the `reports/` folder as a site. The site root
+(`reports/index.html`) is always the newest report, with a "Report archive" picker to open any of the
+30 kept reports. GitHub shows `.html` files in the repo as source code, so use the Pages link to read them.
+
 **Email**: one per run. Gmail strips `<style>` blocks, so the body is an inline-styled summary
 (held alerts, ranked fresh buys with Entry / SL / TP) and the full report is attached.
 
@@ -60,6 +64,10 @@ the Held and Position P/L columns, the My Portfolio filter and the red held-bear
 2. Add repository secrets (Settings > Secrets and variables > Actions):
    `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `EMAIL_TO` (same values as the US tool).
 3. Settings > Actions > General > Workflow permissions: **Read and write**.
+   Settings > Pages > Build and deployment > Source: **GitHub Actions** (not "Deploy from a branch",
+   which only shows this README). The site URL appears there after the first run.
+   Pages needs a public repo on the free GitHub plan; a public repo also makes `input/portfolio.csv`
+   and every report readable by anyone.
 4. Locally, check the tickers and run the gate before trusting any signal:
 
 ```bash

@@ -275,6 +275,9 @@ def main(argv=None) -> int:
         deleted = state_mod.cleanup_reports()
         if deleted:
             log.info("Retention: deleted %d old report(s): %s", len(deleted), ", ".join(deleted))
+        kept = [p.name for p in settings.REPORTS_DIR.glob(f"{settings.REPORT_PREFIX}*.html")]
+        (settings.REPORTS_DIR / "index.html").write_text(report.build_index(html, kept), encoding="utf-8")
+        (settings.REPORTS_DIR / ".nojekyll").touch()
 
     if not (args.no_email or args.dry_run):
         emailer.send(report.subject(ctx_out), report.email_summary(ctx_out), html, report_path.name)

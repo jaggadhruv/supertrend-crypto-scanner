@@ -511,3 +511,32 @@ def email_summary(ctx: dict) -> str:
 {table}{sells_html}
 <div style="margin-top:16px;font-size:12px;color:{muted}">The full report (7-day flip history, watchlist, filters) is attached. Open the HTML file in a browser.</div>
 </div></body></html>"""
+
+
+# ------------------------------------------------------------------ index page (GitHub Pages)
+def build_index(latest_html: str, report_names: list[str]) -> str:
+    """
+    reports/index.html = the newest report plus a picker for every report still kept.
+    GitHub Pages serves reports/ as the site, so the site root always opens today's report.
+    """
+    names = sorted(report_names, reverse=True)
+    options = "".join(
+        f'<option value="{escape(n)}">{escape(n[len(settings.REPORT_PREFIX):-5])}'
+        f'{" (latest, shown)" if i == 0 else ""}</option>'
+        for i, n in enumerate(names)
+    )
+    bar = f"""
+  <div class="archive-bar">
+    <span class="archive-label">Report archive</span>
+    <select onchange="if (this.value) window.location.href = this.value;">
+      <option value="">Open an earlier report ({len(names)} kept)…</option>{options}
+    </select>
+    <span class="archive-note">Newest {settings.REPORT_RETENTION} reports are kept; older ones are deleted automatically.</span>
+  </div>"""
+    marker = '<div class="topbar">'
+    start = latest_html.find(marker)
+    end = latest_html.find("</div>\n  </div>", start)  # close of .params + .topbar
+    if start == -1 or end == -1:
+        return latest_html
+    insert_at = end + len("</div>\n  </div>")
+    return latest_html[:insert_at] + bar + latest_html[insert_at:]
