@@ -210,6 +210,20 @@
 .stat-chip .of-total { font-size: 14px; color: var(--muted); font-weight: 500; }
 @media (max-width: 700px) { .filtered-box ul { columns: 1; } }
 
+/* ---- check chips and tiers ---- */
+.chk-row { flex-basis: 100%; order: 2; display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.chk { font-size: 10.5px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); cursor: help; font-family: var(--mono); }
+.chk-ok { color: var(--bull); border-color: rgba(47,191,113,0.35); background: rgba(47,191,113,0.08); }
+.chk-no { color: var(--muted); opacity: 0.8; }
+.tier { font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 999px; font-family: var(--mono); }
+.tier-strong { background: var(--bull); color: #0B0E14; }
+.tier-watch { background: rgba(240,169,61,0.2); color: var(--amber); }
+.diag { color: var(--muted); font-size: 11.5px; font-family: var(--mono); margin: -4px 0 10px; }
+.flip-card .mom-line { order: 3; }
+.flip-card .fc-levels { order: 4; }
+.flip-card .fc-notes { order: 5; }
+.flip-log-panel .panel-head h2 { white-space: nowrap; }
+
 </style>
 </head>
 <body>
@@ -217,7 +231,7 @@
 
   <div class="topbar">
     <h1>Crypto Supertrend Combined Scanner</h1>
-    <div class="params">ATR(10) &times; 2.5 &middot; Weekly + Daily + 4H &middot; Generated 2026-09-27 10:16 UTC</div>
+    <div class="params">ATR(10) &times; 2.5 &middot; Weekly + Daily + 4H &middot; Generated 2026-09-27 10:27 UTC</div>
   </div>
   <div class="archive-bar">
     <span class="archive-label">Archived report</span>
@@ -229,23 +243,198 @@
     <div class="panel flip-log-panel">
       <div class="panel-head">
         <h2>Recent Buy Flips (Last 7 Days)</h2>
-        <span class="subtle">0 of 88 BUY flip(s) pass the volume/momentum filter today, across 0 day(s). Anything older than 7 days rolls off this list automatically. History in <code>data/flip_log.json</code>.</span>
+        <span class="subtle">25 of 88 BUY flip(s) meet enough volume/momentum checks at today's price, across 6 day(s). Anything older than 7 days rolls off this list automatically. History in <code>data/flip_log.json</code>.</span>
       </div>
-      <div class="flip-mode-note">Long-only view — SELL flips are hidden here (Weekly/Daily sells still trigger the held-bearish alert). Only flips that still pass the volume/momentum filter at today's price are shown (see Buying Opportunities for the rules), grouped by the UTC day the bar closed and sorted by quality; ★ marks the top 3 when a day has more than 5 candidates. Each card shows Entry, SL (Supertrend line) and TP1/TP2 at 2R/3R.</div>
-      <div class="empty-note">No BUY flip in the last 7 days passes the filter today.</div>
+      <div class="flip-mode-note">Long-only view — SELL flips are hidden here (Weekly/Daily sells still trigger the held-bearish alert). Only flips that still meet enough volume/momentum checks at today's price are shown (see Buying Opportunities for the rules), grouped by the UTC day the bar closed and sorted by checks met, then quality; ★ marks the top 3 when a day has more than 5 candidates. Each card shows Entry, SL (Supertrend line) and TP1/TP2 at 2R/3R.</div>
+      <div class="flip-day"><div class="flip-day-head">2026-09-27 <span class="today-tag">today</span></div><div class="flip-grid">
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">PENDLE</span>
+      <span class="flip-meta">BUY · Bullish · Close 2.641 · ST 2.400</span>
+      <span class="q-badge q-high" title="Quality 78/100, grade A — volume 1.5x avg, RSI 58. trend 30/30; BTC 15/15; volume 7.7/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5">78</span>
+      <div class="chk-row"><span class="tier tier-strong">Strong 4/5</span><span class="chk chk-ok" title="volume 1.51x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 58 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="vs BTC 7d -5.5 pts (need ≥ -2)">✗ vs BTC</span><span class="chk chk-ok" title="-0.5% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-ok" title="Daily trend up">✓ Trend</span></div><div class="mom-line">Vol <b>1.5x</b> · RSI <b>58</b> · vs BTC 7d <span class="lv-sl">-5.5 pts</span> · since flip <span class="lv-sl">-0.5%</span></div><div class="fc-levels">Entry <span class="lv-entry">2.641</span> · SL <span class="lv-sl">2.400</span> (-9.2%) · TP1 <span class="lv-tp">3.125</span> (+18.3%) · TP2 <span class="lv-tp">3.367</span> (+27.5%)</div><div class="fc-notes">Wide stop (9.2% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">ZEC</span>
+      <span class="flip-meta">BUY · Bullish · Close 1,653 · ST 1,498</span>
+      <span class="q-badge q-high" title="Quality 85/100, grade A — volume 13.0x avg, RSI 66. trend 30/30; BTC 15/15; volume 15/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5">85</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 13.04x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 66 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+0.9% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>13.0x</b> · RSI <b>66</b> · since flip <span class="lv-tp">+0.9%</span></div><div class="fc-levels">Entry <span class="lv-entry">1,653</span> · SL <span class="lv-sl">1,498</span> (-9.4%) · TP1 <span class="lv-tp">1,962</span> (+18.7%) · TP2 <span class="lv-tp">2,117</span> (+28.1%)</div><div class="fc-notes">Wide stop (9.4% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">CRO</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.06814 · ST 0.06205</span>
+      <span class="q-badge q-med" title="Quality 60/100, grade B — volume 2.5x avg, RSI 65. trend 15/30; BTC 15/15; volume 15/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">60</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.51x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 65 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+1.3% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.5x</b> · RSI <b>65</b> · since flip <span class="lv-tp">+1.3%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.06814</span> · SL <span class="lv-sl">0.06205</span> (-8.9%) · TP1 <span class="lv-tp">0.08032</span> (+17.9%) · TP2 <span class="lv-tp">0.08641</span> (+26.8%)</div><div class="fc-notes">Wide stop (8.9% &gt; 8% cap); Thin liquidity ($0.6M/day)</div>
+    </div></div></div><div class="flip-day"><div class="flip-day-head">2026-09-26</div><div class="flip-grid">
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">DYDX</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.1398 · ST 0.1292</span>
+      <span class="q-badge q-high" title="Quality 76/100, grade A — volume 2.0x avg, RSI 61. trend 30/30; BTC 15/15; volume 15/15; stop 1.3/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">76</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.02x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 61 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+2.9% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.0x</b> · RSI <b>61</b> · since flip <span class="lv-tp">+2.9%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.1398</span> · SL <span class="lv-sl">0.1292</span> (-7.6%) · TP1 <span class="lv-tp">0.1610</span> (+15.2%) · TP2 <span class="lv-tp">0.1716</span> (+22.7%)</div><div class="fc-notes">Thin liquidity ($0.6M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">ADA</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.2588 · ST 0.2382</span>
+      <span class="q-badge q-med" title="Quality 70/100, grade B — volume 2.4x avg, RSI 66. trend 15/30; BTC 15/15; volume 15/15; stop 0.1/15; candle 10/10; RSI 10/10; clean 5/5">70</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.37x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 66 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="-0.9% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.4x</b> · RSI <b>66</b> · since flip <span class="lv-sl">-0.9%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.2588</span> · SL <span class="lv-sl">0.2382</span> (-8.0%) · TP1 <span class="lv-tp">0.3000</span> (+15.9%) · TP2 <span class="lv-tp">0.3206</span> (+23.9%)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">1INCH</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.1034 · ST 0.09706</span>
+      <span class="q-badge q-med" title="Quality 64/100, grade B — volume 3.5x avg, RSI 58. trend 15/30; BTC 15/15; volume 15/15; stop 5.9/15; candle 10/10; RSI 10/10; clean 3/5; liquidity -10">64</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 3.50x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 58 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+0.1% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>3.5x</b> · RSI <b>58</b> · since flip <span class="lv-tp">+0.1%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.1034</span> · SL <span class="lv-sl">0.09706</span> (-6.1%) · TP1 <span class="lv-tp">0.1160</span> (+12.2%) · TP2 <span class="lv-tp">0.1223</span> (+18.3%)</div><div class="fc-notes">Thin liquidity ($0.7M/day)</div>
+    </div></div></div><div class="flip-day"><div class="flip-day-head">2026-09-25 <span class="flip-topbadge">★ top 3 of 9</span></div><div class="flip-grid">
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr"><span class="q-star" title="Top-ranked BUY on this day">★</span>SOL</span>
+      <span class="flip-meta">BUY · Bullish · Close 120.81 · ST 113.08</span>
+      <span class="q-badge q-high" title="Quality 90/100, grade A — volume 6.8x avg, RSI 66. trend 30/30; BTC 15/15; volume 15/15; stop 5/15; candle 10/10; RSI 10/10; clean 5/5">90</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 6.81x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 66 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+2.7% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>6.8x</b> · RSI <b>66</b> · since flip <span class="lv-tp">+2.7%</span></div><div class="fc-levels">Entry <span class="lv-entry">120.81</span> · SL <span class="lv-sl">113.08</span> (-6.4%) · TP1 <span class="lv-tp">136.27</span> (+12.8%) · TP2 <span class="lv-tp">143.99</span> (+19.2%)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr"><span class="q-star" title="Top-ranked BUY on this day">★</span>AAVE</span>
+      <span class="flip-meta">BUY · Bullish · Close 149.30 · ST 135.44</span>
+      <span class="q-badge q-high" title="Quality 85/100, grade A — volume 2.1x avg, RSI 60. trend 30/30; BTC 15/15; volume 15/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5">85</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.12x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 60 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.3% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.1x</b> · RSI <b>60</b> · since flip <span class="lv-tp">+4.3%</span></div><div class="fc-levels">Entry <span class="lv-entry">149.30</span> · SL <span class="lv-sl">135.44</span> (-9.3%) · TP1 <span class="lv-tp">177.01</span> (+18.6%) · TP2 <span class="lv-tp">190.87</span> (+27.8%)</div><div class="fc-notes">Wide stop (9.3% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr"><span class="q-star" title="Top-ranked BUY on this day">★</span>DOT</span>
+      <span class="flip-meta">BUY · Bullish · Close 1.195 · ST 1.085</span>
+      <span class="q-badge q-high" title="Quality 75/100, grade A — volume 1.4x avg, RSI 59. trend 30/30; BTC 15/15; volume 5.3/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5">75</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.36x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 59 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.6% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.4x</b> · RSI <b>59</b> · since flip <span class="lv-tp">+4.6%</span></div><div class="fc-levels">Entry <span class="lv-entry">1.195</span> · SL <span class="lv-sl">1.085</span> (-9.2%) · TP1 <span class="lv-tp">1.416</span> (+18.4%) · TP2 <span class="lv-tp">1.526</span> (+27.7%)</div><div class="fc-notes">Wide stop (9.2% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">KAS</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.04206 · ST 0.03833</span>
+      <span class="q-badge q-high" title="Quality 75/100, grade A — volume 8.0x avg, RSI 62. trend 30/30; BTC 15/15; volume 15/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">75</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 7.95x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 62 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+17.0% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>8.0x</b> · RSI <b>62</b> · since flip <span class="lv-tp">+17.0%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.04206</span> · SL <span class="lv-sl">0.03833</span> (-8.9%) · TP1 <span class="lv-tp">0.04953</span> (+17.7%) · TP2 <span class="lv-tp">0.05326</span> (+26.6%)</div><div class="fc-notes">Wide stop (8.9% &gt; 8% cap); Thin liquidity ($0.6M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">THETA</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.2341 · ST 0.2152</span>
+      <span class="q-badge q-med" title="Quality 68/100, grade B — volume 1.5x avg, RSI 63. trend 30/30; BTC 15/15; volume 7.8/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">68</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.52x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 63 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+1.0% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.5x</b> · RSI <b>63</b> · since flip <span class="lv-tp">+1.0%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.2341</span> · SL <span class="lv-sl">0.2152</span> (-8.1%) · TP1 <span class="lv-tp">0.2718</span> (+16.1%) · TP2 <span class="lv-tp">0.2906</span> (+24.2%)</div><div class="fc-notes">Wide stop (8.1% &gt; 8% cap); Thin liquidity ($1.5M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">AXS</span>
+      <span class="flip-meta">BUY · Bullish · Close 1.130 · ST 1.026</span>
+      <span class="q-badge q-med" title="Quality 68/100, grade B — volume 13.5x avg, RSI 63. trend 15/30; BTC 15/15; volume 15/15; stop 0/15; candle 7.6/10; RSI 10/10; clean 5/5">68</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 13.51x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 63 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.2% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>13.5x</b> · RSI <b>63</b> · since flip <span class="lv-tp">+4.2%</span></div><div class="fc-levels">Entry <span class="lv-entry">1.130</span> · SL <span class="lv-sl">1.026</span> (-9.2%) · TP1 <span class="lv-tp">1.337</span> (+18.4%) · TP2 <span class="lv-tp">1.441</span> (+27.5%)</div><div class="fc-notes">Wide stop (9.2% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">BLUR</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.02056 · ST 0.01932</span>
+      <span class="q-badge q-med" title="Quality 66/100, grade B — volume 2.1x avg, RSI 63. trend 15/30; BTC 15/15; volume 15/15; stop 6.2/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">66</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.13x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 63 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.2% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.1x</b> · RSI <b>63</b> · since flip <span class="lv-tp">+4.2%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.02056</span> · SL <span class="lv-sl">0.01932</span> (-6.0%) · TP1 <span class="lv-tp">0.02303</span> (+12.0%) · TP2 <span class="lv-tp">0.02427</span> (+18.1%)</div><div class="fc-notes">Thin liquidity ($0.2M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">IMX</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.1599 · ST 0.1448</span>
+      <span class="q-badge q-med" title="Quality 60/100, grade B — volume 2.5x avg, RSI 68. trend 15/30; BTC 15/15; volume 15/15; stop 0/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">60</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.45x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 68 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+5.0% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.5x</b> · RSI <b>68</b> · since flip <span class="lv-tp">+5.0%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.1599</span> · SL <span class="lv-sl">0.1448</span> (-9.4%) · TP1 <span class="lv-tp">0.1901</span> (+18.9%) · TP2 <span class="lv-tp">0.2052</span> (+28.3%)</div><div class="fc-notes">Wide stop (9.4% &gt; 8% cap); Thin liquidity ($1.3M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">ENJ</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.02964 · ST 0.02750</span>
+      <span class="q-badge q-med" title="Quality 60/100, grade C — volume 3.9x avg, RSI 62. trend 15/30; BTC 15/15; volume 15/15; stop 2.4/15; candle 9.1/10; RSI 10/10; clean 3/5; liquidity -10">60</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 3.89x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 62 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.0% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>3.9x</b> · RSI <b>62</b> · since flip <span class="lv-tp">+4.0%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.02964</span> · SL <span class="lv-sl">0.02750</span> (-7.2%) · TP1 <span class="lv-tp">0.03393</span> (+14.5%) · TP2 <span class="lv-tp">0.03608</span> (+21.7%)</div><div class="fc-notes">Thin liquidity ($0.1M/day)</div>
+    </div></div></div><div class="flip-day"><div class="flip-day-head">2026-09-24 <span class="flip-topbadge">★ top 3 of 6</span></div><div class="flip-grid">
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr"><span class="q-star" title="Top-ranked BUY on this day">★</span>CORE</span>
+      <span class="flip-meta">BUY · Bullish · Close 6,178 · ST 6,057</span>
+      <span class="q-badge q-high" title="Quality 86/100, grade A — volume 11.1x avg, RSI 51. trend 30/30; BTC 15/15; volume 15/15; stop 15/15; candle 10/10; RSI 6/10; clean 5/5; liquidity -10">86</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 11.08x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 51 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="-0.3% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>11.1x</b> · RSI <b>51</b> · since flip <span class="lv-sl">-0.3%</span></div><div class="fc-levels">Entry <span class="lv-entry">6,178</span> · SL <span class="lv-sl">6,057</span> (-1.9%) · TP1 <span class="lv-tp">6,419</span> (+3.9%) · TP2 <span class="lv-tp">6,539</span> (+5.8%)</div><div class="fc-notes">Thin liquidity ($0.1M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr"><span class="q-star" title="Top-ranked BUY on this day">★</span>LINK</span>
+      <span class="flip-meta">BUY · Bullish · Close 13.26 · ST 12.13</span>
+      <span class="q-badge q-high" title="Quality 85/100, grade A — volume 5.5x avg, RSI 62. trend 30/30; BTC 15/15; volume 15/15; stop 0/15; candle 9.9/10; RSI 10/10; clean 5/5">85</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 5.47x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 62 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+8.3% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>5.5x</b> · RSI <b>62</b> · since flip <span class="lv-tp">+8.3%</span></div><div class="fc-levels">Entry <span class="lv-entry">13.26</span> · SL <span class="lv-sl">12.13</span> (-8.6%) · TP1 <span class="lv-tp">15.53</span> (+17.1%) · TP2 <span class="lv-tp">16.67</span> (+25.7%)</div><div class="fc-notes">Wide stop (8.6% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr"><span class="q-star" title="Top-ranked BUY on this day">★</span>TWT</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.5728 · ST 0.5228</span>
+      <span class="q-badge q-high" title="Quality 79/100, grade A — volume 1.9x avg, RSI 54. trend 30/30; BTC 15/15; volume 13.1/15; stop 0/15; candle 10/10; RSI 6/10; clean 5/5">79</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.87x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 54 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.1% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.9x</b> · RSI <b>54</b> · since flip <span class="lv-tp">+4.1%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.5728</span> · SL <span class="lv-sl">0.5228</span> (-8.7%) · TP1 <span class="lv-tp">0.6728</span> (+17.5%) · TP2 <span class="lv-tp">0.7228</span> (+26.2%)</div><div class="fc-notes">Wide stop (8.7% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">COMP</span>
+      <span class="flip-meta">BUY · Bullish · Close 23.90 · ST 21.72</span>
+      <span class="q-badge q-med" title="Quality 69/100, grade B — volume 3.3x avg, RSI 67. trend 15/30; BTC 15/15; volume 15/15; stop 0/15; candle 9.2/10; RSI 10/10; clean 5/5">69</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 3.31x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 67 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+1.9% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>3.3x</b> · RSI <b>67</b> · since flip <span class="lv-tp">+1.9%</span></div><div class="fc-levels">Entry <span class="lv-entry">23.90</span> · SL <span class="lv-sl">21.72</span> (-9.1%) · TP1 <span class="lv-tp">28.26</span> (+18.2%) · TP2 <span class="lv-tp">30.44</span> (+27.4%)</div><div class="fc-notes">Wide stop (9.1% &gt; 8% cap)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">MANA</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.08860 · ST 0.08185</span>
+      <span class="q-badge q-med" title="Quality 58/100, grade C — volume 1.8x avg, RSI 62. trend 15/30; BTC 15/15; volume 11.4/15; stop 1.2/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">58</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.76x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 62 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.2% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.8x</b> · RSI <b>62</b> · since flip <span class="lv-tp">+4.2%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.08860</span> · SL <span class="lv-sl">0.08185</span> (-7.6%) · TP1 <span class="lv-tp">0.1021</span> (+15.2%) · TP2 <span class="lv-tp">0.1088</span> (+22.8%)</div><div class="fc-notes">Thin liquidity ($1.0M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">GLM</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.1268 · ST 0.1182</span>
+      <span class="q-badge q-med" title="Quality 56/100, grade C — volume 1.5x avg, RSI 59. trend 15/30; BTC 15/15; volume 7.6/15; stop 3.9/15; candle 10/10; RSI 10/10; clean 5/5; liquidity -10">56</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.51x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 59 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+3.5% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.5x</b> · RSI <b>59</b> · since flip <span class="lv-tp">+3.5%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.1268</span> · SL <span class="lv-sl">0.1182</span> (-6.8%) · TP1 <span class="lv-tp">0.1439</span> (+13.5%) · TP2 <span class="lv-tp">0.1525</span> (+20.3%)</div><div class="fc-notes">Thin liquidity ($0.5M/day)</div>
+    </div></div></div><div class="flip-day"><div class="flip-day-head">2026-09-22</div><div class="flip-grid">
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-d">D</span>
+      <span class="flip-tkr">GMX</span>
+      <span class="flip-meta">BUY · Bullish · Close 8.112 · ST 6.995</span>
+      <span class="q-badge q-med" title="Quality 61/100, grade B — volume 1.6x avg, RSI 60. trend 10/30; BTC 15/15; volume 8.9/15; stop 2/15; candle 10/10; RSI 10/10; clean 5/5">61</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.59x (need 1.2x)">✓ Volume</span><span class="chk chk-ok" title="RSI 60 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+3.8% since flip (allowed down to -3%)">✓ Holding</span><span class="chk chk-no" title="Weekly trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.6x</b> · RSI <b>60</b> · since flip <span class="lv-tp">+3.8%</span></div><div class="fc-levels">Entry <span class="lv-entry">8.112</span> · SL <span class="lv-sl">6.995</span> (-13.8%) · TP1 <span class="lv-tp">10.35</span> (+27.5%) · TP2 <span class="lv-tp">11.46</span> (+41.3%)</div>
+    </div></div></div><div class="flip-day"><div class="flip-day-head">2026-09-21</div><div class="flip-grid">
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">GMX</span>
+      <span class="flip-meta">BUY · Bullish · Close 7.850 · ST 7.550</span>
+      <span class="q-badge q-high" title="Quality 78/100, grade A — volume 2.2x avg, RSI 65. trend 15/30; BTC 15/15; volume 15/15; stop 13.1/15; candle 7.2/10; RSI 10/10; clean 3/5">78</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 2.18x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 65 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+7.3% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>2.2x</b> · RSI <b>65</b> · since flip <span class="lv-tp">+7.3%</span></div><div class="fc-levels">Entry <span class="lv-entry">7.850</span> · SL <span class="lv-sl">7.550</span> (-3.8%) · TP1 <span class="lv-tp">8.449</span> (+7.6%) · TP2 <span class="lv-tp">8.748</span> (+11.4%)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-4h">4H</span>
+      <span class="flip-tkr">ANKR</span>
+      <span class="flip-meta">BUY · Bullish · Close 0.004970 · ST 0.004678</span>
+      <span class="q-badge q-med" title="Quality 56/100, grade C — volume 1.5x avg, RSI 64. trend 15/30; BTC 15/15; volume 6.9/15; stop 6.6/15; candle 9.3/10; RSI 10/10; clean 3/5; liquidity -10">56</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.46x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 64 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+4.6% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.5x</b> · RSI <b>64</b> · since flip <span class="lv-tp">+4.6%</span></div><div class="fc-levels">Entry <span class="lv-entry">0.004970</span> · SL <span class="lv-sl">0.004678</span> (-5.9%) · TP1 <span class="lv-tp">0.005554</span> (+11.8%) · TP2 <span class="lv-tp">0.005846</span> (+17.6%)</div><div class="fc-notes">Thin liquidity ($0.0M/day)</div>
+    </div>
+    <div class="flip-card flip-buy">
+      <span class="flip-tag tf-tag-w">W</span>
+      <span class="flip-tkr">LTC</span>
+      <span class="flip-meta">BUY · Bullish · Close 58.74 · ST 41.19</span>
+      <span class="q-badge q-low" title="Quality 42/100, grade D — volume 1.1x avg, RSI 56. trend 0/30; BTC 15/15; volume 2/15; stop 0.1/15; candle 10/10; RSI 10/10; clean 5/5">42</span>
+      <div class="chk-row"><span class="tier tier-watch">Watch 3/5</span><span class="chk chk-ok" title="volume 1.13x (need 1.1x)">✓ Volume</span><span class="chk chk-ok" title="RSI 56 (need 50-80)">✓ RSI</span><span class="chk chk-no" title="no 7-day data">✗ vs BTC</span><span class="chk chk-ok" title="+22.3% since flip (allowed down to -5%)">✓ Holding</span><span class="chk chk-no" title="Daily trend unknown">✗ Trend</span></div><div class="mom-line">Vol <b>1.1x</b> · RSI <b>56</b> · since flip <span class="lv-tp">+22.3%</span></div><div class="fc-levels">Entry <span class="lv-entry">58.74</span> · SL <span class="lv-sl">41.19</span> (-29.9%) · TP1 <span class="lv-tp">93.82</span> (+59.7%) · TP2 <span class="lv-tp">111.37</span> (+89.6%)</div>
+    </div></div></div>
     </div>
   
     <div class="stats-row">
       <div class="stat-chip"><div class="num">95</div><div class="label">Coins</div></div>
       <div class="stat-chip"><div class="num"><span class="bull">▲</span></div><div class="label">BTC Daily</div></div>
       <div class="stats-group-label">Weekly</div>
-      <div class="stat-chip stat-buy" title="0 passed the volume/momentum filter out of 11 BUY flips"><div class="num">0<span class="of-total">/11</span></div><div class="label">Buy (passed/all)</div></div>
+      <div class="stat-chip stat-buy" title="1 of 11 BUY flips shown after the volume/momentum checks"><div class="num">1<span class="of-total">/11</span></div><div class="label">Buy (shown/all)</div></div>
       <div class="stat-chip stat-sell"><div class="num">0</div><div class="label">Sell</div></div>
       <div class="stats-group-label">Daily</div>
-      <div class="stat-chip stat-buy" title="0 passed the volume/momentum filter out of 0 BUY flips"><div class="num">0<span class="of-total">/0</span></div><div class="label">Buy (passed/all)</div></div>
+      <div class="stat-chip stat-buy" title="0 of 0 BUY flips shown after the volume/momentum checks"><div class="num">0<span class="of-total">/0</span></div><div class="label">Buy (shown/all)</div></div>
       <div class="stat-chip stat-sell"><div class="num">1</div><div class="label">Sell</div></div>
       <div class="stats-group-label">4H (24h)</div>
-      <div class="stat-chip stat-buy" title="0 passed the volume/momentum filter out of 10 BUY flips"><div class="num">0<span class="of-total">/10</span></div><div class="label">Buy (passed/all)</div></div>
+      <div class="stat-chip stat-buy" title="3 of 10 BUY flips shown after the volume/momentum checks"><div class="num">3<span class="of-total">/10</span></div><div class="label">Buy (shown/all)</div></div>
       <div class="stats-group-label">Confluence</div>
       <div class="stat-chip stat-buy"><div class="num">0</div><div class="label">Buy (2+ TF)</div></div>
       <div class="stat-chip"><div class="num">1</div><div class="label">Errors</div></div>
@@ -259,22 +448,57 @@
           <div class="empty-note">Nothing fresh.</div>
         </div>
         <div class="buy-subpanel">
-          <h3><span class="tf-tag tf-tag-4h">4-hour</span> Buy Opportunities (last 24h) <span class="count">0 of 10</span></h3>
-          <div class="filter-rule">Shown only if: volume ≥ 1.5x, RSI 55-72, beating BTC over 7d, holding above the flip close, Daily trend up, stop ≤ 8%. Top 5 by quality.</div>
-          <div class="empty-note">Nothing passed the filter.</div>
-          <details class="filtered-box"><summary>10 more flip(s) not shown (filtered out or outside top results)</summary><ul><li><b>AVAX</b> <span class="muted">A 85</span> faded -1.1% since flip; stop 10.2% &gt; 8% cap</li><li><b>UNI</b> <span class="muted">A 85</span> faded -0.7% since flip; stop 10.0% &gt; 8% cap</li><li><b>ZEC</b> <span class="muted">A 85</span> stop 9.4% &gt; 8% cap</li><li><b>PENDLE</b> <span class="muted">A 78</span> lagging BTC by 5.5 pts (7d); faded -1.4% since flip; stop 9.2% &gt; 8% cap</li><li><b>TON</b> <span class="muted">A 75</span> thin liquidity $0.0M/day; lagging BTC by 6.5 pts (7d); Daily trend down</li><li><b>DYDX</b> <span class="muted">B 73</span> thin liquidity $0.6M/day</li><li><b>CRO</b> <span class="muted">B 60</span> thin liquidity $0.6M/day; stop 8.9% &gt; 8% cap</li><li><b>ATOM</b> <span class="muted">C 60</span> volume 0.00x &lt; 1.5x</li><li><b>MASK</b> <span class="muted">C 50</span> volume 0.42x &lt; 1.5x; thin liquidity $2.4M/day; lagging BTC by 3.0 pts (7d)</li><li><b>BAT</b> <span class="muted">C 49</span> volume 0.30x &lt; 1.5x; thin liquidity $0.5M/day</li></ul></details>
+          <h3><span class="tf-tag tf-tag-4h">4-hour</span> Buy Opportunities (last 24h) <span class="count">3 of 10</span></h3>
+          <div class="filter-rule">Shown if at least 3 of 5 checks: volume ≥ 1.3x, RSI 50-75, vs BTC 7d ≥ -2 pts, holding within 2% of the flip close, Daily trend up. Always required: price above stop and below TP1, stop ≤ 10%, ≥ $5M/day volume. Up to 8, most checks met first, then quality.</div>
+          <div class="diag">Checks met across 10 flip(s): Volume 7/10 · RSI 10/10 · vs BTC 7/10 · Holding 10/10 · Trend 9/10 · untradeable (stop/TP1/liquidity) 7</div>
+          <div class="buy-grid">
+          <div class="buy-item">
+            <div class="bi-head"><span class="q-rank">#1</span><span class="buy-ticker">ZEC</span>
+              <span class="q-badge q-high" title="Quality 87/100, grade A — volume 13.0x avg, RSI 66. trend 30/30; BTC 15/15; volume 15/15; stop 1.6/15; candle 10/10; RSI 10/10; clean 5/5">A 87</span></div>
+            <div class="buy-meta">Close 1,653 · ST 1,498 · bar 2026-09-26 20:00 UTC</div>
+            <div class="chk-row"><span class="tier tier-strong">Strong 5/5</span><span class="chk chk-ok" title="volume 13.04x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 66 (need 50-75)">✓ RSI</span><span class="chk chk-ok" title="vs BTC 7d +8.5 pts (need ≥ -2)">✓ vs BTC</span><span class="chk chk-ok" title="+0.9% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-ok" title="Daily trend up">✓ Trend</span></div>
+            <div class="mom-line">Vol <b>13.0x</b> · RSI <b>66</b> · vs BTC 7d <span class="lv-tp">+8.5 pts</span> · since flip <span class="lv-tp">+0.9%</span></div>
+            <div class="fc-levels">Entry <span class="lv-entry">1,653</span> · SL <span class="lv-sl">1,498</span> (-9.4%) · TP1 <span class="lv-tp">1,962</span> (+18.7%) · TP2 <span class="lv-tp">2,117</span> (+28.1%)</div>
+          </div>
+          <div class="buy-item">
+            <div class="bi-head"><span class="q-rank">#2</span><span class="buy-ticker">PENDLE</span>
+              <span class="q-badge q-high" title="Quality 80/100, grade A — volume 1.5x avg, RSI 58. trend 30/30; BTC 15/15; volume 7.7/15; stop 2.1/15; candle 10/10; RSI 10/10; clean 5/5">A 80</span></div>
+            <div class="buy-meta">Close 2.641 · ST 2.400 · bar 2026-09-27 04:00 UTC</div>
+            <div class="chk-row"><span class="tier tier-strong">Strong 4/5</span><span class="chk chk-ok" title="volume 1.51x (need 1.3x)">✓ Volume</span><span class="chk chk-ok" title="RSI 58 (need 50-75)">✓ RSI</span><span class="chk chk-no" title="vs BTC 7d -5.5 pts (need ≥ -2)">✗ vs BTC</span><span class="chk chk-ok" title="-0.5% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-ok" title="Daily trend up">✓ Trend</span></div>
+            <div class="mom-line">Vol <b>1.5x</b> · RSI <b>58</b> · vs BTC 7d <span class="lv-sl">-5.5 pts</span> · since flip <span class="lv-sl">-0.5%</span></div>
+            <div class="fc-levels">Entry <span class="lv-entry">2.641</span> · SL <span class="lv-sl">2.400</span> (-9.2%) · TP1 <span class="lv-tp">3.125</span> (+18.3%) · TP2 <span class="lv-tp">3.367</span> (+27.5%)</div>
+          </div>
+          <div class="buy-item">
+            <div class="bi-head"><span class="q-rank">#3</span><span class="buy-ticker">ATOM</span>
+              <span class="q-badge q-med" title="Quality 64/100, grade B — volume 0.0x avg, RSI 61. trend 15/30; BTC 15/15; volume 0/15; stop 9.2/15; candle 9.5/10; RSI 10/10; clean 5/5">B 64</span></div>
+            <div class="buy-meta">Close 1.835 · ST 1.718 · bar 2026-09-26 08:00 UTC</div>
+            <div class="chk-row"><span class="tier tier-strong">Strong 4/5</span><span class="chk chk-no" title="volume 0.00x (need 1.3x)">✗ Volume</span><span class="chk chk-ok" title="RSI 61 (need 50-75)">✓ RSI</span><span class="chk chk-ok" title="vs BTC 7d +3.1 pts (need ≥ -2)">✓ vs BTC</span><span class="chk chk-ok" title="+3.0% since flip (allowed down to -2%)">✓ Holding</span><span class="chk chk-ok" title="Daily trend up">✓ Trend</span></div>
+            <div class="mom-line">Vol <b>0.0x</b> · RSI <b>61</b> · vs BTC 7d <span class="lv-tp">+3.1 pts</span> · since flip <span class="lv-tp">+3.0%</span></div>
+            <div class="fc-levels">Entry <span class="lv-entry">1.835</span> · SL <span class="lv-sl">1.718</span> (-6.3%) · TP1 <span class="lv-tp">2.067</span> (+12.7%) · TP2 <span class="lv-tp">2.183</span> (+19.0%)</div>
+          </div></div>
+          <details class="filtered-box"><summary>7 more flip(s) not shown (click to see why)</summary><ul><li><b>AVAX</b> <span class="muted">A 85</span> stop 10.2% wider than 10%</li><li><b>UNI</b> <span class="muted">A 85</span> stop 10.0% wider than 10%</li><li><b>DYDX</b> <span class="muted">A 78</span> thin liquidity $0.6M/day</li><li><b>CRO</b> <span class="muted">B 63</span> thin liquidity $0.6M/day</li><li><b>BAT</b> <span class="muted">C 53</span> thin liquidity $0.5M/day</li><li><b>TON</b> <span class="muted">A 75</span> thin liquidity $0.0M/day</li><li><b>MASK</b> <span class="muted">C 54</span> thin liquidity $2.4M/day</li></ul></details>
         </div>
         <div class="buy-subpanel">
           <h3><span class="tf-tag tf-tag-d">Daily</span> Buy Opportunities <span class="count">0 of 0</span></h3>
-          <div class="filter-rule">Shown only if: volume ≥ 1.3x, RSI 52-75, beating BTC over 7d, holding above the flip close, stop ≤ 15%. Top 5 by quality.</div>
+          <div class="filter-rule">Shown if at least 3 of 5 checks: volume ≥ 1.2x, RSI 50-75, vs BTC 7d ≥ -2 pts, holding within 3% of the flip close, Weekly trend up. Always required: price above stop and below TP1, stop ≤ 15%, ≥ $5M/day volume. Up to 6, most checks met first, then quality.</div>
+          
           <div class="empty-note">No BUY flips.</div>
           
         </div>
         <div class="buy-subpanel">
-          <h3><span class="tf-tag tf-tag-w">Weekly</span> Buy Opportunities <span class="count">0 of 11</span></h3>
-          <div class="filter-rule">Shown only if: volume ≥ 1.2x, RSI 50-78, within 5 pts of BTC over 7d, holding above the flip close, Daily trend up, stop ≤ 30%. Top 3 by quality.</div>
-          <div class="empty-note">Nothing passed the filter.</div>
-          <details class="filtered-box"><summary>11 more flip(s) not shown (filtered out or outside top results)</summary><ul><li><b>AVAX</b> <span class="muted">B 70</span> faded -2.7% since flip; stop 47.4% &gt; 30% cap</li><li><b>NEAR</b> <span class="muted">B 60</span> stop 54.4% &gt; 30% cap</li><li><b>XTZ</b> <span class="muted">C 55</span> lagging BTC by 14.7 pts (7d); faded -6.5% since flip; stop 46.4% &gt; 30% cap</li><li><b>RUNE</b> <span class="muted">C 53</span> volume 0.71x &lt; 1.2x; stop 36.3% &gt; 30% cap</li><li><b>KAS</b> <span class="muted">C 48</span> thin liquidity $0.6M/day; stop 39.4% &gt; 30% cap</li><li><b>PYTH</b> <span class="muted">C 45</span> volume 0.55x &lt; 1.2x; thin liquidity $1.5M/day; stop 48.6% &gt; 30% cap</li><li><b>DOT</b> <span class="muted">D 42</span> RSI 49 &lt; 50; stop 39.1% &gt; 30% cap</li><li><b>LTC</b> <span class="muted">D 42</span> volume 1.13x &lt; 1.2x</li><li><b>ETC</b> <span class="muted">D 36</span> volume 1.02x &lt; 1.2x; stop 34.5% &gt; 30% cap</li><li><b>THETA</b> <span class="muted">D 26</span> volume 0.84x &lt; 1.2x; thin liquidity $1.5M/day; stop 47.0% &gt; 30% cap</li><li><b>GRT</b> <span class="muted">D 23</span> volume 0.98x &lt; 1.2x; thin liquidity $0.4M/day; RSI 48 &lt; 50; stop 50.3% &gt; 30% cap</li></ul></details>
+          <h3><span class="tf-tag tf-tag-w">Weekly</span> Buy Opportunities <span class="count">1 of 11</span></h3>
+          <div class="filter-rule">Shown if at least 3 of 5 checks: volume ≥ 1.1x, RSI 50-80, vs BTC 7d ≥ -5 pts, holding within 5% of the flip close, Daily trend up. Always required: price above stop and below TP1, stop ≤ 30%, ≥ $5M/day volume. Up to 4, most checks met first, then quality.</div>
+          <div class="diag">Checks met across 11 flip(s): Volume 6/11 · RSI 9/11 · vs BTC 10/11 · Holding 10/11 · Trend 11/11 · untradeable (stop/TP1/liquidity) 10</div>
+          <div class="buy-grid">
+          <div class="buy-item">
+            <div class="bi-head"><span class="q-rank">#1</span><span class="buy-ticker">LTC</span>
+              <span class="q-badge q-low" title="Quality 42/100, grade D — volume 1.1x avg, RSI 56. trend 0/30; BTC 15/15; volume 2/15; stop 0.1/15; candle 10/10; RSI 10/10; clean 5/5">D 42</span></div>
+            <div class="buy-meta">Close 58.74 · ST 41.19 · bar 2026-09-14</div>
+            <div class="chk-row"><span class="tier tier-strong">Strong 5/5</span><span class="chk chk-ok" title="volume 1.13x (need 1.1x)">✓ Volume</span><span class="chk chk-ok" title="RSI 56 (need 50-80)">✓ RSI</span><span class="chk chk-ok" title="vs BTC 7d +20.6 pts (need ≥ -5)">✓ vs BTC</span><span class="chk chk-ok" title="+22.3% since flip (allowed down to -5%)">✓ Holding</span><span class="chk chk-ok" title="Daily trend up">✓ Trend</span></div>
+            <div class="mom-line">Vol <b>1.1x</b> · RSI <b>56</b> · vs BTC 7d <span class="lv-tp">+20.6 pts</span> · since flip <span class="lv-tp">+22.3%</span></div>
+            <div class="fc-levels">Entry <span class="lv-entry">58.74</span> · SL <span class="lv-sl">41.19</span> (-29.9%) · TP1 <span class="lv-tp">93.82</span> (+59.7%) · TP2 <span class="lv-tp">111.37</span> (+89.6%)</div>
+          </div></div>
+          <details class="filtered-box"><summary>10 more flip(s) not shown (click to see why)</summary><ul><li><b>AVAX</b> <span class="muted">B 70</span> stop 47.4% wider than 30%</li><li><b>NEAR</b> <span class="muted">B 60</span> stop 54.4% wider than 30%</li><li><b>KAS</b> <span class="muted">C 48</span> stop 39.4% wider than 30%; thin liquidity $0.6M/day</li><li><b>RUNE</b> <span class="muted">C 53</span> stop 36.3% wider than 30%</li><li><b>PYTH</b> <span class="muted">C 45</span> stop 48.6% wider than 30%; thin liquidity $1.5M/day</li><li><b>DOT</b> <span class="muted">D 42</span> stop 39.1% wider than 30%</li><li><b>ETC</b> <span class="muted">D 36</span> stop 34.5% wider than 30%</li><li><b>THETA</b> <span class="muted">D 26</span> stop 47.0% wider than 30%; thin liquidity $1.5M/day</li><li><b>XTZ</b> <span class="muted">C 55</span> stop 46.4% wider than 30%</li><li><b>GRT</b> <span class="muted">D 23</span> stop 50.3% wider than 30%; thin liquidity $0.4M/day</li></ul></details>
         </div>
       </div>
     </div>
@@ -1750,9 +1974,9 @@
     (4H SELL flips are not signalled). "↺ Changed" means the direction differs from the last run even though the flip bar has
     already passed, so nothing is missed if a run is skipped. "In-trend" counts consecutive bars in the current direction
     (w = weeks, d = days, h = hours on 4H; hover for the start). Confluence ▲▲▲ means Weekly, Daily and 4H all agree.
-    Buying Opportunities and Recent Buy Flips only show flips that pass the volume/momentum filter for their timeframe
-    (flip-bar volume vs the 20-bar average, RSI band, 7-day return vs BTC, price holding above the flip close, trend context,
-    stop width, liquidity; thresholds in settings.py OPPORTUNITY_FILTERS). Filtered flips are listed with the reason under each section.
+    Buying Opportunities and Recent Buy Flips show flips that meet at least 3 of 5 checks (volume vs the 20-bar average, RSI band,
+    7-day return vs BTC, price holding near the flip close, higher-timeframe trend) and are still tradeable (above stop, below TP1,
+    stop within the timeframe cap, liquid). Strong = 4-5 checks, Watch = 3. Thresholds: OPPORTUNITY_FILTERS in settings.py.
     Buy cards: Entry = flip-bar close, SL = Supertrend line on that bar, TP1/TP2 = 2R/3R.
     Quality (0-100, A 75+ / B 60+ / C 45+ / D) = trend alignment 30, BTC regime 15, volume 15, stop distance 15, candle 10, RSI 10,
     cleanliness 5, minus 10 for thin liquidity; hover a badge for the breakdown. The table is sorted by Daily flip recency by default;
