@@ -406,7 +406,15 @@
    "Wide stop (47.4% > 30% cap)"
   ],
   "vol_ratio": 2.3,
-  "rsi": 62.2
+  "rsi": 62.2,
+  "last_close": 11.031999588012695,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "faded -2.7% since flip",
+   "Daily trend down",
+   "stop 47.4% > 30% cap"
+  ]
  },
  {
   "symbol": "DOT",
@@ -440,7 +448,15 @@
    "Wide stop (39.1% > 30% cap)"
   ],
   "vol_ratio": 1.63,
-  "rsi": 49.3
+  "rsi": 49.3,
+  "last_close": 1.2502000331878662,
+  "passed": false,
+  "fail_reasons": [
+   "RSI 49 < 50",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 39.1% > 30% cap"
+  ]
  },
  {
   "symbol": "ETC",
@@ -474,7 +490,15 @@
    "Wide stop (34.5% > 30% cap)"
   ],
   "vol_ratio": 1.02,
-  "rsi": 52.0
+  "rsi": 52.0,
+  "last_close": 9.54800033569336,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.02x < 1.2x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 34.5% > 30% cap"
+  ]
  },
  {
   "symbol": "GRT",
@@ -509,7 +533,16 @@
    "Thin liquidity ($0.4M/day)"
   ],
   "vol_ratio": 0.98,
-  "rsi": 48.3
+  "rsi": 48.3,
+  "last_close": 0.027990000322461128,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.98x < 1.2x",
+   "RSI 48 < 50",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 50.3% > 30% cap"
+  ]
  },
  {
   "symbol": "KAS",
@@ -544,7 +577,14 @@
    "Thin liquidity ($0.6M/day)"
   ],
   "vol_ratio": 1.22,
-  "rsi": 59.2
+  "rsi": 59.2,
+  "last_close": 0.04873687028884888,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 39.4% > 30% cap"
+  ]
  },
  {
   "symbol": "LTC",
@@ -576,7 +616,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 1.13,
-  "rsi": 55.9
+  "rsi": 55.9,
+  "last_close": 72.0510025024414,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.13x < 1.2x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "NEAR",
@@ -611,7 +658,14 @@
    "RSI stretched (76)"
   ],
   "vol_ratio": 3.58,
-  "rsi": 75.9
+  "rsi": 75.9,
+  "last_close": 5.230000019073486,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 54.4% > 30% cap"
+  ]
  },
  {
   "symbol": "PYTH",
@@ -646,7 +700,15 @@
    "Thin liquidity ($2.3M/day)"
   ],
   "vol_ratio": 0.55,
-  "rsi": 57.3
+  "rsi": 57.3,
+  "last_close": 0.08506999909877777,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.55x < 1.2x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 48.6% > 30% cap"
+  ]
  },
  {
   "symbol": "RUNE",
@@ -681,7 +743,15 @@
    "Thin liquidity ($4.2M/day)"
   ],
   "vol_ratio": 0.71,
-  "rsi": 57.5
+  "rsi": 57.5,
+  "last_close": 0.7634693384170532,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.71x < 1.2x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 36.3% > 30% cap"
+  ]
  },
  {
   "symbol": "THETA",
@@ -716,7 +786,15 @@
    "Thin liquidity ($1.5M/day)"
   ],
   "vol_ratio": 0.84,
-  "rsi": 53.0
+  "rsi": 53.0,
+  "last_close": 0.23554183542728424,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.84x < 1.2x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 47.0% > 30% cap"
+  ]
  },
  {
   "symbol": "XTZ",
@@ -750,7 +828,15 @@
    "Wide stop (46.4% > 30% cap)"
   ],
   "vol_ratio": 3.14,
-  "rsi": 56.9
+  "rsi": 56.9,
+  "last_close": 0.3255999982357025,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "faded -6.5% since flip",
+   "Daily trend down",
+   "stop 46.4% > 30% cap"
+  ]
  },
  {
   "symbol": "MINA",
@@ -785,7 +871,14 @@
    "Thin liquidity ($2.1M/day)"
   ],
   "vol_ratio": 1.12,
-  "rsi": 74.3
+  "rsi": 74.3,
+  "last_close": 0.1436000019311905,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.12x < 1.3x",
+   "no 7-day return vs BTC",
+   "stop 29.0% > 15% cap"
+  ]
  },
  {
   "symbol": "POL",
@@ -819,7 +912,13 @@
    "Wide stop (16.3% > 15% cap)"
   ],
   "vol_ratio": 1.49,
-  "rsi": 64.0
+  "rsi": 64.0,
+  "last_close": 0.12015999853610992,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 16.3% > 15% cap"
+  ]
  },
  {
   "symbol": "1INCH",
@@ -853,7 +952,14 @@
    "Thin liquidity ($0.7M/day)"
   ],
   "vol_ratio": 0.56,
-  "rsi": 68.6
+  "rsi": 68.6,
+  "last_close": 0.10337000340223312,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.56x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "EGLD",
@@ -887,7 +993,15 @@
    "Wide stop (12.8% > 8% cap)"
   ],
   "vol_ratio": 0.2,
-  "rsi": 60.2
+  "rsi": 60.2,
+  "last_close": 4.626999855041504,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.20x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 12.8% > 8% cap"
+  ]
  },
  {
   "symbol": "ENJ",
@@ -921,7 +1035,14 @@
    "Thin liquidity ($0.1M/day)"
   ],
   "vol_ratio": 1.21,
-  "rsi": 63.6
+  "rsi": 63.6,
+  "last_close": 0.030847538262605667,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.21x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "GMX",
@@ -953,7 +1074,13 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 2.18,
-  "rsi": 64.9
+  "rsi": 64.9,
+  "last_close": 8.433178901672363,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "DOGE",
@@ -985,7 +1112,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 0.91,
-  "rsi": 65.8
+  "rsi": 65.8,
+  "last_close": 0.09809999912977219,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.91x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "FET",
@@ -1019,7 +1153,16 @@
    "Wide stop (9.2% > 8% cap)"
   ],
   "vol_ratio": 0.62,
-  "rsi": 61.6
+  "rsi": 61.6,
+  "last_close": 0.24443000555038452,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.62x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.2% > 8% cap",
+   "already past TP1"
+  ]
  },
  {
   "symbol": "TON",
@@ -1053,7 +1196,15 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 0.86,
-  "rsi": 71.4
+  "rsi": 71.4,
+  "last_close": 0.00541066937148571,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.86x < 1.5x",
+   "no 7-day return vs BTC",
+   "faded -1.2% since flip",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "AERO",
@@ -1089,7 +1240,16 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": null,
-  "rsi": 55.0
+  "rsi": 55.0,
+  "last_close": 3.279749216744676e-05,
+  "passed": false,
+  "fail_reasons": [
+   "no volume data",
+   "no 7-day return vs BTC",
+   "faded -7.9% since flip",
+   "Daily trend down",
+   "already below stop"
+  ]
  },
  {
   "symbol": "ANKR",
@@ -1123,7 +1283,14 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 1.46,
-  "rsi": 64.5
+  "rsi": 64.5,
+  "last_close": 0.005194900091737509,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.46x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "BSV",
@@ -1155,7 +1322,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 10.21,
-  "rsi": 70.5
+  "rsi": 70.5,
+  "last_close": 21.66387939453125,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "already past TP1"
+  ]
  },
  {
   "symbol": "WIF",
@@ -1189,7 +1363,15 @@
    "Wide stop (10.7% > 8% cap)"
   ],
   "vol_ratio": 1.01,
-  "rsi": 65.5
+  "rsi": 65.5,
+  "last_close": 0.24841000139713287,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.01x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 10.7% > 8% cap"
+  ]
  },
  {
   "symbol": "DOGE",
@@ -1223,7 +1405,14 @@
    "Wide stop (17.9% > 15% cap)"
   ],
   "vol_ratio": 3.59,
-  "rsi": 70.5
+  "rsi": 70.5,
+  "last_close": 0.09809999912977219,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "faded -1.5% since flip",
+   "stop 17.9% > 15% cap"
+  ]
  },
  {
   "symbol": "DOT",
@@ -1258,7 +1447,13 @@
    "Choppy: 3 flips in last 30 bars"
   ],
   "vol_ratio": 1.32,
-  "rsi": 67.5
+  "rsi": 67.5,
+  "last_close": 1.2502000331878662,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 18.5% > 15% cap"
+  ]
  },
  {
   "symbol": "FIL",
@@ -1293,7 +1488,13 @@
    "Choppy: 3 flips in last 30 bars"
   ],
   "vol_ratio": 1.44,
-  "rsi": 65.1
+  "rsi": 65.1,
+  "last_close": 1.145799994468689,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 16.9% > 15% cap"
+  ]
  },
  {
   "symbol": "FLOKI",
@@ -1328,7 +1529,13 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 3.31,
-  "rsi": 67.0
+  "rsi": 67.0,
+  "last_close": 2.9049999284325168e-05,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 17.1% > 15% cap"
+  ]
  },
  {
   "symbol": "GMX",
@@ -1360,7 +1567,12 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 1.59,
-  "rsi": 59.6
+  "rsi": 59.6,
+  "last_close": 8.433178901672363,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC"
+  ]
  },
  {
   "symbol": "ICP",
@@ -1394,7 +1606,13 @@
    "Wide stop (16.1% > 15% cap)"
   ],
   "vol_ratio": 1.63,
-  "rsi": 66.0
+  "rsi": 66.0,
+  "last_close": 3.2016000747680664,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 16.1% > 15% cap"
+  ]
  },
  {
   "symbol": "QNT",
@@ -1426,7 +1644,13 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 1.77,
-  "rsi": 59.1
+  "rsi": 59.1,
+  "last_close": 174.60000610351562,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "already past TP1"
+  ]
  },
  {
   "symbol": "TWT",
@@ -1458,7 +1682,13 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 0.82,
-  "rsi": 63.3
+  "rsi": 63.3,
+  "last_close": 0.5963338017463684,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.82x < 1.3x",
+   "no 7-day return vs BTC"
+  ]
  },
  {
   "symbol": "WLD",
@@ -1492,7 +1722,13 @@
    "Wide stop (19.4% > 15% cap)"
   ],
   "vol_ratio": 1.58,
-  "rsi": 63.3
+  "rsi": 63.3,
+  "last_close": 0.5608000159263611,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 19.4% > 15% cap"
+  ]
  },
  {
   "symbol": "XRP",
@@ -1526,7 +1762,13 @@
    "Wide stop (16.3% > 15% cap)"
   ],
   "vol_ratio": 2.27,
-  "rsi": 65.3
+  "rsi": 65.3,
+  "last_close": 1.5422999858856201,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "stop 16.3% > 15% cap"
+  ]
  },
  {
   "symbol": "FIL",
@@ -1560,7 +1802,15 @@
    "Wide stop (10.0% > 8% cap)"
   ],
   "vol_ratio": 0.2,
-  "rsi": 69.0
+  "rsi": 69.0,
+  "last_close": 1.145799994468689,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.20x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 10.0% > 8% cap"
+  ]
  },
  {
   "symbol": "MKR",
@@ -1592,7 +1842,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 0.31,
-  "rsi": 60.8
+  "rsi": 60.8,
+  "last_close": 1760.262939453125,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.31x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "JUP",
@@ -1629,7 +1886,18 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 0.03,
-  "rsi": 88.9
+  "rsi": 88.9,
+  "last_close": 0.0003320480464026332,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.03x < 1.5x",
+   "RSI 89 > 72 (stretched)",
+   "no 7-day return vs BTC",
+   "faded -66.0% since flip",
+   "Daily trend down",
+   "stop 47.7% > 8% cap",
+   "already below stop"
+  ]
  },
  {
   "symbol": "PEPE",
@@ -1674,7 +1942,14 @@
    "Wide stop (11.7% > 8% cap)"
   ],
   "vol_ratio": 4.26,
-  "rsi": 69.3
+  "rsi": 69.3,
+  "last_close": 72.0510025024414,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 11.7% > 8% cap"
+  ]
  },
  {
   "symbol": "ETC",
@@ -1708,7 +1983,15 @@
    "Wide stop (11.7% > 8% cap)"
   ],
   "vol_ratio": 0.7,
-  "rsi": 65.6
+  "rsi": 65.6,
+  "last_close": 9.54800033569336,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.70x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 11.7% > 8% cap"
+  ]
  },
  {
   "symbol": "COMP",
@@ -1742,7 +2025,14 @@
    "Wide stop (9.1% > 8% cap)"
   ],
   "vol_ratio": 3.31,
-  "rsi": 67.3
+  "rsi": 67.3,
+  "last_close": 24.389999389648438,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.1% > 8% cap"
+  ]
  },
  {
   "symbol": "EOS",
@@ -1777,7 +2067,15 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 0.21,
-  "rsi": 62.9
+  "rsi": 62.9,
+  "last_close": 0.10400384664535522,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.21x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.3% > 8% cap"
+  ]
  },
  {
   "symbol": "GLM",
@@ -1811,7 +2109,13 @@
    "Thin liquidity ($0.5M/day)"
   ],
   "vol_ratio": 1.51,
-  "rsi": 59.2
+  "rsi": 59.2,
+  "last_close": 0.13130000233650208,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "NEO",
@@ -1845,7 +2149,15 @@
    "Wide stop (8.7% > 8% cap)"
   ],
   "vol_ratio": 0.0,
-  "rsi": 62.6
+  "rsi": 62.6,
+  "last_close": 2.6850979328155518,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.00x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.7% > 8% cap"
+  ]
  },
  {
   "symbol": "TWT",
@@ -1879,7 +2191,15 @@
    "Wide stop (8.7% > 8% cap)"
   ],
   "vol_ratio": 1.87,
-  "rsi": 54.5
+  "rsi": 54.5,
+  "last_close": 0.5963338017463684,
+  "passed": false,
+  "fail_reasons": [
+   "RSI 54 < 55",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.7% > 8% cap"
+  ]
  },
  {
   "symbol": "CORE",
@@ -1913,7 +2233,15 @@
    "Thin liquidity ($0.1M/day)"
   ],
   "vol_ratio": 11.08,
-  "rsi": 51.1
+  "rsi": 51.1,
+  "last_close": 6156.40771484375,
+  "passed": false,
+  "fail_reasons": [
+   "RSI 51 < 55",
+   "no 7-day return vs BTC",
+   "faded -0.3% since flip",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "LDO",
@@ -1947,7 +2275,14 @@
    "Wide stop (11.7% > 8% cap)"
   ],
   "vol_ratio": 4.07,
-  "rsi": 60.0
+  "rsi": 60.0,
+  "last_close": 0.485509991645813,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 11.7% > 8% cap"
+  ]
  },
  {
   "symbol": "LINK",
@@ -1981,7 +2316,14 @@
    "Wide stop (8.6% > 8% cap)"
   ],
   "vol_ratio": 5.47,
-  "rsi": 62.3
+  "rsi": 62.3,
+  "last_close": 14.385000228881836,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.6% > 8% cap"
+  ]
  },
  {
   "symbol": "MANA",
@@ -2015,7 +2357,13 @@
    "Thin liquidity ($1.0M/day)"
   ],
   "vol_ratio": 1.76,
-  "rsi": 61.7
+  "rsi": 61.7,
+  "last_close": 0.09220000356435776,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "MKR",
@@ -2050,7 +2398,15 @@
    "Choppy: 3 flips in last 30 bars"
   ],
   "vol_ratio": 0.2,
-  "rsi": 66.5
+  "rsi": 66.5,
+  "last_close": 1760.262939453125,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.20x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.4% > 8% cap"
+  ]
  },
  {
   "symbol": "JUP",
@@ -2096,7 +2452,15 @@
    "Thin liquidity ($2.2M/day)"
   ],
   "vol_ratio": 0.93,
-  "rsi": 62.4
+  "rsi": 62.4,
+  "last_close": 0.26423001289367676,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.93x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.5% > 8% cap"
+  ]
  },
  {
   "symbol": "AXS",
@@ -2130,7 +2494,14 @@
    "Wide stop (9.2% > 8% cap)"
   ],
   "vol_ratio": 13.51,
-  "rsi": 63.2
+  "rsi": 63.2,
+  "last_close": 1.1783000230789185,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.2% > 8% cap"
+  ]
  },
  {
   "symbol": "POL",
@@ -2162,7 +2533,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 0.15,
-  "rsi": 58.2
+  "rsi": 58.2,
+  "last_close": 0.12015999853610992,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.15x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "SAND",
@@ -2197,7 +2575,15 @@
    "Thin liquidity ($0.8M/day)"
   ],
   "vol_ratio": 9.6,
-  "rsi": 67.8
+  "rsi": 67.8,
+  "last_close": 0.04520000144839287,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "faded -0.4% since flip",
+   "Daily trend down",
+   "stop 10.5% > 8% cap"
+  ]
  },
  {
   "symbol": "BLUR",
@@ -2231,7 +2617,13 @@
    "Thin liquidity ($0.2M/day)"
   ],
   "vol_ratio": 2.13,
-  "rsi": 63.1
+  "rsi": 63.1,
+  "last_close": 0.021417999640107155,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "DOT",
@@ -2265,7 +2657,15 @@
    "Wide stop (9.2% > 8% cap)"
   ],
   "vol_ratio": 1.36,
-  "rsi": 58.7
+  "rsi": 58.7,
+  "last_close": 1.2502000331878662,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.36x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.2% > 8% cap"
+  ]
  },
  {
   "symbol": "FIL",
@@ -2300,7 +2700,15 @@
    "Choppy: 3 flips in last 30 bars"
   ],
   "vol_ratio": 1.28,
-  "rsi": 59.6
+  "rsi": 59.6,
+  "last_close": 1.145799994468689,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.28x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 10.2% > 8% cap"
+  ]
  },
  {
   "symbol": "GMX",
@@ -2334,7 +2742,14 @@
    "Choppy: 3 flips in last 30 bars"
   ],
   "vol_ratio": 0.81,
-  "rsi": 59.4
+  "rsi": 59.4,
+  "last_close": 8.433178901672363,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.81x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "IMX",
@@ -2369,7 +2784,14 @@
    "Thin liquidity ($1.3M/day)"
   ],
   "vol_ratio": 2.45,
-  "rsi": 67.5
+  "rsi": 67.5,
+  "last_close": 0.16788999736309052,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.4% > 8% cap"
+  ]
  },
  {
   "symbol": "IOTA",
@@ -2403,7 +2825,14 @@
    "Thin liquidity ($0.3M/day)"
   ],
   "vol_ratio": 1.15,
-  "rsi": 61.7
+  "rsi": 61.7,
+  "last_close": 0.05082644149661064,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.15x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "KAS",
@@ -2438,7 +2867,14 @@
    "Thin liquidity ($0.6M/day)"
   ],
   "vol_ratio": 7.95,
-  "rsi": 61.5
+  "rsi": 61.5,
+  "last_close": 0.04873687028884888,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.9% > 8% cap"
+  ]
  },
  {
   "symbol": "OP",
@@ -2472,7 +2908,14 @@
    "Wide stop (11.9% > 8% cap)"
   ],
   "vol_ratio": 1.52,
-  "rsi": 63.7
+  "rsi": 63.7,
+  "last_close": 0.14535999298095703,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 11.9% > 8% cap"
+  ]
  },
  {
   "symbol": "SOL",
@@ -2504,7 +2947,13 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 6.81,
-  "rsi": 66.5
+  "rsi": 66.5,
+  "last_close": 124.4800033569336,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "WLD",
@@ -2538,7 +2987,15 @@
    "Wide stop (11.3% > 8% cap)"
   ],
   "vol_ratio": 1.81,
-  "rsi": 59.0
+  "rsi": 59.0,
+  "last_close": 0.5608000159263611,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 11.3% > 8% cap",
+   "already past TP1"
+  ]
  },
  {
   "symbol": "XRP",
@@ -2572,7 +3029,15 @@
    "Wide stop (8.6% > 8% cap)"
   ],
   "vol_ratio": 2.96,
-  "rsi": 65.0
+  "rsi": 65.0,
+  "last_close": 1.5422999858856201,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "faded -3.3% since flip",
+   "Daily trend down",
+   "stop 8.6% > 8% cap"
+  ]
  },
  {
   "symbol": "AAVE",
@@ -2606,7 +3071,14 @@
    "Wide stop (9.3% > 8% cap)"
   ],
   "vol_ratio": 2.12,
-  "rsi": 60.3
+  "rsi": 60.3,
+  "last_close": 156.0500030517578,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.3% > 8% cap"
+  ]
  },
  {
   "symbol": "APT",
@@ -2640,7 +3112,16 @@
    "Wide stop (12.1% > 8% cap)"
   ],
   "vol_ratio": 1.37,
-  "rsi": 66.3
+  "rsi": 66.3,
+  "last_close": 0.8571000099182129,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.37x < 1.5x",
+   "no 7-day return vs BTC",
+   "faded -0.6% since flip",
+   "Daily trend down",
+   "stop 12.1% > 8% cap"
+  ]
  },
  {
   "symbol": "ENJ",
@@ -2674,7 +3155,13 @@
    "Thin liquidity ($0.1M/day)"
   ],
   "vol_ratio": 3.89,
-  "rsi": 62.5
+  "rsi": 62.5,
+  "last_close": 0.030847538262605667,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "ROSE",
@@ -2709,7 +3196,15 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 1.28,
-  "rsi": 66.6
+  "rsi": 66.6,
+  "last_close": 0.008911999873816967,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.28x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.5% > 8% cap"
+  ]
  },
  {
   "symbol": "THETA",
@@ -2744,7 +3239,14 @@
    "Thin liquidity ($1.5M/day)"
   ],
   "vol_ratio": 1.52,
-  "rsi": 62.8
+  "rsi": 62.8,
+  "last_close": 0.23554183542728424,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.1% > 8% cap"
+  ]
  },
  {
   "symbol": "EGLD",
@@ -2778,7 +3280,14 @@
    "Wide stop (23.0% > 15% cap)"
   ],
   "vol_ratio": 0.73,
-  "rsi": 58.8
+  "rsi": 58.8,
+  "last_close": 4.626999855041504,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.73x < 1.3x",
+   "no 7-day return vs BTC",
+   "stop 23.0% > 15% cap"
+  ]
  },
  {
   "symbol": "1INCH",
@@ -2812,7 +3321,13 @@
    "Thin liquidity ($0.7M/day)"
   ],
   "vol_ratio": 3.5,
-  "rsi": 58.0
+  "rsi": 58.0,
+  "last_close": 0.10337000340223312,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "ADA",
@@ -2844,7 +3359,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 2.37,
-  "rsi": 66.1
+  "rsi": 66.1,
+  "last_close": 0.25690001249313354,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "faded -0.7% since flip",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "ANKR",
@@ -2878,7 +3400,14 @@
    "Thin liquidity ($0.0M/day)"
   ],
   "vol_ratio": 0.12,
-  "rsi": 60.0
+  "rsi": 60.0,
+  "last_close": 0.005194900091737509,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.12x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "CHZ",
@@ -2912,7 +3441,15 @@
    "Thin liquidity ($0.4M/day)"
   ],
   "vol_ratio": 1.18,
-  "rsi": 61.3
+  "rsi": 61.3,
+  "last_close": 0.016767999157309532,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.18x < 1.5x",
+   "no 7-day return vs BTC",
+   "faded -0.4% since flip",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "ILV",
@@ -2944,7 +3481,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 0.18,
-  "rsi": 63.5
+  "rsi": 63.5,
+  "last_close": 4.054500102996826,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.18x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "RUNE",
@@ -2978,7 +3522,14 @@
    "Thin liquidity ($4.2M/day)"
   ],
   "vol_ratio": 3.42,
-  "rsi": 64.4
+  "rsi": 64.4,
+  "last_close": 0.7634693384170532,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "already past TP1"
+  ]
  },
  {
   "symbol": "TAO",
@@ -3012,7 +3563,14 @@
    "Wide stop (10.6% > 8% cap)"
   ],
   "vol_ratio": 2.53,
-  "rsi": 66.2
+  "rsi": 66.2,
+  "last_close": 333.19000244140625,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 10.6% > 8% cap"
+  ]
  },
  {
   "symbol": "ATOM",
@@ -3044,7 +3602,14 @@
   "penalty": 0,
   "notes": [],
   "vol_ratio": 1.19,
-  "rsi": 61.3
+  "rsi": 61.3,
+  "last_close": 1.8946000337600708,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.19x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "STX",
@@ -3078,7 +3643,14 @@
    "Wide stop (11.9% > 8% cap)"
   ],
   "vol_ratio": 5.6,
-  "rsi": 65.8
+  "rsi": 65.8,
+  "last_close": 0.34860000014305115,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 11.9% > 8% cap"
+  ]
  },
  {
   "symbol": "DYDX",
@@ -3112,7 +3684,13 @@
    "Thin liquidity ($0.6M/day)"
   ],
   "vol_ratio": 2.02,
-  "rsi": 60.7
+  "rsi": 60.7,
+  "last_close": 0.1428000032901764,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "MASK",
@@ -3146,7 +3724,25 @@
    "Thin liquidity ($2.4M/day)"
   ],
   "vol_ratio": 1.13,
-  "rsi": 60.6
+  "rsi": 60.6,
+  "last_close": 0.48868998885154724,
+  "passed": false,
+  "fail_reasons": [
+   "volume 1.13x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
+ },
+ {
+  "symbol": "TON",
+  "ticker": "TON-USD",
+  "tf": "1D",
+  "direction": "sell",
+  "bar_time": "2026-09-26T00:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 0.005293999798595905,
+  "st": 0.005538807360338868,
+  "logged_utc": "2026-09-27 10:16 UTC"
  },
  {
   "symbol": "BAT",
@@ -3180,7 +3776,14 @@
    "Thin liquidity ($0.5M/day)"
   ],
   "vol_ratio": 0.3,
-  "rsi": 65.0
+  "rsi": 65.0,
+  "last_close": 0.09718000143766403,
+  "passed": false,
+  "fail_reasons": [
+   "volume 0.30x < 1.5x",
+   "no 7-day return vs BTC",
+   "Daily trend down"
+  ]
  },
  {
   "symbol": "CRO",
@@ -3215,7 +3818,14 @@
    "Thin liquidity ($0.6M/day)"
   ],
   "vol_ratio": 2.51,
-  "rsi": 65.2
+  "rsi": 65.2,
+  "last_close": 0.0685499981045723,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 8.9% > 8% cap"
+  ]
  },
  {
   "symbol": "ZEC",
@@ -3249,6 +3859,192 @@
    "Wide stop (9.4% > 8% cap)"
   ],
   "vol_ratio": 13.04,
-  "rsi": 66.0
+  "rsi": 66.0,
+  "last_close": 1665.0,
+  "passed": false,
+  "fail_reasons": [
+   "no 7-day return vs BTC",
+   "Daily trend down",
+   "stop 9.4% > 8% cap"
+  ]
+ },
+ {
+  "symbol": "AVAX",
+  "ticker": "AVAX-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-27T04:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 11.156999588012695,
+  "st": 10.013609067461553,
+  "logged_utc": "2026-09-27 10:16 UTC",
+  "stop": 10.013609067461553,
+  "tp1": 13.443780629114979,
+  "tp2": 14.587171149666121,
+  "risk_pct": 10.2481900400859,
+  "tp1_pct": 20.496380080171804,
+  "tp2_pct": 30.74457012025771,
+  "score": 85.0,
+  "grade": "A",
+  "parts": {
+   "trend_alignment": 30.0,
+   "market_regime": 15,
+   "volume": 15.0,
+   "stop_distance": 0.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 0,
+  "notes": [
+   "Wide stop (10.2% > 8% cap)"
+  ],
+  "vol_ratio": 2.86,
+  "rsi": 62.1,
+  "trend_1D": 1,
+  "trend_1W": 1,
+  "rs_7d": 3.76,
+  "dollar_vol_30d": 4106388142.42254,
+  "last_close": 11.031999588012695,
+  "passed": false,
+  "fail_reasons": [
+   "faded -1.1% since flip",
+   "stop 10.2% > 8% cap"
+  ]
+ },
+ {
+  "symbol": "PENDLE",
+  "ticker": "PENDLE-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-27T04:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 2.6412999629974365,
+  "st": 2.3995657839843627,
+  "logged_utc": "2026-09-27 10:16 UTC",
+  "stop": 2.3995657839843627,
+  "tp1": 3.124768321023584,
+  "tp2": 3.366502500036658,
+  "risk_pct": 9.152091106636206,
+  "tp1_pct": 18.304182213272412,
+  "tp2_pct": 27.456273319908632,
+  "score": 77.7,
+  "grade": "A",
+  "parts": {
+   "trend_alignment": 30.0,
+   "market_regime": 15,
+   "volume": 7.7,
+   "stop_distance": 0.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 0,
+  "notes": [
+   "Wide stop (9.2% > 8% cap)"
+  ],
+  "vol_ratio": 1.51,
+  "rsi": 58.5,
+  "trend_1D": 1,
+  "trend_1W": 1,
+  "rs_7d": -5.54,
+  "dollar_vol_30d": 104394856.55932112,
+  "last_close": 2.6043999195098877,
+  "passed": false,
+  "fail_reasons": [
+   "lagging BTC by 5.5 pts (7d)",
+   "faded -1.4% since flip",
+   "stop 9.2% > 8% cap"
+  ]
+ },
+ {
+  "symbol": "TON",
+  "ticker": "TON-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-27T04:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 0.00541066937148571,
+  "st": 0.005303359719559206,
+  "logged_utc": "2026-09-27 10:16 UTC",
+  "stop": 0.005303359719559206,
+  "tp1": 0.005625288675338718,
+  "tp2": 0.005732598327265222,
+  "risk_pct": 1.9832971589804966,
+  "tp1_pct": 3.966594317961003,
+  "tp2_pct": 5.9498914769414935,
+  "score": 75.0,
+  "grade": "A",
+  "parts": {
+   "trend_alignment": 15.0,
+   "market_regime": 15,
+   "volume": 15.0,
+   "stop_distance": 15.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 10,
+  "notes": [
+   "Against the Daily trend",
+   "Thin liquidity ($0.0M/day)"
+  ],
+  "vol_ratio": 18.97,
+  "rsi": 61.6,
+  "trend_1D": -1,
+  "trend_1W": 1,
+  "rs_7d": -6.48,
+  "dollar_vol_30d": 0.0028581333657105765,
+  "last_close": 0.00541066937148571,
+  "passed": false,
+  "fail_reasons": [
+   "thin liquidity $0.0M/day",
+   "lagging BTC by 6.5 pts (7d)",
+   "Daily trend down"
+  ]
+ },
+ {
+  "symbol": "UNI",
+  "ticker": "UNI7083-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-27T04:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 10.083800315856934,
+  "st": 9.072591754644314,
+  "logged_utc": "2026-09-27 10:16 UTC",
+  "stop": 9.072591754644314,
+  "tp1": 12.106217438282172,
+  "tp2": 13.117425999494792,
+  "risk_pct": 10.028050234418844,
+  "tp1_pct": 20.056100468837677,
+  "tp2_pct": 30.08415070325654,
+  "score": 85.0,
+  "grade": "A",
+  "parts": {
+   "trend_alignment": 30.0,
+   "market_regime": 15,
+   "volume": 15.0,
+   "stop_distance": 0.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 0,
+  "notes": [
+   "Wide stop (10.0% > 8% cap)"
+  ],
+  "vol_ratio": 2.43,
+  "rsi": 63.8,
+  "trend_1D": 1,
+  "trend_1W": 1,
+  "rs_7d": 8.11,
+  "dollar_vol_30d": 6372447596.67269,
+  "last_close": 10.017499923706055,
+  "passed": false,
+  "fail_reasons": [
+   "faded -0.7% since flip",
+   "stop 10.0% > 8% cap"
+  ]
  }
 ]
