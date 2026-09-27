@@ -1,3 +1,5 @@
+Website: https://jaggadhruv.github.io/supertrend-crypto-scanner/
+
 # Crypto Supertrend Tool
 
 Sister repo to the US equity Supertrend screener. Same engine (TradingView-matched Supertrend,
