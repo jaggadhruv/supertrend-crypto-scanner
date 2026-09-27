@@ -1,5 +1,3 @@
-Website: https://jaggadhruv.github.io/supertrend-crypto-scanner/
-
 # Crypto Supertrend Tool
 
 Sister repo to the US equity Supertrend screener. Same engine (TradingView-matched Supertrend,
@@ -41,6 +39,24 @@ TP1 = 2R, TP2 = 3R. Cards say so if price is already below the stop or past TP1.
 | Momentum | 10 | RSI(14) between 55 and 70 |
 | Cleanliness | 5 | Few flips in the prior 30 bars (no chop) |
 | Liquidity penalty | -10 | 30-day average daily $ volume under $5M |
+
+**Opportunity filter (volume and momentum)**: a BUY flip only appears under Buying Opportunities,
+Recent Buy Flips and in the email if it passes every gate for its timeframe
+(`OPPORTUNITY_FILTERS` in `settings.py`):
+
+| Gate | 4H | Daily | Weekly |
+|---|---|---|---|
+| Flip-bar volume vs 20-bar average | ≥ 1.5x | ≥ 1.3x | ≥ 1.2x |
+| RSI(14) on the flip bar | 55-72 | 52-75 | 50-78 |
+| 7-day return vs BTC | ≥ 0 pts | ≥ 0 pts | ≥ -5 pts |
+| Price now at or above the flip close | yes | yes | yes |
+| Daily Supertrend up | yes | n/a | yes |
+| Stop distance | ≤ 8% | ≤ 15% | ≤ 30% |
+| Shown (best quality first) | top 5 | top 5 | top 3 |
+
+Also required everywhere: 30-day average volume ≥ $5M/day, price not below the stop and not past TP1.
+Flips that fail are listed in a collapsed "not shown" line under each section with the reason, and
+the stats row shows passed/all per timeframe. The watchlist table still shows every coin.
 
 Hover a quality badge for the breakdown. Every flip is also appended to `data/signal_log.csv`
 so the grades can be checked against outcomes later.

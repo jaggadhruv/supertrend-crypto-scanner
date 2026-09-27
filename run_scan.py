@@ -82,7 +82,17 @@ def coin_context(frames: dict, btc_ctx: dict) -> dict:
         ctx["above_sma50w"] = ctx["sma50w_rising"] = None
     tail = d.tail(30)
     ctx["dollar_volume_30d"] = float((tail["Close"] * tail["Volume"]).mean()) if len(tail) else None
+    # momentum vs the market: 7-day return minus BTC's 7-day return (percentage points)
+    ret7 = ret_7d(d["Close"])
+    btc7 = btc_ctx.get("btc_ret_7d")
+    ctx["rs_7d"] = ret7 - btc7 if ret7 is not None and btc7 is not None else None
     return ctx
+
+
+def ret_7d(close: pd.Series):
+    if len(close) < 8:
+        return None
+    return float((close.iloc[-1] / close.iloc[-8] - 1) * 100)
 
 
 def flip_entry(sym, ticker, tf, bars, pos, ctx, run_utc) -> dict:
@@ -107,6 +117,11 @@ def flip_entry(sym, ticker, tf, bars, pos, ctx, run_utc) -> dict:
         e["notes"] = sc["notes"]
         e["vol_ratio"] = None if np.isnan(sc["vol_ratio"]) else round(sc["vol_ratio"], 2)
         e["rsi"] = None if np.isnan(sc["rsi"]) else round(sc["rsi"], 1)
+        # context used by the opportunity filter (filters.py)
+        e["trend_1D"] = ctx.get("trend_1D")
+        e["trend_1W"] = ctx.get("trend_1W")
+        e["rs_7d"] = None if ctx.get("rs_7d") is None else round(ctx["rs_7d"], 2)
+        e["dollar_vol_30d"] = ctx.get("dollar_volume_30d")
     return e
 
 
@@ -160,10 +175,11 @@ def main(argv=None) -> int:
     btc_coin = next((c for c in universe if c["symbol"] == "BTC"),
                     {"symbol": "BTC", "csv_ticker": "BTC-USD", "rank": 0})
     btc_ticker, btc_daily, _ = data.resolve_and_fetch_daily(btc_coin, overrides, resolved, now)
-    btc_ctx = {"btc_trend_1D": None, "btc_above_sma200d": None}
+    btc_ctx = {"btc_trend_1D": None, "btc_above_sma200d": None, "btc_ret_7d": None}
     if btc_ticker:
         bd = add_indicators(data.closed_daily(btc_daily, now))
         if bd is not None:
+            btc_ctx["btc_ret_7d"] = ret_7d(bd["Close"])
             btc_ctx["btc_trend_1D"] = int(bd["trend"].iloc[-1])
             btc_ctx["btc_above_sma200d"] = sma_flag(bd["Close"], 200)
     cache = {"BTC": (btc_ticker, btc_daily)} if btc_ticker else {}

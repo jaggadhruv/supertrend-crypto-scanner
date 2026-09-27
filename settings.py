@@ -88,6 +88,34 @@ VOLUME_LOOKBACK_BARS = 20
 GRADES = [(75, "A"), (60, "B"), (45, "C"), (0, "D")]
 
 # --------------------------------------------------------------------------
+# Opportunity filter: a BUY flip is only shown as an opportunity if it passes
+# EVERY gate for its timeframe. Everything else is counted and listed in a
+# collapsed "filtered out" section with the reason, never silently dropped.
+#
+#   min_vol_ratio       flip-bar volume / average of the 20 bars before it
+#   rsi_min / rsi_max   RSI(14) on the flip bar: strong but not stretched
+#   min_rs_vs_btc_7d    coin 7-day return minus BTC 7-day return, in % points
+#                       (0 = at least keeping pace with BTC)
+#   require_daily_up    Daily Supertrend must be bullish (4H: trade with the Daily trend)
+#   require_weekly_up   Weekly Supertrend must be bullish
+#   require_follow_through  current price at or above the flip close (the move hasn't faded)
+#   max_results         cap per section, best quality first
+# Shared gates: stop within the timeframe's max_risk_pct, 30-day avg $ volume
+# >= MIN_DOLLAR_VOLUME, price not already past TP1 and not below the stop.
+# --------------------------------------------------------------------------
+OPPORTUNITY_FILTERS = {
+    "4H": {"min_vol_ratio": 1.5, "rsi_min": 55, "rsi_max": 72, "min_rs_vs_btc_7d": 0.0,
+           "require_daily_up": True, "require_weekly_up": False,
+           "require_follow_through": True, "max_results": 5},
+    "1D": {"min_vol_ratio": 1.3, "rsi_min": 52, "rsi_max": 75, "min_rs_vs_btc_7d": 0.0,
+           "require_daily_up": False, "require_weekly_up": False,
+           "require_follow_through": True, "max_results": 5},
+    "1W": {"min_vol_ratio": 1.2, "rsi_min": 50, "rsi_max": 78, "min_rs_vs_btc_7d": -5.0,
+           "require_daily_up": True, "require_weekly_up": False,
+           "require_follow_through": True, "max_results": 3},
+}
+
+# --------------------------------------------------------------------------
 # Daily run, report and retention
 #   The scan runs once a day (00:30 UTC, after the Daily candle closes).
 #   4H buy flips from the whole previous 24 hours are picked up in that run.
