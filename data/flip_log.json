@@ -3147,5 +3147,108 @@
   ],
   "vol_ratio": 1.13,
   "rsi": 60.6
+ },
+ {
+  "symbol": "BAT",
+  "ticker": "BAT-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-26T20:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 0.09516000002622604,
+  "st": 0.08866960854199674,
+  "logged_utc": "2026-09-27 05:37 UTC",
+  "stop": 0.08866960854199674,
+  "tp1": 0.10814078299468466,
+  "tp2": 0.11463117447891397,
+  "risk_pct": 6.820503869735771,
+  "tp1_pct": 13.641007739471544,
+  "tp2_pct": 20.461511609207307,
+  "score": 48.7,
+  "grade": "C",
+  "parts": {
+   "trend_alignment": 15.0,
+   "market_regime": 15,
+   "volume": 0.0,
+   "stop_distance": 3.7,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 10,
+  "notes": [
+   "Thin liquidity ($0.5M/day)"
+  ],
+  "vol_ratio": 0.3,
+  "rsi": 65.0
+ },
+ {
+  "symbol": "CRO",
+  "ticker": "CRO-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-26T20:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 0.06814000010490417,
+  "st": 0.06205162671710966,
+  "logged_utc": "2026-09-27 05:37 UTC",
+  "stop": 0.06205162671710966,
+  "tp1": 0.0803167468804932,
+  "tp2": 0.08640512026828771,
+  "risk_pct": 8.935094479631973,
+  "tp1_pct": 17.870188959263956,
+  "tp2_pct": 26.80528343889592,
+  "score": 60.0,
+  "grade": "B",
+  "parts": {
+   "trend_alignment": 15.0,
+   "market_regime": 15,
+   "volume": 15.0,
+   "stop_distance": 0.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 10,
+  "notes": [
+   "Wide stop (8.9% > 8% cap)",
+   "Thin liquidity ($0.6M/day)"
+  ],
+  "vol_ratio": 2.51,
+  "rsi": 65.2
+ },
+ {
+  "symbol": "ZEC",
+  "ticker": "ZEC-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-09-26T20:00:00+00:00",
+  "close_date": "2026-09-27",
+  "close": 1652.8699951171875,
+  "st": 1498.3111613016833,
+  "logged_utc": "2026-09-27 05:37 UTC",
+  "stop": 1498.3111613016833,
+  "tp1": 1961.9876627481958,
+  "tp2": 2116.5464965637,
+  "risk_pct": 9.350937113753222,
+  "tp1_pct": 18.701874227506444,
+  "tp2_pct": 28.052811341259677,
+  "score": 85.0,
+  "grade": "A",
+  "parts": {
+   "trend_alignment": 30.0,
+   "market_regime": 15,
+   "volume": 15.0,
+   "stop_distance": 0.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 5
+  },
+  "penalty": 0,
+  "notes": [
+   "Wide stop (9.4% > 8% cap)"
+  ],
+  "vol_ratio": 13.04,
+  "rsi": 66.0
  }
 ]
