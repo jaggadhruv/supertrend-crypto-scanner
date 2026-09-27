@@ -40,23 +40,23 @@ TP1 = 2R, TP2 = 3R. Cards say so if price is already below the stop or past TP1.
 | Cleanliness | 5 | Few flips in the prior 30 bars (no chop) |
 | Liquidity penalty | -10 | 30-day average daily $ volume under $5M |
 
-**Opportunity filter (volume and momentum)**: a BUY flip only appears under Buying Opportunities,
-Recent Buy Flips and in the email if it passes every gate for its timeframe
-(`OPPORTUNITY_FILTERS` in `settings.py`):
+**Opportunity filter (volume and momentum)**: instead of requiring every rule at once, each BUY flip
+gets five checks and is shown when it meets at least 3 (`OPPORTUNITY_FILTERS` in `settings.py`):
 
-| Gate | 4H | Daily | Weekly |
+| Check | 4H | Daily | Weekly |
 |---|---|---|---|
-| Flip-bar volume vs 20-bar average | ≥ 1.5x | ≥ 1.3x | ≥ 1.2x |
-| RSI(14) on the flip bar | 55-72 | 52-75 | 50-78 |
-| 7-day return vs BTC | ≥ 0 pts | ≥ 0 pts | ≥ -5 pts |
-| Price now at or above the flip close | yes | yes | yes |
-| Daily Supertrend up | yes | n/a | yes |
-| Stop distance | ≤ 8% | ≤ 15% | ≤ 30% |
-| Shown (best quality first) | top 5 | top 5 | top 3 |
+| Volume: flip bar vs 20-bar average | ≥ 1.3x | ≥ 1.2x | ≥ 1.1x |
+| RSI(14) on the flip bar | 50-75 | 50-75 | 50-80 |
+| vs BTC: 7-day return minus BTC's | ≥ -2 pts | ≥ -2 pts | ≥ -5 pts |
+| Holding: price vs flip close | down ≤ 2% | down ≤ 3% | down ≤ 5% |
+| Trend: higher timeframe up | Daily | Weekly | Daily |
+| Shown (most checks first, then quality) | up to 8 | up to 6 | up to 4 |
 
-Also required everywhere: 30-day average volume ≥ $5M/day, price not below the stop and not past TP1.
-Flips that fail are listed in a collapsed "not shown" line under each section with the reason, and
-the stats row shows passed/all per timeframe. The watchlist table still shows every coin.
+Cards are tagged **Strong** (4-5 checks) or **Watch** (3) with ✓/✗ chips; hover a chip for the value.
+Always required (hard gates): price above the stop and below TP1, stop within 10% / 15% / 30%,
+at least $5M/day average volume. Each section shows how many flips met each check, so you can see
+which rule is doing the filtering, and a collapsed "not shown" list with reasons.
+To tighten, set `min_checks` to 4; to loosen, set it to 2 or relax a threshold.
 
 Hover a quality badge for the breakdown. Every flip is also appended to `data/signal_log.csv`
 so the grades can be checked against outcomes later.

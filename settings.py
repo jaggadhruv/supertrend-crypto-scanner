@@ -42,7 +42,7 @@ MULTIPLIER = 2.5
 TIMEFRAMES = {
     "1W": {"label": "Weekly", "buy_only": False, "max_risk_pct": 30.0},
     "1D": {"label": "Daily", "buy_only": False, "max_risk_pct": 15.0},
-    "4H": {"label": "4-hour", "buy_only": True, "max_risk_pct": 8.0},
+    "4H": {"label": "4-hour", "buy_only": True, "max_risk_pct": 10.0},
 }
 TIMEFRAME_ORDER = ["1W", "1D", "4H"]
 
@@ -88,32 +88,33 @@ VOLUME_LOOKBACK_BARS = 20
 GRADES = [(75, "A"), (60, "B"), (45, "C"), (0, "D")]
 
 # --------------------------------------------------------------------------
-# Opportunity filter: a BUY flip is only shown as an opportunity if it passes
-# EVERY gate for its timeframe. Everything else is counted and listed in a
-# collapsed "filtered out" section with the reason, never silently dropped.
+# Opportunity filter: "checks, not a wall".
 #
-#   min_vol_ratio       flip-bar volume / average of the 20 bars before it
-#   rsi_min / rsi_max   RSI(14) on the flip bar: strong but not stretched
-#   min_rs_vs_btc_7d    coin 7-day return minus BTC 7-day return, in % points
-#                       (0 = at least keeping pace with BTC)
-#   require_daily_up    Daily Supertrend must be bullish (4H: trade with the Daily trend)
-#   require_weekly_up   Weekly Supertrend must be bullish
-#   require_follow_through  current price at or above the flip close (the move hasn't faded)
-#   max_results         cap per section, best quality first
-# Shared gates: stop within the timeframe's max_risk_pct, 30-day avg $ volume
-# >= MIN_DOLLAR_VOLUME, price not already past TP1 and not below the stop.
+# HARD GATES (a flip failing any of these is never shown, it isn't a usable trade):
+#   - price now above the stop, and not already past TP1
+#   - stop distance within TIMEFRAMES[tf]["max_risk_pct"]
+#   - 30-day average $ volume >= MIN_DOLLAR_VOLUME
+#
+# FIVE CHECKS (volume and momentum). A flip is shown if it meets at least
+# `min_checks` of them; flips meeting more checks rank higher, then by quality score.
+#   volume   flip-bar volume >= min_vol_ratio x the 20-bar average
+#   rsi      RSI(14) on the flip bar within rsi_min..rsi_max (strong, not stretched)
+#   vs_btc   7-day return minus BTC 7-day return >= min_rs_vs_btc_7d (percentage points)
+#   holding  current price >= flip close minus hold_tolerance_pct (move hasn't faded)
+#   trend    higher timeframe agrees: 4H -> Daily up, Daily -> Weekly up, Weekly -> Daily up
+#
+# Tiers on the cards: 5/5 or 4/5 = "Strong", 3/5 = "Watch".
+# To tighten: raise min_checks to 4. To loosen: lower it to 2 or relax a threshold.
 # --------------------------------------------------------------------------
 OPPORTUNITY_FILTERS = {
-    "4H": {"min_vol_ratio": 1.5, "rsi_min": 55, "rsi_max": 72, "min_rs_vs_btc_7d": 0.0,
-           "require_daily_up": True, "require_weekly_up": False,
-           "require_follow_through": True, "max_results": 5},
-    "1D": {"min_vol_ratio": 1.3, "rsi_min": 52, "rsi_max": 75, "min_rs_vs_btc_7d": 0.0,
-           "require_daily_up": False, "require_weekly_up": False,
-           "require_follow_through": True, "max_results": 5},
-    "1W": {"min_vol_ratio": 1.2, "rsi_min": 50, "rsi_max": 78, "min_rs_vs_btc_7d": -5.0,
-           "require_daily_up": True, "require_weekly_up": False,
-           "require_follow_through": True, "max_results": 3},
+    "4H": {"min_vol_ratio": 1.3, "rsi_min": 50, "rsi_max": 75, "min_rs_vs_btc_7d": -2.0,
+           "hold_tolerance_pct": 2.0, "min_checks": 3, "max_results": 8},
+    "1D": {"min_vol_ratio": 1.2, "rsi_min": 50, "rsi_max": 75, "min_rs_vs_btc_7d": -2.0,
+           "hold_tolerance_pct": 3.0, "min_checks": 3, "max_results": 6},
+    "1W": {"min_vol_ratio": 1.1, "rsi_min": 50, "rsi_max": 80, "min_rs_vs_btc_7d": -5.0,
+           "hold_tolerance_pct": 5.0, "min_checks": 3, "max_results": 4},
 }
+STRONG_MIN_CHECKS = 4
 
 # --------------------------------------------------------------------------
 # Daily run, report and retention

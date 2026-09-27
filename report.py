@@ -115,7 +115,7 @@ def flip_card(e: dict, star: bool) -> str:
       <span class="flip-tkr">{star_html}{escape(e['symbol'])}</span>
       <span class="flip-meta">BUY · Bullish · Close {fp(e['close'])} · ST {fp(e['st'])}</span>
       <span class="q-badge {q_class(e['grade'])}" title="{q_title(e)}">{e['score']:.0f}</span>
-      {momentum_line(e)}{levels_html(e)}{notes_html(e)}
+      {checks_html(e)}{momentum_line(e)}{levels_html(e)}{notes_html(e)}
     </div>"""
 
 
@@ -131,22 +131,22 @@ def recent_panel(ctx: dict) -> str:
     blocks = []
     for d in days:
         items = sorted((e for e in buys if e["close_date"] == d),
-                       key=lambda e: (-e["score"], TF_RANK[e["tf"]], e["symbol"]))
+                       key=lambda e: (-e["met"], -e["score"], TF_RANK[e["tf"]], e["symbol"]))
         many = len(items) > 5
         today_tag = ' <span class="today-tag">today</span>' if d == today else ""
         top = f' <span class="flip-topbadge">★ top 3 of {len(items)}</span>' if many else ""
         cards = "".join(flip_card(e, many and i < 3) for i, e in enumerate(items))
         blocks.append(f'<div class="flip-day"><div class="flip-day-head">{d}{today_tag}{top}</div>'
                       f'<div class="flip-grid">{cards}</div></div>')
-    body = "".join(blocks) or '<div class="empty-note">No BUY flip in the last 7 days passes the filter today.</div>'
+    body = "".join(blocks) or '<div class="empty-note">No BUY flip in the last 7 days meets enough checks today.</div>'
     first = " First run: back-filled from price history." if ctx["first_run"] else ""
     return f"""
     <div class="panel flip-log-panel">
       <div class="panel-head">
         <h2>Recent Buy Flips (Last {settings.RECENT_DAYS} Days)</h2>
-        <span class="subtle">{len(buys)} of {len(all_buys)} BUY flip(s) pass the volume/momentum filter today, across {len(days)} day(s). Anything older than {settings.RECENT_DAYS} days rolls off this list automatically. History in <code>data/flip_log.json</code>.{first}</span>
+        <span class="subtle">{len(buys)} of {len(all_buys)} BUY flip(s) meet enough volume/momentum checks at today's price, across {len(days)} day(s). Anything older than {settings.RECENT_DAYS} days rolls off this list automatically. History in <code>data/flip_log.json</code>.{first}</span>
       </div>
-      <div class="flip-mode-note">Long-only view — SELL flips are hidden here (Weekly/Daily sells still trigger the held-bearish alert). Only flips that still pass the volume/momentum filter at today's price are shown (see Buying Opportunities for the rules), grouped by the UTC day the bar closed and sorted by quality; ★ marks the top 3 when a day has more than 5 candidates. Each card shows Entry, SL (Supertrend line) and TP1/TP2 at {settings.TP_R_MULTIPLES[0]:g}R/{settings.TP_R_MULTIPLES[1]:g}R.</div>
+      <div class="flip-mode-note">Long-only view — SELL flips are hidden here (Weekly/Daily sells still trigger the held-bearish alert). Only flips that still meet enough volume/momentum checks at today's price are shown (see Buying Opportunities for the rules), grouped by the UTC day the bar closed and sorted by checks met, then quality; ★ marks the top 3 when a day has more than 5 candidates. Each card shows Entry, SL (Supertrend line) and TP1/TP2 at {settings.TP_R_MULTIPLES[0]:g}R/{settings.TP_R_MULTIPLES[1]:g}R.</div>
       {body}
     </div>"""
 
@@ -189,8 +189,8 @@ def stats_row(ctx: dict, sets: dict) -> str:
     def buys(tf):
         passed = sum(1 for e in qualified if e["tf"] == tf)
         total = sum(1 for e in sets["buys"] if e["tf"] == tf)
-        return (f'<div class="stat-chip stat-buy" title="{passed} passed the volume/momentum filter out of {total} BUY flips">'
-                f'<div class="num">{passed}<span class="of-total">/{total}</span></div><div class="label">Buy (passed/all)</div></div>')
+        return (f'<div class="stat-chip stat-buy" title="{passed} of {total} BUY flips shown after the volume/momentum checks">'
+                f'<div class="num">{passed}<span class="of-total">/{total}</span></div><div class="label">Buy (shown/all)</div></div>')
 
     btc = ctx["btc"].get("btc_trend_1D")
     btc_num = '<span class="bull">▲</span>' if btc == 1 else '<span class="bear">▼</span>' if btc == -1 else "—"
@@ -211,6 +211,21 @@ def stats_row(ctx: dict, sets: dict) -> str:
       <div class="stat-chip stat-buy"><div class="num">{len(sets['confluence'])}</div><div class="label">Buy (2+ TF)</div></div>
       <div class="stat-chip"><div class="num">{errors}</div><div class="label">Errors</div></div>
     </div>"""
+
+
+def checks_html(e: dict) -> str:
+    """✓/✗ chips for the five volume/momentum checks, plus the tier."""
+    if "checks" not in e:
+        return ""
+    chips = "".join(
+        f'<span class="chk {"chk-ok" if ok else "chk-no"}" title="{escape(detail)}">'
+        f'{"✓" if ok else "✗"} {filters.CHECK_LABELS[name]}</span>'
+        for name, (ok, detail) in e["checks"].items()
+    )
+    tier = ""
+    if e.get("tier"):
+        tier = f'<span class="tier tier-{e["tier"].lower()}">{e["tier"]} {e["met"]}/5</span>'
+    return f'<div class="chk-row">{tier}{chips}</div>'
 
 
 def momentum_line(e: dict) -> str:
@@ -237,6 +252,7 @@ def buy_item(e: dict, rank: int, extra_tags: str = "") -> str:
             <div class="bi-head"><span class="q-rank">#{rank}</span>{extra_tags}<span class="buy-ticker">{escape(e['symbol'])}</span>
               <span class="q-badge {q_class(e['grade'])}" title="{q_title(e)}">{e['grade']} {e['score']:.0f}</span></div>
             <div class="buy-meta">Close {fp(e['close'])} · ST {fp(e['st'])}{when}</div>
+            {checks_html(e)}
             {momentum_line(e)}
             {levels_html(e)}{notes_html(e)}
           </div>"""
@@ -247,11 +263,22 @@ def filtered_box(items: list[dict], overflow: list[dict]) -> str:
     if not items and not overflow:
         return ""
     rows = [f'<li><b>{escape(e["symbol"])}</b> <span class="muted">{e["grade"]} {e["score"]:.0f}</span> '
-            f'passed all gates, outside the top results</li>' for e in overflow]
+            f'{e["tier"]} {e["met"]}/5, below the top results</li>' for e in overflow]
     rows += [f'<li><b>{escape(e["symbol"])}</b> <span class="muted">{e["grade"]} {e["score"]:.0f}</span> '
              f'{escape("; ".join(e["fail_reasons"]))}</li>' for e in items]
     return (f'<details class="filtered-box"><summary>{len(items) + len(overflow)} more flip(s) not shown '
-            f'(filtered out or outside top results)</summary><ul>{"".join(rows)}</ul></details>')
+            f'(click to see why)</summary><ul>{"".join(rows)}</ul></details>')
+
+
+def diagnostics(entries: list[dict]) -> str:
+    """Per-check pass counts, so it's obvious which rule is doing the filtering."""
+    if not entries:
+        return ""
+    c = filters.check_counts(entries)
+    hard = sum(1 for e in entries if e["hard_fails"])
+    parts = " · ".join(f"{filters.CHECK_LABELS[n]} {c[n]}/{len(entries)}" for n in filters.CHECK_NAMES)
+    return (f'<div class="diag">Checks met across {len(entries)} flip(s): {parts} · '
+            f'untradeable (stop/TP1/liquidity) {hard}</div>')
 
 
 def buying_panel(sets: dict) -> str:
@@ -274,7 +301,8 @@ def buying_panel(sets: dict) -> str:
         subs.append(f"""
         <div class="buy-subpanel">
           <h3>{tf_tag(tf, long=True)} {head} <span class="count">{len(shown)} of {total}</span></h3>
-          <div class="filter-rule">Shown only if: {escape(filters.describe(tf))}. Top {cap} by quality.</div>
+          <div class="filter-rule">Shown if {escape(filters.describe(tf))}. Up to {cap}, most checks met first, then quality.</div>
+          {diagnostics(passed + rejected)}
           {grid("".join(buy_item(e, i + 1) for i, e in enumerate(shown)),
                 "No BUY flips." if not total else "Nothing passed the filter.")}
           {filtered_box(rejected, overflow)}
@@ -428,7 +456,7 @@ def _prices(ctx: dict) -> dict:
 
 
 def _fresh_sets(ctx: dict) -> dict:
-    """Fresh signals split into qualified (passed every filter gate) and filtered out."""
+    """Fresh signals split into shown (enough checks met, no hard-gate failure) and not shown."""
     prices = _prices(ctx)
     fresh = _dedupe_latest(ctx["fresh"])
     for e in fresh:
@@ -483,9 +511,9 @@ def build_html(ctx: dict) -> str:
     (4H SELL flips are not signalled). "↺ Changed" means the direction differs from the last run even though the flip bar has
     already passed, so nothing is missed if a run is skipped. "In-trend" counts consecutive bars in the current direction
     (w = weeks, d = days, h = hours on 4H; hover for the start). Confluence ▲▲▲ means Weekly, Daily and 4H all agree.
-    Buying Opportunities and Recent Buy Flips only show flips that pass the volume/momentum filter for their timeframe
-    (flip-bar volume vs the 20-bar average, RSI band, 7-day return vs BTC, price holding above the flip close, trend context,
-    stop width, liquidity; thresholds in settings.py OPPORTUNITY_FILTERS). Filtered flips are listed with the reason under each section.
+    Buying Opportunities and Recent Buy Flips show flips that meet at least 3 of 5 checks (volume vs the 20-bar average, RSI band,
+    7-day return vs BTC, price holding near the flip close, higher-timeframe trend) and are still tradeable (above stop, below TP1,
+    stop within the timeframe cap, liquid). Strong = 4-5 checks, Watch = 3. Thresholds: OPPORTUNITY_FILTERS in settings.py.
     Buy cards: Entry = flip-bar close, SL = Supertrend line on that bar, TP1/TP2 = {tp1:g}R/{tp2:g}R.
     Quality (0-100, A 75+ / B 60+ / C 45+ / D) = trend alignment 30, BTC regime 15, volume 15, stop distance 15, candle 10, RSI 10,
     cleanliness 5, minus 10 for thin liquidity; hover a badge for the breakdown. The table is sorted by Daily flip recency by default;
@@ -504,6 +532,10 @@ def build_html(ctx: dict) -> str:
 
 
 # ------------------------------------------------------------------ email
+def _fmt(v, spec: str, suffix: str = "") -> str:
+    return "—" if v is None else f"{v:{spec}}{suffix}"
+
+
 def _email_picks(sets: dict) -> list[dict]:
     """Same selection as the report: qualified flips, top N per timeframe."""
     out = []
@@ -549,21 +581,23 @@ def email_summary(ctx: dict) -> str:
     conf_syms = {s for s, _ in confluence}
     for e in sorted(picks, key=lambda e: (-e["score"], TF_RANK[e["tf"]])):
         star = "★ " if e["symbol"] in conf_syms else ""
-        rows += (f"<tr><td style=\"{td};color:{gcol[e['grade']]};font-weight:700\">{e['grade']} {e['score']:.0f}</td>"
+        tcol = bull if e["tier"] == "Strong" else amber
+        rows += (f"<tr><td style=\"{td};color:{tcol};font-weight:700\">{e['tier']} {e['met']}/5</td>"
+                 f"<td style=\"{td};color:{gcol[e['grade']]};font-weight:700\">{e['grade']} {e['score']:.0f}</td>"
                  f"<td style=\"{td};font-weight:700\">{star}{escape(e['symbol'])}</td>"
                  f"<td style=\"{td}\">{TF_SHORT[e['tf']][0]}</td>"
                  f"<td style=\"{td}\">{fp(e['close'])}</td>"
-                 f"<td style=\"{td}\">{e['vol_ratio']:.1f}x · {e['rsi']:.0f} · {e['rs_7d']:+.1f}</td>"
+                 f"<td style=\"{td}\">{_fmt(e.get('vol_ratio'), '.1f', 'x')} · {_fmt(e.get('rsi'), '.0f')} · {_fmt(e.get('rs_7d'), '+.1f')}</td>"
                  f"<td style=\"{td};color:{bear}\">{fp(e['stop'])} ({pct(-e['risk_pct'])})</td>"
                  f"<td style=\"{td};color:{bull}\">{fp(e['tp1'])}</td>"
                  f"<td style=\"{td};color:{bull}\">{fp(e['tp2'])}</td></tr>")
     if rows:
         table = (f'<table cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;background:{panel}">'
-                 f'<tr><th style="{th}">Quality</th><th style="{th}">Coin</th><th style="{th}">TF</th>'
+                 f'<tr><th style="{th}">Checks</th><th style="{th}">Quality</th><th style="{th}">Coin</th><th style="{th}">TF</th>'
                  f'<th style="{th}">Entry</th><th style="{th}">Vol · RSI · vs BTC 7d</th><th style="{th}">SL</th><th style="{th}">TP1</th><th style="{th}">TP2</th></tr>'
                  f'{rows}</table>')
     else:
-        table = f'<div style="color:{muted};font-size:13px">No BUY flip passed the volume/momentum filter today.</div>'
+        table = f'<div style="color:{muted};font-size:13px">No BUY flip met enough volume/momentum checks today.</div>'
 
     sells = [e for e in fresh if e["direction"] == "sell"]
     sells_html = ""
@@ -576,9 +610,9 @@ def email_summary(ctx: dict) -> str:
 <div style="font-size:18px;font-weight:700;color:{text}">Crypto Supertrend Combined Scanner</div>
 <div style="font-size:12px;color:{muted};font-family:{mono};margin-bottom:14px">ATR({settings.ATR_PERIOD}) × {settings.MULTIPLIER} · Weekly + Daily + 4H · {escape(ctx['run_utc'])}</div>
 {alerts}
-<div style="font-size:12px;color:{muted};text-transform:uppercase;letter-spacing:0.04em;margin:8px 0">Buy opportunities that passed the volume/momentum filter, ranked by quality (★ = 2+ timeframes)</div>
+<div style="font-size:12px;color:{muted};text-transform:uppercase;letter-spacing:0.04em;margin:8px 0">Buy opportunities, most volume/momentum checks met first (★ = 2+ timeframes)</div>
 {table}
-<div style="margin-top:8px;font-size:12px;color:{muted}">{filtered_n} other BUY flip(s) filtered out. Reasons are listed in the report.</div>{sells_html}
+<div style="margin-top:8px;font-size:12px;color:{muted}">{filtered_n} other BUY flip(s) not shown. The report lists why.</div>{sells_html}
 <div style="margin-top:16px;font-size:12px;color:{muted}">The full report (7-day flip history, watchlist, filters) is attached. Open the HTML file in a browser.</div>
 </div></body></html>"""
 

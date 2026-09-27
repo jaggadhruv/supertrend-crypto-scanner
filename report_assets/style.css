@@ -202,3 +202,17 @@
 .filtered-box li b { color: var(--text); font-family: var(--mono); }
 .stat-chip .of-total { font-size: 14px; color: var(--muted); font-weight: 500; }
 @media (max-width: 700px) { .filtered-box ul { columns: 1; } }
+
+/* ---- check chips and tiers ---- */
+.chk-row { flex-basis: 100%; order: 2; display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.chk { font-size: 10.5px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); cursor: help; font-family: var(--mono); }
+.chk-ok { color: var(--bull); border-color: rgba(47,191,113,0.35); background: rgba(47,191,113,0.08); }
+.chk-no { color: var(--muted); opacity: 0.8; }
+.tier { font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 999px; font-family: var(--mono); }
+.tier-strong { background: var(--bull); color: #0B0E14; }
+.tier-watch { background: rgba(240,169,61,0.2); color: var(--amber); }
+.diag { color: var(--muted); font-size: 11.5px; font-family: var(--mono); margin: -4px 0 10px; }
+.flip-card .mom-line { order: 3; }
+.flip-card .fc-levels { order: 4; }
+.flip-card .fc-notes { order: 5; }
+.flip-log-panel .panel-head h2 { white-space: nowrap; }
