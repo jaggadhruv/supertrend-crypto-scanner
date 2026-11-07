@@ -1,102 +1,5 @@
 [
  {
-  "symbol": "CAKE",
-  "ticker": "CAKE-USD",
-  "tf": "1D",
-  "direction": "sell",
-  "bar_time": "2026-10-06T00:00:00+00:00",
-  "close_date": "2026-10-07",
-  "close": 2.3898050785064697,
-  "st": 2.738090212471808,
-  "logged_utc": "2026-10-08 06:33 UTC"
- },
- {
-  "symbol": "MINA",
-  "ticker": "MINA-USD",
-  "tf": "1D",
-  "direction": "sell",
-  "bar_time": "2026-10-06T00:00:00+00:00",
-  "close_date": "2026-10-07",
-  "close": 0.11371699720621109,
-  "st": 0.17319975338254445,
-  "logged_utc": "2026-10-08 06:33 UTC"
- },
- {
-  "symbol": "MNT",
-  "ticker": "MNT27075-USD",
-  "tf": "1D",
-  "direction": "sell",
-  "bar_time": "2026-10-06T00:00:00+00:00",
-  "close_date": "2026-10-07",
-  "close": 0.59238201379776,
-  "st": 0.7069685512550088,
-  "logged_utc": "2026-10-08 06:33 UTC"
- },
- {
-  "symbol": "STX",
-  "ticker": "STX4847-USD",
-  "tf": "4H",
-  "direction": "buy",
-  "bar_time": "2026-10-07T04:00:00+00:00",
-  "close_date": "2026-10-07",
-  "close": 0.40130001306533813,
-  "st": 0.3663505242870143,
-  "logged_utc": "2026-10-08 06:33 UTC",
-  "stop": 0.3663505242870143,
-  "tp1": 0.4711989906219858,
-  "tp2": 0.5061484794003096,
-  "risk_pct": 8.709067440930655,
-  "tp1_pct": 17.418134881861302,
-  "tp2_pct": 26.127202322791952,
-  "score": 86.3,
-  "grade": "A",
-  "parts": {
-   "trend_alignment": 30.0,
-   "market_regime": 15,
-   "volume": 15.0,
-   "stop_distance": 3.2,
-   "candle": 8.1,
-   "momentum": 10,
-   "cleanliness": 5
-  },
-  "penalty": 0,
-  "notes": [],
-  "vol_ratio": 8.46,
-  "rsi": 64.9,
-  "trend_1D": 1,
-  "trend_1W": 1,
-  "rs_7d": 19.06,
-  "dollar_vol_30d": 9918642.553508786,
-  "last_close": 0.42640000581741333,
-  "hard_fails": [],
-  "checks": {
-   "volume": [
-    true,
-    "volume 8.46x (need 1.3x)"
-   ],
-   "rsi": [
-    true,
-    "RSI 65 (need 50-75)"
-   ],
-   "vs_btc": [
-    true,
-    "vs BTC 7d +19.1 pts (need \u2265 -2)"
-   ],
-   "holding": [
-    true,
-    "+6.3% since flip (allowed down to -2%)"
-   ],
-   "trend": [
-    true,
-    "Daily trend up"
-   ]
-  },
-  "met": 5,
-  "passed": true,
-  "tier": "Strong",
-  "fail_reasons": []
- },
- {
   "symbol": "BSV",
   "ticker": "BSV-USD",
   "tf": "1D",
@@ -21058,7 +20961,7 @@
   "trend_1W": 1,
   "rs_7d": 4.15,
   "dollar_vol_30d": 321.66235240551293,
-  "last_close": 4.55999997939216e-06,
+  "last_close": 4.510000053414842e-06,
   "hard_fails": [
    "thin liquidity $0.0M/day",
    "already below stop"
@@ -21078,7 +20981,7 @@
    ],
    "holding": [
     false,
-    "-8.8% since flip (allowed down to -3%)"
+    "-9.8% since flip (allowed down to -3%)"
    ],
    "trend": [
     true,
@@ -21132,7 +21035,7 @@
   "trend_1W": 1,
   "rs_7d": -5.57,
   "dollar_vol_30d": 27308.201176721028,
-  "last_close": 0.0038815001025795937,
+  "last_close": 0.003922999836504459,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -21151,7 +21054,7 @@
    ],
    "holding": [
     true,
-    "-1.7% since flip (allowed down to -2%)"
+    "-0.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21203,7 +21106,7 @@
   "trend_1W": 1,
   "rs_7d": 0.79,
   "dollar_vol_30d": 304896381.7686198,
-  "last_close": 1496.359619140625,
+  "last_close": 1477.0262451171875,
   "hard_fails": [
    "already below stop"
   ],
@@ -21222,7 +21125,7 @@
    ],
    "holding": [
     false,
-    "-4.5% since flip (allowed down to -2%)"
+    "-5.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21276,7 +21179,7 @@
   "trend_1W": 1,
   "rs_7d": -6.3,
   "dollar_vol_30d": 571669.5901084043,
-  "last_close": 0.07914000004529953,
+  "last_close": 0.07925999909639359,
   "hard_fails": [
    "thin liquidity $0.6M/day"
   ],
@@ -21295,7 +21198,7 @@
    ],
    "holding": [
     false,
-    "-6.2% since flip (allowed down to -2%)"
+    "-6.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21348,7 +21251,7 @@
   "trend_1W": -1,
   "rs_7d": -3.77,
   "dollar_vol_30d": 1211141.6303222657,
-  "last_close": 4844.37939453125,
+  "last_close": 4808.78125,
   "hard_fails": [
    "thin liquidity $1.2M/day",
    "already below stop"
@@ -21367,15 +21270,15 @@
     "vs BTC 7d -3.8 pts (need \u2265 -2)"
    ],
    "holding": [
-    true,
-    "-1.9% since flip (allowed down to -2%)"
+    false,
+    "-2.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 1,
+  "met": 0,
   "passed": false,
   "tier": null,
   "fail_reasons": [
@@ -21487,7 +21390,7 @@
   "trend_1W": 1,
   "rs_7d": 7.31,
   "dollar_vol_30d": 3848703157.5643973,
-  "last_close": 6.92579984664917,
+  "last_close": 6.982100009918213,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -21504,7 +21407,7 @@
    ],
    "holding": [
     false,
-    "-5.0% since flip (allowed down to -2%)"
+    "-4.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21517,7 +21420,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "volume 0.31x (need 1.3x)",
-   "-5.0% since flip (allowed down to -2%)",
+   "-4.2% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -21573,7 +21476,7 @@
   "trend_1W": -1,
   "rs_7d": 1.0,
   "dollar_vol_30d": 0.0022596999391680584,
-  "last_close": 0.00024046818725764751,
+  "last_close": 0.00024295841285493225,
   "hard_fails": [
    "stop 88.4% wider than 10%",
    "thin liquidity $0.0M/day"
@@ -21593,7 +21496,7 @@
    ],
    "holding": [
     true,
-    "-1.8% since flip (allowed down to -2%)"
+    "-0.8% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21646,7 +21549,7 @@
   "trend_1W": -1,
   "rs_7d": 1.13,
   "dollar_vol_30d": 185482065.93667662,
-  "last_close": 0.318340927362442,
+  "last_close": 0.3179144859313965,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -21663,7 +21566,7 @@
    ],
    "holding": [
     true,
-    "-0.8% since flip (allowed down to -2%)"
+    "-0.9% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21713,7 +21616,7 @@
   "trend_1W": 1,
   "rs_7d": 5.55,
   "dollar_vol_30d": 37784331.83017926,
-  "last_close": 8.2338285446167,
+  "last_close": 8.028952598571777,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -21729,17 +21632,17 @@
     "vs BTC 7d +5.5 pts (need \u2265 -2)"
    ],
    "holding": [
-    true,
-    "-0.5% since flip (allowed down to -2%)"
+    false,
+    "-3.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 4,
+  "met": 3,
   "passed": true,
-  "tier": "Strong",
+  "tier": "Watch",
   "fail_reasons": []
  },
  {
@@ -21779,7 +21682,7 @@
   "trend_1W": 1,
   "rs_7d": 5.51,
   "dollar_vol_30d": 75891049944.74341,
-  "last_close": 618.2149047851562,
+  "last_close": 612.5943603515625,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -21796,7 +21699,7 @@
    ],
    "holding": [
     true,
-    "-0.9% since flip (allowed down to -2%)"
+    "-1.8% since flip (allowed down to -2%)"
    ],
    "trend": [
     true,
@@ -21849,7 +21752,7 @@
   "trend_1W": 1,
   "rs_7d": -8.8,
   "dollar_vol_30d": 0.0,
-  "last_close": 0.039904624223709106,
+  "last_close": 0.04153973609209061,
   "hard_fails": [
    "stop 14.2% wider than 10%",
    "thin liquidity $0.0M/day"
@@ -21869,7 +21772,7 @@
    ],
    "holding": [
     false,
-    "-10.1% since flip (allowed down to -2%)"
+    "-6.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21922,7 +21825,7 @@
   "trend_1W": 1,
   "rs_7d": 0.48,
   "dollar_vol_30d": 188332508.18245107,
-  "last_close": 16.977540969848633,
+  "last_close": 17.031089782714844,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -21939,7 +21842,7 @@
    ],
    "holding": [
     true,
-    "+0.1% since flip (allowed down to -2%)"
+    "+0.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -21995,7 +21898,7 @@
   "trend_1W": 1,
   "rs_7d": 0.32,
   "dollar_vol_30d": 9940000.83644115,
-  "last_close": 0.09285999834537506,
+  "last_close": 0.09211000055074692,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -22012,7 +21915,7 @@
    ],
    "holding": [
     true,
-    "-0.8% since flip (allowed down to -2%)"
+    "-1.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22063,7 +21966,7 @@
   "trend_1W": 1,
   "rs_7d": -6.9,
   "dollar_vol_30d": 7630940.538293856,
-  "last_close": 0.612244188785553,
+  "last_close": 0.5881926417350769,
   "hard_fails": [
    "stop 17.6% wider than 10%"
   ],
@@ -22082,7 +21985,7 @@
    ],
    "holding": [
     false,
-    "-5.3% since flip (allowed down to -2%)"
+    "-9.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22135,7 +22038,7 @@
   "trend_1W": 1,
   "rs_7d": -4.54,
   "dollar_vol_30d": 4847827.670577704,
-  "last_close": 0.04349999874830246,
+  "last_close": 0.0430000014603138,
   "hard_fails": [
    "thin liquidity $4.8M/day"
   ],
@@ -22154,7 +22057,7 @@
    ],
    "holding": [
     false,
-    "-5.6% since flip (allowed down to -2%)"
+    "-6.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22207,7 +22110,7 @@
   "trend_1W": -1,
   "rs_7d": -1.36,
   "dollar_vol_30d": 1211141.6303222657,
-  "last_close": 4844.37939453125,
+  "last_close": 4808.78125,
   "hard_fails": [
    "thin liquidity $1.2M/day",
    "already below stop"
@@ -22227,7 +22130,7 @@
    ],
    "holding": [
     false,
-    "-2.7% since flip (allowed down to -2%)"
+    "-3.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22281,10 +22184,9 @@
   "trend_1W": 1,
   "rs_7d": -4.96,
   "dollar_vol_30d": 0.02253886649850756,
-  "last_close": 0.0028424642514437437,
+  "last_close": 0.0028787872288376093,
   "hard_fails": [
-   "thin liquidity $0.0M/day",
-   "already below stop"
+   "thin liquidity $0.0M/day"
   ],
   "checks": {
    "volume": [
@@ -22301,7 +22203,7 @@
    ],
    "holding": [
     true,
-    "-1.4% since flip (allowed down to -2%)"
+    "-0.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22312,8 +22214,7 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "thin liquidity $0.0M/day",
-   "already below stop"
+   "thin liquidity $0.0M/day"
   ]
  },
  {
@@ -22354,7 +22255,7 @@
   "trend_1W": 1,
   "rs_7d": -5.51,
   "dollar_vol_30d": 43972242.59341647,
-  "last_close": 3.099944591522217,
+  "last_close": 3.1849167346954346,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -22370,23 +22271,18 @@
     "vs BTC 7d -5.5 pts (need \u2265 -2)"
    ],
    "holding": [
-    false,
-    "-2.5% since flip (allowed down to -2%)"
+    true,
+    "+0.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 2,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "only 2/5 checks (need 3)",
-   "vs BTC 7d -5.5 pts (need \u2265 -2)",
-   "-2.5% since flip (allowed down to -2%)",
-   "Daily trend down"
-  ]
+  "met": 3,
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "BAT",
@@ -22427,7 +22323,7 @@
   "trend_1W": 1,
   "rs_7d": 4.18,
   "dollar_vol_30d": 6398734.5867574485,
-  "last_close": 0.1330299973487854,
+  "last_close": 0.12460999935865402,
   "hard_fails": [
    "stop 11.6% wider than 10%"
   ],
@@ -22446,7 +22342,7 @@
    ],
    "holding": [
     false,
-    "-2.7% since flip (allowed down to -2%)"
+    "-8.9% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22500,7 +22396,7 @@
   "trend_1W": -1,
   "rs_7d": 1.06,
   "dollar_vol_30d": 106.84233441069296,
-  "last_close": 2.8699998892989242e-06,
+  "last_close": 2.8100000690756133e-06,
   "hard_fails": [
    "stop 10.8% wider than 10%",
    "thin liquidity $0.0M/day"
@@ -22520,7 +22416,7 @@
    ],
    "holding": [
     false,
-    "-5.3% since flip (allowed down to -2%)"
+    "-7.3% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22573,7 +22469,7 @@
   "trend_1W": -1,
   "rs_7d": -3.46,
   "dollar_vol_30d": 85453868.26817092,
-  "last_close": 1.909999966621399,
+  "last_close": 1.9160000085830688,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -22590,7 +22486,7 @@
    ],
    "holding": [
     true,
-    "-0.2% since flip (allowed down to -2%)"
+    "+0.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22641,7 +22537,7 @@
   "trend_1W": -1,
   "rs_7d": 2.57,
   "dollar_vol_30d": 1211141.6303222657,
-  "last_close": 4844.37939453125,
+  "last_close": 4808.78125,
   "hard_fails": [
    "thin liquidity $1.2M/day",
    "already below stop"
@@ -22661,7 +22557,7 @@
    ],
    "holding": [
     false,
-    "-3.4% since flip (allowed down to -2%)"
+    "-4.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     true,
@@ -22715,7 +22611,7 @@
   "trend_1W": -1,
   "rs_7d": -1.67,
   "dollar_vol_30d": 161192.97156066727,
-  "last_close": 0.023539407178759575,
+  "last_close": 0.023343080654740334,
   "hard_fails": [
    "thin liquidity $0.2M/day"
   ],
@@ -22734,7 +22630,7 @@
    ],
    "holding": [
     false,
-    "-3.8% since flip (allowed down to -2%)"
+    "-4.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22787,7 +22683,7 @@
   "trend_1W": -1,
   "rs_7d": -7.01,
   "dollar_vol_30d": 37717.201996516436,
-  "last_close": 0.08039183914661407,
+  "last_close": 0.07985752075910568,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -22806,7 +22702,7 @@
    ],
    "holding": [
     false,
-    "-2.5% since flip (allowed down to -2%)"
+    "-3.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22859,7 +22755,7 @@
   "trend_1W": 1,
   "rs_7d": -11.0,
   "dollar_vol_30d": 1868407.6841563163,
-  "last_close": 0.03864999860525131,
+  "last_close": 0.03891000151634216,
   "hard_fails": [
    "thin liquidity $1.9M/day"
   ],
@@ -22878,7 +22774,7 @@
    ],
    "holding": [
     true,
-    "-1.6% since flip (allowed down to -2%)"
+    "-0.9% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -22931,7 +22827,7 @@
   "trend_1W": 1,
   "rs_7d": -1.45,
   "dollar_vol_30d": 947506969.7266176,
-  "last_close": 8.12600040435791,
+  "last_close": 8.22700023651123,
   "hard_fails": [
    "stop 10.3% wider than 10%"
   ],
@@ -22950,7 +22846,7 @@
    ],
    "holding": [
     true,
-    "+7.1% since flip (allowed down to -2%)"
+    "+8.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23002,7 +22898,7 @@
   "trend_1W": 1,
   "rs_7d": -6.05,
   "dollar_vol_30d": 9822341.115448149,
-  "last_close": 0.16418999433517456,
+  "last_close": 0.16131000220775604,
   "hard_fails": [
    "already below stop"
   ],
@@ -23021,7 +22917,7 @@
    ],
    "holding": [
     false,
-    "-7.1% since flip (allowed down to -2%)"
+    "-8.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23074,7 +22970,7 @@
   "trend_1W": 1,
   "rs_7d": -0.03,
   "dollar_vol_30d": 1204314658907.2568,
-  "last_close": 1255.5,
+  "last_close": 1309.050048828125,
   "hard_fails": [
    "stop 12.6% wider than 10%"
   ],
@@ -23093,7 +22989,7 @@
    ],
    "holding": [
     true,
-    "-1.9% since flip (allowed down to -2%)"
+    "+2.3% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23145,7 +23041,7 @@
   "trend_1W": 1,
   "rs_7d": -3.69,
   "dollar_vol_30d": 9138640.796752183,
-  "last_close": 0.09325999766588211,
+  "last_close": 0.09492000192403793,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -23161,23 +23057,18 @@
     "vs BTC 7d -3.7 pts (need \u2265 -2)"
    ],
    "holding": [
-    false,
-    "-3.3% since flip (allowed down to -2%)"
+    true,
+    "-1.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 2,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "only 2/5 checks (need 3)",
-   "vs BTC 7d -3.7 pts (need \u2265 -2)",
-   "-3.3% since flip (allowed down to -2%)",
-   "Daily trend down"
-  ]
+  "met": 3,
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "DYDX",
@@ -23218,7 +23109,7 @@
   "trend_1W": 1,
   "rs_7d": -2.55,
   "dollar_vol_30d": 423997.6210550323,
-  "last_close": 0.09730000048875809,
+  "last_close": 0.09700000286102295,
   "hard_fails": [
    "thin liquidity $0.4M/day",
    "already below stop"
@@ -23238,7 +23129,7 @@
    ],
    "holding": [
     false,
-    "-7.7% since flip (allowed down to -2%)"
+    "-8.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23291,10 +23182,8 @@
   "trend_1W": 1,
   "rs_7d": 3.8,
   "dollar_vol_30d": 27461624203889.62,
-  "last_close": 2219.06005859375,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 2242.570068359375,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -23310,7 +23199,7 @@
    ],
    "holding": [
     false,
-    "-4.6% since flip (allowed down to -2%)"
+    "-3.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23318,11 +23207,9 @@
    ]
   },
   "met": 3,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "already below stop"
-  ]
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "ILV",
@@ -23362,7 +23249,7 @@
   "trend_1W": -1,
   "rs_7d": 1.55,
   "dollar_vol_30d": 6448102.975187207,
-  "last_close": 2.9159998893737793,
+  "last_close": 2.8929998874664307,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -23379,7 +23266,7 @@
    ],
    "holding": [
     false,
-    "-4.4% since flip (allowed down to -2%)"
+    "-5.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23392,7 +23279,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "volume 0.96x (need 1.3x)",
-   "-4.4% since flip (allowed down to -2%)",
+   "-5.1% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -23435,7 +23322,7 @@
   "trend_1W": -1,
   "rs_7d": -7.77,
   "dollar_vol_30d": 1890274.1340268294,
-  "last_close": 0.05429999902844429,
+  "last_close": 0.05469999834895134,
   "hard_fails": [
    "thin liquidity $1.9M/day"
   ],
@@ -23454,7 +23341,7 @@
    ],
    "holding": [
     false,
-    "-6.4% since flip (allowed down to -2%)"
+    "-5.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23506,7 +23393,7 @@
   "trend_1W": 1,
   "rs_7d": -14.23,
   "dollar_vol_30d": 4835684647.729558,
-  "last_close": 3.6577999591827393,
+  "last_close": 3.7279999256134033,
   "hard_fails": [
    "already below stop"
   ],
@@ -23525,7 +23412,7 @@
    ],
    "holding": [
     false,
-    "-10.3% since flip (allowed down to -2%)"
+    "-8.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23578,7 +23465,7 @@
   "trend_1W": -1,
   "rs_7d": -8.05,
   "dollar_vol_30d": 2695012.888062032,
-  "last_close": 0.04560999944806099,
+  "last_close": 0.04596000164747238,
   "hard_fails": [
    "thin liquidity $2.7M/day",
    "already below stop"
@@ -23598,7 +23485,7 @@
    ],
    "holding": [
     false,
-    "-7.3% since flip (allowed down to -2%)"
+    "-6.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23651,10 +23538,8 @@
   "trend_1W": 1,
   "rs_7d": -0.3,
   "dollar_vol_30d": 521174458.6219581,
-  "last_close": 0.853600025177002,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 0.8672000169754028,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -23670,7 +23555,7 @@
    ],
    "holding": [
     false,
-    "-6.1% since flip (allowed down to -2%)"
+    "-4.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23678,11 +23563,9 @@
    ]
   },
   "met": 3,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "already below stop"
-  ]
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "XRP",
@@ -23722,7 +23605,7 @@
   "trend_1W": 1,
   "rs_7d": -0.42,
   "dollar_vol_30d": 2689094039.1299963,
-  "last_close": 1.184999942779541,
+  "last_close": 1.1627999544143677,
   "hard_fails": [
    "already below stop"
   ],
@@ -23741,7 +23624,7 @@
    ],
    "holding": [
     false,
-    "-7.9% since flip (allowed down to -2%)"
+    "-9.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23794,7 +23677,7 @@
   "trend_1W": 1,
   "rs_7d": -3.96,
   "dollar_vol_30d": 500818.53239171655,
-  "last_close": 0.07914000004529953,
+  "last_close": 0.07925999909639359,
   "hard_fails": [
    "thin liquidity $0.5M/day"
   ],
@@ -23813,7 +23696,7 @@
    ],
    "holding": [
     false,
-    "-6.1% since flip (allowed down to -2%)"
+    "-6.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23865,7 +23748,7 @@
   "trend_1W": 1,
   "rs_7d": -0.44,
   "dollar_vol_30d": 39071444584.01704,
-  "last_close": 129.1199951171875,
+  "last_close": 131.38999938964844,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -23881,17 +23764,17 @@
     "vs BTC 7d -0.4 pts (need \u2265 -2)"
    ],
    "holding": [
-    false,
-    "-3.2% since flip (allowed down to -2%)"
+    true,
+    "-1.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 3,
+  "met": 4,
   "passed": true,
-  "tier": "Watch",
+  "tier": "Strong",
   "fail_reasons": []
  },
  {
@@ -23932,10 +23815,8 @@
   "trend_1W": 1,
   "rs_7d": -2.98,
   "dollar_vol_30d": 82319046.20367223,
-  "last_close": 0.18279999494552612,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 0.18429000675678253,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -23951,7 +23832,7 @@
    ],
    "holding": [
     false,
-    "-7.6% since flip (allowed down to -2%)"
+    "-6.8% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -23962,7 +23843,10 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "already below stop"
+   "only 2/5 checks (need 3)",
+   "vs BTC 7d -3.0 pts (need \u2265 -2)",
+   "-6.8% since flip (allowed down to -2%)",
+   "Daily trend down"
   ]
  },
  {
@@ -24004,7 +23888,7 @@
   "trend_1W": 1,
   "rs_7d": -1.96,
   "dollar_vol_30d": 25791.17057558881,
-  "last_close": 0.0038815001025795937,
+  "last_close": 0.003922999836504459,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -24022,15 +23906,15 @@
     "vs BTC 7d -2.0 pts (need \u2265 -2)"
    ],
    "holding": [
-    false,
-    "-3.0% since flip (allowed down to -2%)"
+    true,
+    "-2.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 3,
+  "met": 4,
   "passed": false,
   "tier": null,
   "fail_reasons": [
@@ -24075,7 +23959,7 @@
   "trend_1W": 1,
   "rs_7d": -7.29,
   "dollar_vol_30d": 52426897.6467646,
-  "last_close": 0.6014999747276306,
+  "last_close": 0.6003999710083008,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -24092,7 +23976,7 @@
    ],
    "holding": [
     false,
-    "-6.2% since flip (allowed down to -2%)"
+    "-6.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24105,7 +23989,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -7.3 pts (need \u2265 -2)",
-   "-6.2% since flip (allowed down to -2%)",
+   "-6.4% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -24147,7 +24031,7 @@
   "trend_1W": 1,
   "rs_7d": -9.08,
   "dollar_vol_30d": 87158557.82588205,
-  "last_close": 1.4063999652862549,
+  "last_close": 1.3835999965667725,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -24164,7 +24048,7 @@
    ],
    "holding": [
     false,
-    "-4.8% since flip (allowed down to -2%)"
+    "-6.3% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24178,7 +24062,7 @@
    "only 1/5 checks (need 3)",
    "volume 1.15x (need 1.3x)",
    "vs BTC 7d -9.1 pts (need \u2265 -2)",
-   "-4.8% since flip (allowed down to -2%)",
+   "-6.3% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -24220,7 +24104,7 @@
   "trend_1W": 1,
   "rs_7d": -1.73,
   "dollar_vol_30d": 3524469997.146799,
-  "last_close": 8.241999626159668,
+  "last_close": 8.300999641418457,
   "hard_fails": [
    "already below stop"
   ],
@@ -24239,7 +24123,7 @@
    ],
    "holding": [
     false,
-    "-7.8% since flip (allowed down to -2%)"
+    "-7.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24291,7 +24175,7 @@
   "trend_1W": 1,
   "rs_7d": -7.24,
   "dollar_vol_30d": 21854537.50459318,
-  "last_close": 0.840399980545044,
+  "last_close": 0.8370000123977661,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -24308,7 +24192,7 @@
    ],
    "holding": [
     false,
-    "-4.2% since flip (allowed down to -2%)"
+    "-4.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24321,7 +24205,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -7.2 pts (need \u2265 -2)",
-   "-4.2% since flip (allowed down to -2%)",
+   "-4.6% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -24363,10 +24247,8 @@
   "trend_1W": 1,
   "rs_7d": -3.73,
   "dollar_vol_30d": 19514442.11425651,
-  "last_close": 1.71295964717865,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 1.7387031316757202,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -24382,7 +24264,7 @@
    ],
    "holding": [
     false,
-    "-3.5% since flip (allowed down to -2%)"
+    "-2.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24393,7 +24275,10 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "already below stop"
+   "only 2/5 checks (need 3)",
+   "vs BTC 7d -3.7 pts (need \u2265 -2)",
+   "-2.0% since flip (allowed down to -2%)",
+   "Daily trend down"
   ]
  },
  {
@@ -24434,7 +24319,7 @@
   "trend_1W": 1,
   "rs_7d": -4.1,
   "dollar_vol_30d": 1073614909134.7821,
-  "last_close": 686.739990234375,
+  "last_close": 694.1599731445312,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -24451,7 +24336,7 @@
    ],
    "holding": [
     false,
-    "-4.1% since flip (allowed down to -2%)"
+    "-3.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24464,7 +24349,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -4.1 pts (need \u2265 -2)",
-   "-4.1% since flip (allowed down to -2%)",
+   "-3.0% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -24506,7 +24391,7 @@
   "trend_1W": 1,
   "rs_7d": 0.0,
   "dollar_vol_30d": 2147935644534827.5,
-  "last_close": 75299.2265625,
+  "last_close": 75929.6875,
   "hard_fails": [
    "already below stop"
   ],
@@ -24525,7 +24410,7 @@
    ],
    "holding": [
     false,
-    "-6.1% since flip (allowed down to -2%)"
+    "-5.3% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24578,7 +24463,7 @@
   "trend_1W": 1,
   "rs_7d": -1.87,
   "dollar_vol_30d": 305746.5736676849,
-  "last_close": 0.04969999939203262,
+  "last_close": 0.04961000010371208,
   "hard_fails": [
    "thin liquidity $0.3M/day"
   ],
@@ -24597,7 +24482,7 @@
    ],
    "holding": [
     false,
-    "-4.4% since flip (allowed down to -2%)"
+    "-4.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24649,7 +24534,7 @@
   "trend_1W": 1,
   "rs_7d": -17.25,
   "dollar_vol_30d": 18109249.389048066,
-  "last_close": 0.2563999891281128,
+  "last_close": 0.2646999955177307,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -24666,7 +24551,7 @@
    ],
    "holding": [
     false,
-    "-7.6% since flip (allowed down to -2%)"
+    "-4.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24679,7 +24564,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -17.2 pts (need \u2265 -2)",
-   "-7.6% since flip (allowed down to -2%)",
+   "-4.6% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -24721,7 +24606,7 @@
   "trend_1W": 1,
   "rs_7d": -2.33,
   "dollar_vol_30d": 58036833.09327236,
-  "last_close": 0.07137999683618546,
+  "last_close": 0.07182999700307846,
   "hard_fails": [
    "already below stop"
   ],
@@ -24740,7 +24625,7 @@
    ],
    "holding": [
     false,
-    "-7.6% since flip (allowed down to -2%)"
+    "-7.0% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24792,7 +24677,7 @@
   "trend_1W": 1,
   "rs_7d": -2.51,
   "dollar_vol_30d": 74108014.74384907,
-  "last_close": 4.617000102996826,
+  "last_close": 4.632999897003174,
   "hard_fails": [
    "already below stop"
   ],
@@ -24811,7 +24696,7 @@
    ],
    "holding": [
     false,
-    "-9.7% since flip (allowed down to -2%)"
+    "-9.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24863,7 +24748,7 @@
   "trend_1W": 1,
   "rs_7d": -2.23,
   "dollar_vol_30d": 307402244.25296754,
-  "last_close": 6.982999801635742,
+  "last_close": 6.959000110626221,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -24880,7 +24765,7 @@
    ],
    "holding": [
     false,
-    "-3.8% since flip (allowed down to -2%)"
+    "-4.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -24893,7 +24778,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -2.2 pts (need \u2265 -2)",
-   "-3.8% since flip (allowed down to -2%)",
+   "-4.2% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -24935,7 +24820,7 @@
   "trend_1W": 1,
   "rs_7d": -10.87,
   "dollar_vol_30d": 34734530.53519431,
-  "last_close": 0.14717000722885132,
+  "last_close": 0.146479994058609,
   "hard_fails": [
    "already below stop"
   ],
@@ -24954,7 +24839,7 @@
    ],
    "holding": [
     false,
-    "-9.7% since flip (allowed down to -2%)"
+    "-10.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25007,7 +24892,7 @@
   "trend_1W": -1,
   "rs_7d": -3.11,
   "dollar_vol_30d": 678.5206625402329,
-  "last_close": 2.1600000764010474e-05,
+  "last_close": 2.1489999198820442e-05,
   "hard_fails": [
    "thin liquidity $0.0M/day",
    "already below stop"
@@ -25027,7 +24912,7 @@
    ],
    "holding": [
     false,
-    "-6.7% since flip (allowed down to -2%)"
+    "-7.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25081,9 +24966,10 @@
   "trend_1W": 1,
   "rs_7d": -7.74,
   "dollar_vol_30d": 384334.3304294087,
-  "last_close": 0.019182000309228897,
+  "last_close": 0.01903500035405159,
   "hard_fails": [
-   "thin liquidity $0.4M/day"
+   "thin liquidity $0.4M/day",
+   "already below stop"
   ],
   "checks": {
    "volume": [
@@ -25100,7 +24986,7 @@
    ],
    "holding": [
     false,
-    "-7.4% since flip (allowed down to -2%)"
+    "-8.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25111,7 +24997,8 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "thin liquidity $0.4M/day"
+   "thin liquidity $0.4M/day",
+   "already below stop"
   ]
  },
  {
@@ -25152,7 +25039,7 @@
   "trend_1W": -1,
   "rs_7d": -1.87,
   "dollar_vol_30d": 7061760.097612033,
-  "last_close": 0.06819000095129013,
+  "last_close": 0.06762000173330307,
   "hard_fails": [
    "already below stop"
   ],
@@ -25171,7 +25058,7 @@
    ],
    "holding": [
     false,
-    "-6.4% since flip (allowed down to -2%)"
+    "-7.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25223,10 +25110,8 @@
   "trend_1W": 1,
   "rs_7d": -1.03,
   "dollar_vol_30d": 167274239.19575775,
-  "last_close": 2.416100025177002,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 2.4268999099731445,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -25242,7 +25127,7 @@
    ],
    "holding": [
     false,
-    "-6.8% since flip (allowed down to -2%)"
+    "-6.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25250,11 +25135,9 @@
    ]
   },
   "met": 3,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "already below stop"
-  ]
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "IMX",
@@ -25295,7 +25178,7 @@
   "trend_1W": 1,
   "rs_7d": -11.87,
   "dollar_vol_30d": 1642899.5852578033,
-  "last_close": 0.11766000092029572,
+  "last_close": 0.11911000311374664,
   "hard_fails": [
    "thin liquidity $1.6M/day"
   ],
@@ -25314,7 +25197,7 @@
    ],
    "holding": [
     false,
-    "-5.6% since flip (allowed down to -2%)"
+    "-4.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25369,7 +25252,7 @@
   "trend_1W": -1,
   "rs_7d": 3.4,
   "dollar_vol_30d": 0.002373666603428622,
-  "last_close": 0.00024046818725764751,
+  "last_close": 0.00024295841285493225,
   "hard_fails": [
    "stop 43.5% wider than 10%",
    "thin liquidity $0.0M/day"
@@ -25389,7 +25272,7 @@
    ],
    "holding": [
     false,
-    "-9.0% since flip (allowed down to -2%)"
+    "-8.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25443,7 +25326,7 @@
   "trend_1W": 1,
   "rs_7d": -12.58,
   "dollar_vol_30d": 447550.23882208887,
-  "last_close": 0.0300331749022007,
+  "last_close": 0.029892191290855408,
   "hard_fails": [
    "thin liquidity $0.4M/day"
   ],
@@ -25462,7 +25345,7 @@
    ],
    "holding": [
     false,
-    "-7.4% since flip (allowed down to -2%)"
+    "-7.8% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25514,7 +25397,7 @@
   "trend_1W": 1,
   "rs_7d": -9.13,
   "dollar_vol_30d": 21676082.28520097,
-  "last_close": 0.33156999945640564,
+  "last_close": 0.32649001479148865,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -25531,7 +25414,7 @@
    ],
    "holding": [
     false,
-    "-4.9% since flip (allowed down to -2%)"
+    "-6.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25544,7 +25427,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -9.1 pts (need \u2265 -2)",
-   "-4.9% since flip (allowed down to -2%)",
+   "-6.4% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -25586,10 +25469,8 @@
   "trend_1W": 1,
   "rs_7d": -1.92,
   "dollar_vol_30d": 3599030146.259841,
-  "last_close": 10.697999954223633,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 10.819999694824219,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -25605,7 +25486,7 @@
    ],
    "holding": [
     false,
-    "-7.7% since flip (allowed down to -2%)"
+    "-6.6% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25613,11 +25494,9 @@
    ]
   },
   "met": 3,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "already below stop"
-  ]
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "LTC",
@@ -25657,7 +25536,7 @@
   "trend_1W": 1,
   "rs_7d": -3.86,
   "dollar_vol_30d": 13622294972.041891,
-  "last_close": 52.117000579833984,
+  "last_close": 52.28499984741211,
   "hard_fails": [
    "already below stop"
   ],
@@ -25676,7 +25555,7 @@
    ],
    "holding": [
     false,
-    "-7.4% since flip (allowed down to -2%)"
+    "-7.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25729,7 +25608,7 @@
   "trend_1W": 1,
   "rs_7d": -4.18,
   "dollar_vol_30d": 1318903.6834918766,
-  "last_close": 0.0714000016450882,
+  "last_close": 0.07169999927282333,
   "hard_fails": [
    "thin liquidity $1.3M/day"
   ],
@@ -25748,7 +25627,7 @@
    ],
    "holding": [
     false,
-    "-4.8% since flip (allowed down to -2%)"
+    "-4.4% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25800,7 +25679,7 @@
   "trend_1W": 1,
   "rs_7d": 3.93,
   "dollar_vol_30d": 160547513.71882325,
-  "last_close": 1496.359619140625,
+  "last_close": 1477.0262451171875,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -25817,7 +25696,7 @@
    ],
    "holding": [
     false,
-    "-3.8% since flip (allowed down to -2%)"
+    "-5.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25867,10 +25746,8 @@
   "trend_1W": 1,
   "rs_7d": -4.17,
   "dollar_vol_30d": 13971811.768520229,
-  "last_close": 0.43810001015663147,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 0.4480000138282776,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -25886,7 +25763,7 @@
    ],
    "holding": [
     false,
-    "-8.7% since flip (allowed down to -2%)"
+    "-6.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25897,7 +25774,10 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "already below stop"
+   "only 2/5 checks (need 3)",
+   "vs BTC 7d -4.2 pts (need \u2265 -2)",
+   "-6.7% since flip (allowed down to -2%)",
+   "Daily trend down"
   ]
  },
  {
@@ -25938,7 +25818,7 @@
   "trend_1W": 1,
   "rs_7d": -5.62,
   "dollar_vol_30d": 11378917.64543723,
-  "last_close": 1.9070382118225098,
+  "last_close": 1.8929991722106934,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -25955,7 +25835,7 @@
    ],
    "holding": [
     false,
-    "-5.0% since flip (allowed down to -2%)"
+    "-5.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -25968,7 +25848,7 @@
   "fail_reasons": [
    "only 2/5 checks (need 3)",
    "vs BTC 7d -5.6 pts (need \u2265 -2)",
-   "-5.0% since flip (allowed down to -2%)",
+   "-5.7% since flip (allowed down to -2%)",
    "Daily trend down"
   ]
  },
@@ -26010,7 +25890,7 @@
   "trend_1W": 1,
   "rs_7d": -1.91,
   "dollar_vol_30d": 76721935.73118398,
-  "last_close": 0.37209999561309814,
+  "last_close": 0.3690299987792969,
   "hard_fails": [
    "already below stop"
   ],
@@ -26029,7 +25909,7 @@
    ],
    "holding": [
     false,
-    "-9.5% since flip (allowed down to -2%)"
+    "-10.3% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26081,7 +25961,7 @@
   "trend_1W": 1,
   "rs_7d": -8.89,
   "dollar_vol_30d": 66955874.08799922,
-  "last_close": 1.6542999744415283,
+  "last_close": 1.6430000066757202,
   "hard_fails": [
    "already below stop"
   ],
@@ -26100,7 +25980,7 @@
    ],
    "holding": [
     false,
-    "-9.3% since flip (allowed down to -2%)"
+    "-9.9% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26153,7 +26033,7 @@
   "trend_1W": 1,
   "rs_7d": 1.06,
   "dollar_vol_30d": 1913.6785547405075,
-  "last_close": 4.919999810226727e-06,
+  "last_close": 4.909999915980734e-06,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -26172,7 +26052,7 @@
    ],
    "holding": [
     false,
-    "-4.7% since flip (allowed down to -2%)"
+    "-4.8% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26225,7 +26105,7 @@
   "trend_1W": 1,
   "rs_7d": -8.13,
   "dollar_vol_30d": 3285505.4136609477,
-  "last_close": 0.06407999992370605,
+  "last_close": 0.06460999697446823,
   "hard_fails": [
    "thin liquidity $3.3M/day"
   ],
@@ -26244,7 +26124,7 @@
    ],
    "holding": [
     false,
-    "-3.9% since flip (allowed down to -2%)"
+    "-3.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26296,7 +26176,7 @@
   "trend_1W": 1,
   "rs_7d": -4.9,
   "dollar_vol_30d": 66820832.49981679,
-  "last_close": 1.5235999822616577,
+  "last_close": 1.5565999746322632,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -26312,23 +26192,18 @@
     "vs BTC 7d -4.9 pts (need \u2265 -2)"
    ],
    "holding": [
-    false,
-    "-3.9% since flip (allowed down to -2%)"
+    true,
+    "-1.9% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 2,
-  "passed": false,
-  "tier": null,
-  "fail_reasons": [
-   "only 2/5 checks (need 3)",
-   "vs BTC 7d -4.9 pts (need \u2265 -2)",
-   "-3.9% since flip (allowed down to -2%)",
-   "Daily trend down"
-  ]
+  "met": 3,
+  "passed": true,
+  "tier": "Watch",
+  "fail_reasons": []
  },
  {
   "symbol": "ROSE",
@@ -26369,7 +26244,7 @@
   "trend_1W": 1,
   "rs_7d": -8.49,
   "dollar_vol_30d": 26912.120296971763,
-  "last_close": 0.005743000190705061,
+  "last_close": 0.0058200000785291195,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -26388,7 +26263,7 @@
    ],
    "holding": [
     false,
-    "-6.8% since flip (allowed down to -2%)"
+    "-5.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26440,7 +26315,7 @@
   "trend_1W": 1,
   "rs_7d": 1.06,
   "dollar_vol_30d": 287.1328882029451,
-  "last_close": 4.55999997939216e-06,
+  "last_close": 4.510000053414842e-06,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -26459,7 +26334,7 @@
    ],
    "holding": [
     false,
-    "-4.4% since flip (allowed down to -2%)"
+    "-5.5% since flip (allowed down to -2%)"
    ],
    "trend": [
     true,
@@ -26512,7 +26387,7 @@
   "trend_1W": -1,
   "rs_7d": -9.86,
   "dollar_vol_30d": 1783463.9131334438,
-  "last_close": 0.16638000309467316,
+  "last_close": 0.1682399958372116,
   "hard_fails": [
    "thin liquidity $1.8M/day",
    "already below stop"
@@ -26532,7 +26407,7 @@
    ],
    "holding": [
     false,
-    "-9.2% since flip (allowed down to -2%)"
+    "-8.2% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26585,7 +26460,7 @@
   "trend_1W": 1,
   "rs_7d": -5.6,
   "dollar_vol_30d": 276745013369.6527,
-  "last_close": 89.37000274658203,
+  "last_close": 90.0199966430664,
   "hard_fails": [
    "already below stop"
   ],
@@ -26604,7 +26479,7 @@
    ],
    "holding": [
     false,
-    "-7.4% since flip (allowed down to -2%)"
+    "-6.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26656,10 +26531,8 @@
   "trend_1W": 1,
   "rs_7d": -7.87,
   "dollar_vol_30d": 43263389142.59453,
-  "last_close": 218.89999389648438,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 224.8800048828125,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -26675,7 +26548,7 @@
    ],
    "holding": [
     false,
-    "-7.2% since flip (allowed down to -2%)"
+    "-4.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26686,7 +26559,10 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "already below stop"
+   "only 2/5 checks (need 3)",
+   "vs BTC 7d -7.9 pts (need \u2265 -2)",
+   "-4.7% since flip (allowed down to -2%)",
+   "Daily trend down"
   ]
  },
  {
@@ -26728,10 +26604,9 @@
   "trend_1W": 1,
   "rs_7d": -9.8,
   "dollar_vol_30d": 856806.8072303628,
-  "last_close": 0.14638671278953552,
+  "last_close": 0.14776143431663513,
   "hard_fails": [
-   "thin liquidity $0.9M/day",
-   "already below stop"
+   "thin liquidity $0.9M/day"
   ],
   "checks": {
    "volume": [
@@ -26748,7 +26623,7 @@
    ],
    "holding": [
     false,
-    "-7.6% since flip (allowed down to -2%)"
+    "-6.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26759,8 +26634,7 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "thin liquidity $0.9M/day",
-   "already below stop"
+   "thin liquidity $0.9M/day"
   ]
  },
  {
@@ -26801,10 +26675,8 @@
   "trend_1W": 1,
   "rs_7d": -16.64,
   "dollar_vol_30d": 44867125.870525524,
-  "last_close": 0.41749998927116394,
-  "hard_fails": [
-   "already below stop"
-  ],
+  "last_close": 0.4368000030517578,
+  "hard_fails": [],
   "checks": {
    "volume": [
     true,
@@ -26820,7 +26692,7 @@
    ],
    "holding": [
     false,
-    "-9.5% since flip (allowed down to -2%)"
+    "-5.3% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26831,7 +26703,10 @@
   "passed": false,
   "tier": null,
   "fail_reasons": [
-   "already below stop"
+   "only 2/5 checks (need 3)",
+   "vs BTC 7d -16.6 pts (need \u2265 -2)",
+   "-5.3% since flip (allowed down to -2%)",
+   "Daily trend down"
   ]
  },
  {
@@ -26873,7 +26748,7 @@
   "trend_1W": 1,
   "rs_7d": -5.43,
   "dollar_vol_30d": 2708906.2909976523,
-  "last_close": 0.3926508128643036,
+  "last_close": 0.39896202087402344,
   "hard_fails": [
    "thin liquidity $2.7M/day"
   ],
@@ -26892,7 +26767,7 @@
    ],
    "holding": [
     false,
-    "-5.6% since flip (allowed down to -2%)"
+    "-4.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -26945,7 +26820,7 @@
   "trend_1W": -1,
   "rs_7d": -8.42,
   "dollar_vol_30d": 80709.83849387226,
-  "last_close": 0.005462999921292067,
+  "last_close": 0.005423999857157469,
   "hard_fails": [
    "thin liquidity $0.1M/day",
    "already below stop"
@@ -26965,7 +26840,7 @@
    ],
    "holding": [
     false,
-    "-8.2% since flip (allowed down to -2%)"
+    "-8.8% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -27019,7 +26894,7 @@
   "trend_1W": 1,
   "rs_7d": -7.85,
   "dollar_vol_30d": 2041315.336840992,
-  "last_close": 0.24940000474452972,
+  "last_close": 0.2630000114440918,
   "hard_fails": [
    "thin liquidity $2.0M/day"
   ],
@@ -27037,15 +26912,15 @@
     "vs BTC 7d -7.8 pts (need \u2265 -2)"
    ],
    "holding": [
-    false,
-    "-2.2% since flip (allowed down to -2%)"
+    true,
+    "+3.1% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
     "Daily trend down"
    ]
   },
-  "met": 2,
+  "met": 3,
   "passed": false,
   "tier": null,
   "fail_reasons": [
@@ -27090,7 +26965,7 @@
   "trend_1W": -1,
   "rs_7d": 2.57,
   "dollar_vol_30d": 1211141.6303222657,
-  "last_close": 4844.37939453125,
+  "last_close": 4808.78125,
   "hard_fails": [
    "thin liquidity $1.2M/day"
   ],
@@ -27109,7 +26984,7 @@
    ],
    "holding": [
     false,
-    "-8.4% since flip (allowed down to -3%)"
+    "-9.0% since flip (allowed down to -3%)"
    ],
    "trend": [
     false,
@@ -27161,7 +27036,7 @@
   "trend_1W": 1,
   "rs_7d": 4.68,
   "dollar_vol_30d": 37410868.261113785,
-  "last_close": 8.2338285446167,
+  "last_close": 8.028952598571777,
   "hard_fails": [
    "stop 17.9% wider than 15%"
   ],
@@ -27180,7 +27055,7 @@
    ],
    "holding": [
     false,
-    "-8.7% since flip (allowed down to -3%)"
+    "-10.9% since flip (allowed down to -3%)"
    ],
    "trend": [
     true,
@@ -27232,7 +27107,7 @@
   "trend_1W": 1,
   "rs_7d": 20.33,
   "dollar_vol_30d": 11241512.278949706,
-  "last_close": 0.3336000144481659,
+  "last_close": 0.3440000116825104,
   "hard_fails": [
    "stop 24.6% wider than 15%"
   ],
@@ -27251,7 +27126,7 @@
    ],
    "holding": [
     false,
-    "-6.7% since flip (allowed down to -3%)"
+    "-3.8% since flip (allowed down to -3%)"
    ],
    "trend": [
     true,
@@ -27303,7 +27178,7 @@
   "trend_1W": 1,
   "rs_7d": -0.91,
   "dollar_vol_30d": 0.02253886649850756,
-  "last_close": 0.0028424642514437437,
+  "last_close": 0.0028787872288376093,
   "hard_fails": [
    "thin liquidity $0.0M/day"
   ],
@@ -27322,7 +27197,7 @@
    ],
    "holding": [
     false,
-    "-7.8% since flip (allowed down to -3%)"
+    "-6.6% since flip (allowed down to -3%)"
    ],
    "trend": [
     true,
@@ -27374,7 +27249,7 @@
   "trend_1W": 1,
   "rs_7d": -1.32,
   "dollar_vol_30d": 51646157855.03122,
-  "last_close": 266.29998779296875,
+  "last_close": 260.69000244140625,
   "hard_fails": [
    "already below stop"
   ],
@@ -27393,7 +27268,7 @@
    ],
    "holding": [
     false,
-    "-5.7% since flip (allowed down to -2%)"
+    "-7.7% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -27445,7 +27320,7 @@
   "trend_1W": 1,
   "rs_7d": -4.0,
   "dollar_vol_30d": 574407455.4519086,
-  "last_close": 19.809999465942383,
+  "last_close": 20.010000228881836,
   "hard_fails": [],
   "checks": {
    "volume": [
@@ -27462,7 +27337,7 @@
    ],
    "holding": [
     false,
-    "-3.8% since flip (allowed down to -2%)"
+    "-2.9% since flip (allowed down to -2%)"
    ],
    "trend": [
     false,
@@ -27476,8 +27351,83 @@
    "only 1/5 checks (need 3)",
    "volume 0.20x (need 1.3x)",
    "vs BTC 7d -4.0 pts (need \u2265 -2)",
-   "-3.8% since flip (allowed down to -2%)",
+   "-2.9% since flip (allowed down to -2%)",
    "Daily trend down"
+  ]
+ },
+ {
+  "symbol": "XTZ",
+  "ticker": "XTZ-USD",
+  "tf": "4H",
+  "direction": "buy",
+  "bar_time": "2026-11-06T16:00:00+00:00",
+  "close_date": "2026-11-06",
+  "close": 0.28630000352859497,
+  "st": 0.2428442452842284,
+  "logged_utc": "2026-11-07 06:28 UTC",
+  "stop": 0.2428442452842284,
+  "tp1": 0.3732115200173281,
+  "tp2": 0.4166672782616947,
+  "risk_pct": 15.178399479141575,
+  "tp1_pct": 30.356798958283136,
+  "tp2_pct": 45.535198437424725,
+  "score": 35.0,
+  "grade": "D",
+  "parts": {
+   "trend_alignment": 15.0,
+   "market_regime": 7,
+   "volume": 0.0,
+   "stop_distance": 0.0,
+   "candle": 10.0,
+   "momentum": 10,
+   "cleanliness": 3
+  },
+  "penalty": 10,
+  "notes": [
+   "Against the Daily trend",
+   "BTC Daily trend is down",
+   "Wide stop (15.2% > 10% cap)",
+   "Thin liquidity ($2.5M/day)"
+  ],
+  "vol_ratio": 0.49,
+  "rsi": 62.8,
+  "trend_1D": -1,
+  "trend_1W": 1,
+  "rs_7d": -1.83,
+  "dollar_vol_30d": 2484477.660562239,
+  "last_close": 0.2630000114440918,
+  "hard_fails": [
+   "stop 15.2% wider than 10%",
+   "thin liquidity $2.5M/day"
+  ],
+  "checks": {
+   "volume": [
+    false,
+    "volume 0.49x (need 1.3x)"
+   ],
+   "rsi": [
+    true,
+    "RSI 63 (need 50-75)"
+   ],
+   "vs_btc": [
+    true,
+    "vs BTC 7d -1.8 pts (need \u2265 -2)"
+   ],
+   "holding": [
+    false,
+    "-8.1% since flip (allowed down to -2%)"
+   ],
+   "trend": [
+    false,
+    "Daily trend down"
+   ]
+  },
+  "met": 2,
+  "passed": false,
+  "tier": null,
+  "fail_reasons": [
+   "stop 15.2% wider than 10%",
+   "thin liquidity $2.5M/day"
   ]
  }
 ]
