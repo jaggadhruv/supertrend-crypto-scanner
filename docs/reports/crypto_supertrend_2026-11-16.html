@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Supertrend Combined Scanner — 2026-11-16</title>
+<style>
+
+  :root {
+    --bg: #0B0E14;
+    --panel: #12161F;
+    --panel-2: #171C27;
+    --border: #232A38;
+    --text: #E7ECF3;
+    --muted: #7C8797;
+    --bull: #2FBF71;
+    --bull-bg: rgba(47,191,113,0.12);
+    --bear: #F0475D;
+    --bear-bg: rgba(240,71,93,0.12);
+    --amber: #F0A93D;
+    --amber-bg: rgba(240,169,61,0.10);
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Cascadia Code", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 32px 24px 80px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+  .topbar h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+  .topbar .params { color: var(--muted); font-family: var(--mono); font-size: 12.5px; }
+
+  .alert-banner { background: var(--bear-bg); border: 1px solid rgba(240,71,93,0.35); border-radius: 10px; padding: 16px 18px; margin-bottom: 22px; }
+  .alert-banner .alert-head { display:flex; align-items:center; gap:8px; font-weight:700; color: var(--bear); margin-bottom: 10px; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .alert-item { display:flex; gap:14px; padding: 8px 0; border-top: 1px solid rgba(240,71,93,0.18); }
+  .alert-item:first-of-type { border-top: none; }
+  .alert-ticker { font-family: var(--mono); font-weight: 700; min-width: 90px; color: var(--text); }
+  .alert-body { color: var(--text); font-size: 13.5px; }
+  .alert-trade { color: var(--muted); font-size: 12.5px; margin-top: 2px; font-family: var(--mono); }
+
+  .stats-row { display:flex; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+  .stat-chip { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; min-width: 120px; }
+  .stat-chip .num { font-family: var(--mono); font-size: 22px; font-weight: 700; }
+  .stat-chip .label { color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .stat-buy .num { color: var(--bull); }
+  .stat-sell .num { color: var(--bear); }
+
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 22px; }
+  .panel h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 0 0 14px; }
+  .buy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .buy-item { background: var(--bull-bg); border: 1px solid rgba(47,191,113,0.3); border-radius: 8px; padding: 10px 12px; }
+  .buy-ticker { font-family: var(--mono); font-weight: 700; color: var(--bull); }
+  .buy-meta { color: var(--muted); font-size: 12px; margin-top: 3px; }
+  .empty-note { color: var(--muted); font-size: 13px; }
+
+  .controls { display:flex; gap: 10px; align-items:center; margin-bottom: 14px; flex-wrap: wrap; }
+  .chip-btn { background: var(--panel-2); border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 999px; font-size: 12.5px; cursor: pointer; font-family: var(--sans); }
+  .chip-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; }
+  .search-box { margin-left: auto; background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; color: var(--text); font-size: 13px; font-family: var(--mono); width: 200px; }
+  .search-box::placeholder { color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px; }
+  thead th { text-align: left; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; padding: 10px 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; font-family: var(--sans); }
+  thead th:hover { color: var(--text); }
+  thead th.sorted-asc::after { content: " ↑"; }
+  thead th.sorted-desc::after { content: " ↓"; }
+  tbody td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tbody tr:hover { background: var(--panel-2); }
+  td.rail { width: 4px; padding: 0; }
+  .rail-bull { background: var(--bull); }
+  .rail-bear { background: var(--bear); }
+  .rail-none { background: var(--border); }
+  .col-ticker { font-weight: 700; }
+  .error-cell { color: var(--amber); font-family: var(--sans); font-size: 12.5px; }
+
+  .badge { display:inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.02em; }
+  .badge-buy { background: var(--bull-bg); color: var(--bull); }
+  .badge-sell { background: var(--bear-bg); color: var(--bear); }
+  .badge-none { background: transparent; color: var(--muted); font-weight: 400; }
+
+  .dir { font-size: 12.5px; }
+  .dir-bull { color: var(--bull); }
+  .dir-bear { color: var(--bear); }
+  .dir-none { color: var(--muted); }
+
+  .muted { color: var(--muted); }
+  .small { font-size: 11.5px; }
+  .held-yes { color: var(--amber); font-weight: 700; font-size: 12px; }
+  .flip-yes { color: var(--text); background: rgba(231,236,243,0.08); padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .flip-changed { color: var(--amber); background: var(--amber-bg); padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; cursor: help; }
+  .in-trend { display:inline-block; padding: 2px 8px; border-radius: 999px; font-family: var(--mono); font-size: 11.5px; font-weight: 700; cursor: help; }
+  .trend-bull { color: var(--bull); background: var(--bull-bg); }
+  .trend-bear { color: var(--bear); background: var(--bear-bg); }
+  .pnl-pos { color: var(--bull); font-weight: 700; }
+  .pnl-neg { color: var(--bear); font-weight: 700; }
+
+  footer { margin-top: 30px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); padding-top: 16px; }
+  tr.row-error { opacity: 0.7; }
+  tr.hidden-row { display: none; }
+
+
+  .confluence-cell { text-align: center; letter-spacing: 1px; font-size: 14px; }
+  .conf-bull { color: var(--bull); font-weight: 700; }
+  .conf-bear { color: var(--bear); font-weight: 700; }
+  .conf-mixed { color: var(--amber); font-weight: 700; }
+  .conf-none { color: var(--muted); }
+
+  .tf-cell { white-space: nowrap; }
+  .tf-cell .dir { margin-right: 4px; }
+
+  .tf-tag { display:inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700; padding: 1px 6px; border-radius: 4px; letter-spacing: 0.04em; margin-right: 6px; text-transform: uppercase; }
+  .tf-tag-w { background: rgba(120,140,220,0.18); color: #96A9E6; }
+  .tf-tag-d { background: rgba(220,170,120,0.18); color: #E6BE96; }
+
+  .buy-panels { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .buy-subpanel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 0 0 10px; display:flex; align-items:center; gap:8px; }
+  .buy-subpanel h3 .count { color: var(--text); font-family: var(--mono); }
+  .confluence-panel { border: 1px solid rgba(47,191,113,0.35); background: rgba(47,191,113,0.05); border-radius: 8px; padding: 12px 14px; }
+  .confluence-panel h3 { color: var(--bull); }
+  .confluence-panel .buy-item { background: rgba(47,191,113,0.18); }
+
+  .stats-group-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding: 0 4px; align-self: center; }
+
+  /* --- Recent flips (rolling 7-day) panel --- */
+  .flip-log-panel { border: 1px solid var(--border); }
+  .flip-log-panel .panel-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 12px; }
+  .flip-log-panel .panel-head h2 { margin: 0; }
+  .flip-log-panel .panel-head .subtle { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
+  .flip-day { margin: 10px 0 6px; }
+  .flip-day-head { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 6px; }
+  .flip-day-head .today-tag { display:inline-block; margin-left: 8px; background: rgba(240,169,61,0.16); color: var(--amber); padding: 1px 7px; border-radius: 999px; font-size: 10px; letter-spacing: 0.03em; }
+  .flip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+  .flip-card { display:flex; align-items:center; gap: 10px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); }
+  .flip-card.flip-buy  { border-color: rgba(47,191,113,0.35); background: rgba(47,191,113,0.06); }
+  .flip-card.flip-sell { border-color: rgba(240,71,93,0.35);  background: rgba(240,71,93,0.06);  }
+  .flip-card .flip-tkr { font-family: var(--mono); font-weight: 700; color: var(--text); min-width: 62px; }
+  .flip-card .flip-meta { color: var(--muted); font-size: 11.5px; font-family: var(--mono); }
+  .flip-card .flip-tag { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* Quality badges on flip cards */
+  .flip-card .q-badge {
+    margin-left: auto;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    padding: 2px 8px; border-radius: 999px; letter-spacing: 0.02em;
+    cursor: help;
+  }
+  .q-high   { background: rgba(47,191,113,0.18); color: var(--bull); }
+  .q-med    { background: rgba(240,169,61,0.18); color: var(--amber); }
+  .q-low    { background: rgba(231,236,243,0.06); color: var(--muted); }
+  .q-star   { color: var(--amber); margin-right: 4px; font-weight: 700; }
+
+  .flip-mode-note { color: var(--muted); font-size: 11.5px; font-style: italic; }
+  .flip-topbadge {
+    display:inline-block; margin-left: 10px; background: rgba(47,191,113,0.16);
+    color: var(--bull); padding: 1px 8px; border-radius: 999px;
+    font-size: 10.5px; letter-spacing: 0.03em; font-weight: 700;
+  }
+
+  tr.hidden-row { display: none; }
+
+/* ---- crypto additions: 4H tag, trade levels on cards, quality ranking ---- */
+.tf-tag-4h { background: rgba(160,120,220,0.18); color: #C3A6EC; }
+.flip-card { flex-wrap: wrap; row-gap: 4px; align-content: flex-start; }
+.flip-card .fc-levels, .buy-item .fc-levels { flex-basis: 100%; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.lv-sl { color: var(--bear); font-weight: 700; }
+.lv-tp { color: var(--bull); font-weight: 700; }
+.lv-entry { color: var(--text); font-weight: 700; }
+.fc-notes { flex-basis: 100%; color: var(--amber); font-size: 11.5px; }
+.buy-item .bi-head { display: flex; align-items: center; gap: 8px; }
+.buy-item .q-badge { margin-left: auto; font-family: var(--mono); font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; cursor: help; }
+.buy-item .fc-levels { margin-top: 4px; }
+.buy-item .fc-notes { margin-top: 3px; }
+.buy-item .q-rank { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+.status-note { color: var(--amber); font-size: 11.5px; font-weight: 700; margin-top: 3px; }
+.data-notes li { color: var(--muted); font-size: 12.5px; margin: 2px 0; }
+.data-notes ul { margin: 0; padding-left: 18px; }
+.stat-chip .num.bull { color: var(--bull); }
+.stat-chip .num.bear { color: var(--bear); }
+/* card rows: [tag ticker ....... quality] / meta / levels / notes */
+.flip-card .flip-meta { flex-basis: 100%; order: 1; }
+.flip-card .fc-levels { order: 2; }
+.flip-card .fc-notes { order: 3; }
+.buy-item .flip-tag { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* ---- archive bar (index.html only) ---- */
+.archive-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: -8px 0 22px; }
+.archive-bar .archive-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+.archive-bar select { background: var(--panel-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 10px; font-family: var(--mono); font-size: 12.5px; }
+.archive-bar .archive-note { color: var(--muted); font-size: 11.5px; font-family: var(--mono); }
+
+/* ---- opportunity filter ---- */
+.mom-line { flex-basis: 100%; order: 2; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.mom-line b { color: var(--text); }
+.flip-card .fc-levels { order: 3; }
+.flip-card .fc-notes { order: 4; }
+.filter-rule { color: var(--muted); font-size: 11.5px; margin: -4px 0 10px; }
+.filtered-box { margin-top: 10px; color: var(--muted); font-size: 12px; }
+.filtered-box summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+.filtered-box summary:hover { color: var(--text); }
+.filtered-box ul { margin: 8px 0 0; padding-left: 18px; columns: 2; column-gap: 28px; }
+.filtered-box li { margin: 2px 0; break-inside: avoid; }
+.filtered-box li b { color: var(--text); font-family: var(--mono); }
+.stat-chip .of-total { font-size: 14px; color: var(--muted); font-weight: 500; }
+@media (max-width: 700px) { .filtered-box ul { columns: 1; } }
+
+/* ---- check chips and tiers ---- */
+.chk-row { flex-basis: 100%; order: 2; display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.chk { font-size: 10.5px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); cursor: help; font-family: var(--mono); }
+.chk-ok { color: var(--bull); border-color: rgba(47,191,113,0.35); background: rgba(47,191,113,0.08); }
+.chk-no { color: var(--muted); opacity: 0.8; }
+.tier { font-size: 10.5px; font-weight: 700; padding: 1px 7px; border-radius: 999px; font-family: var(--mono); }
+.tier-strong { background: var(--bull); color: #0B0E14; }
+.tier-watch { background: rgba(240,169,61,0.2); color: var(--amber); }
+.diag { color: var(--muted); font-size: 11.5px; font-family: var(--mono); margin: -4px 0 10px; }
+.flip-card .mom-line { order: 3; }
+.flip-card .fc-levels { order: 4; }
+.flip-card .fc-notes { order: 5; }
+.flip-log-panel .panel-head h2 { white-space: nowrap; }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <h1>Crypto Supertrend Combined Scanner</h1>
+    <div class="params">ATR(10) &times; 2.5 &middot; Weekly + Daily + 4H &middot; Generated 2026-11-16 07:09 UTC</div>
+  </div>
+  <div class="archive-bar">
+    <span class="archive-label">Archived report</span>
+    <a class="chip-btn" href="../index.html" style="text-decoration:none">Open the latest report</a>
+  </div>
+
+  
+  
+    <div class="panel flip-log-panel">
+      <div class="panel-head">
+        <h2>Recent Buy Flips (Last 7 Days)</h2>
+        <span class="subtle">0 of 21 BUY flip(s) meet enough volume/momentum checks at today's price, across 0 day(s). Anything older than 7 days rolls off this list automatically. History in <code>data/flip_log.json</code>.</span>
+      </div>
+      <div class="flip-mode-note">Long-only view — SELL flips are hidden here (Weekly/Daily sells still trigger the held-bearish alert). Only flips that still meet enough volume/momentum checks at today's price are shown (see Buying Opportunities for the rules), grouped by the UTC day the bar closed and sorted by checks met, then quality; ★ marks the top 3 when a day has more than 5 candidates. Each card shows Entry, SL (Supertrend line) and TP1/TP2 at 2R/3R.</div>
+      <div class="empty-note">No BUY flip in the last 7 days meets enough checks today.</div>
+    </div>
+  
+    <div class="stats-row">
+      <div class="stat-chip"><div class="num">94</div><div class="label">Coins</div></div>
+      <div class="stat-chip"><div class="num"><span class="bear">▼</span></div><div class="label">BTC Daily</div></div>
+      <div class="stats-group-label">Weekly</div>
+      <div class="stat-chip stat-buy" title="0 of 0 BUY flips shown after the volume/momentum checks"><div class="num">0<span class="of-total">/0</span></div><div class="label">Buy (shown/all)</div></div>
+      <div class="stat-chip stat-sell"><div class="num">30</div><div class="label">Sell</div></div>
+      <div class="stats-group-label">Daily</div>
+      <div class="stat-chip stat-buy" title="0 of 0 BUY flips shown after the volume/momentum checks"><div class="num">0<span class="of-total">/0</span></div><div class="label">Buy (shown/all)</div></div>
+      <div class="stat-chip stat-sell"><div class="num">0</div><div class="label">Sell</div></div>
+      <div class="stats-group-label">4H (24h)</div>
+      <div class="stat-chip stat-buy" title="0 of 4 BUY flips shown after the volume/momentum checks"><div class="num">0<span class="of-total">/4</span></div><div class="label">Buy (shown/all)</div></div>
+      <div class="stats-group-label">Confluence</div>
+      <div class="stat-chip stat-buy"><div class="num">0</div><div class="label">Buy (2+ TF)</div></div>
+      <div class="stat-chip"><div class="num">1</div><div class="label">Errors</div></div>
+    </div>
+  
+    <div class="panel">
+      <h2>Buying Opportunities</h2>
+      <div class="buy-panels">
+        <div class="buy-subpanel confluence-panel">
+          <h3>★ Confluence Buy (fresh BUY on 2+ timeframes, at least one passing the filter) <span class="count">0</span></h3>
+          <div class="empty-note">Nothing fresh.</div>
+        </div>
+        <div class="buy-subpanel">
+          <h3><span class="tf-tag tf-tag-4h">4-hour</span> Buy Opportunities (last 24h) <span class="count">0 of 4</span></h3>
+          <div class="filter-rule">Shown if at least 3 of 5 checks: volume ≥ 1.3x, RSI 50-75, vs BTC 7d ≥ -2 pts, holding within 2% of the flip close, Daily trend up. Always required: price above stop and below TP1, stop ≤ 10%, ≥ $5M/day volume. Up to 8, most checks met first, then quality.</div>
+          <div class="diag">Checks met across 4 flip(s): Volume 1/4 · RSI 0/4 · vs BTC 4/4 · Holding 2/4 · Trend 0/4 · untradeable (stop/TP1/liquidity) 2</div>
+          <div class="empty-note">Nothing passed the filter.</div>
+          <details class="filtered-box"><summary>4 more flip(s) not shown (click to see why)</summary><ul><li><b>MKR</b> <span class="muted">D 40</span> only 2/5 checks (need 3); RSI 42 (need 50-75); -3.2% since flip (allowed down to -2%); Daily trend down</li><li><b>AERO</b> <span class="muted">D 22</span> thin liquidity $0.0M/day</li><li><b>AAVE</b> <span class="muted">D 21</span> only 2/5 checks (need 3); volume 0.00x (need 1.3x); RSI 46 (need 50-75); Daily trend down</li><li><b>EOS</b> <span class="muted">D 16</span> thin liquidity $0.0M/day</li></ul></details>
+        </div>
+        <div class="buy-subpanel">
+          <h3><span class="tf-tag tf-tag-d">Daily</span> Buy Opportunities <span class="count">0 of 0</span></h3>
+          <div class="filter-rule">Shown if at least 3 of 5 checks: volume ≥ 1.2x, RSI 50-75, vs BTC 7d ≥ -2 pts, holding within 3% of the flip close, Weekly trend up. Always required: price above stop and below TP1, stop ≤ 15%, ≥ $5M/day volume. Up to 6, most checks met first, then quality.</div>
+          
+          <div class="empty-note">No BUY flips.</div>
+          
+        </div>
+        <div class="buy-subpanel">
+          <h3><span class="tf-tag tf-tag-w">Weekly</span> Buy Opportunities <span class="count">0 of 0</span></h3>
+          <div class="filter-rule">Shown if at least 3 of 5 checks: volume ≥ 1.1x, RSI 50-80, vs BTC 7d ≥ -5 pts, holding within 5% of the flip close, Daily trend up. Always required: price above stop and below TP1, stop ≤ 30%, ≥ $5M/day volume. Up to 4, most checks met first, then quality.</div>
+          
+          <div class="empty-note">No BUY flips.</div>
+          
+        </div>
+      </div>
+    </div>
+  <div class="panel data-notes"><h2>Data Notes</h2><ul><li>GALA skipped: Not enough daily history</li><li>USDT excluded: Stablecoin (explicit list)</li><li>USDC excluded: Stablecoin (explicit list)</li><li>DAI excluded: Stablecoin (explicit list)</li><li>ARB excluded: Stablecoin (90-day range under 3%)</li><li>FDUSD excluded: Stablecoin (explicit list)</li></ul></div>
+  
+  <div class="panel">
+    <h2>Full Watchlist — Weekly, Daily &amp; 4H Side-by-Side</h2>
+    <div class="controls">
+      <button class="chip-btn active" data-filter="all">All</button>
+      <button class="chip-btn" data-filter="recent7">Recent (7d)</button>
+      <button class="chip-btn" data-filter="any-buy">Any Buy</button>
+      <button class="chip-btn" data-filter="any-sell">Any Sell</button>
+      <button class="chip-btn" data-filter="conf-bull">Confluence ▲▲▲</button>
+      <button class="chip-btn" data-filter="conf-bear">Confluence ▼▼▼</button>
+      <button class="chip-btn" data-filter="weekly-flip">Weekly Flips</button>
+      <button class="chip-btn" data-filter="daily-flip">Daily Flips</button>
+      <button class="chip-btn" data-filter="h4-flip">4H Flips</button>
+      <button class="chip-btn" data-filter="held">My Portfolio</button>
+      <input type="text" id="search-box" class="search-box" placeholder="Search coin...">
+    </div>
+    <div style="overflow-x:auto">
+    <table id="scan-table">
+      <thead>
+        <tr>
+          <th title="Weekly / Daily / 4H direction — click to sort: all bull → all bear → mixed → none">Conf. ↕</th>
+          <th>Coin</th>
+          <th>Close</th>
+          <th title="Click to sort by weekly bars-in-trend (freshest flip first)"><span class="tf-tag tf-tag-w">W</span>Weekly (dir · signal · in-trend · ST) ↕</th>
+          <th title="Click to sort by daily bars-in-trend (freshest flip first) — this is the default order"><span class="tf-tag tf-tag-d">D</span>Daily (dir · signal · in-trend · ST) ↕</th>
+          <th title="Click to sort by 4-hour bars-in-trend (freshest flip first)"><span class="tf-tag tf-tag-4h">4H</span>4-hour (dir · signal · in-trend · ST) ↕</th>
+          <th>Held</th>
+          <th>Position P/L</th>
+          <th>Weekly Bar</th>
+          <th>Daily Bar</th>
+          <th>4H Bar</th>
+        </tr>
+      </thead>
+      <tbody>
+    <tr data-ticker="stx"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="1" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="13" data-d-recency="2" data-h-recency="44">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">STX</td>
+      <td data-sort="0.2714320123195648">0.2714</td>
+      <td data-sort="13"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 13 weeks — since 2026-08-17">13w</span> <span class="muted small">ST 0.2460</span></span></td><td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="flip-changed" title="Was Bullish at the last run; the flip bar has already passed">↺ Changed</span> <span class="in-trend trend-bear" title="Bearish for 2 days — since 2026-11-14">2d</span> <span class="muted small">ST 0.3281</span></span></td><td data-sort="44"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 44 4H bars — since 2026-11-08 20:00">7.3d</span> <span class="muted small">ST 0.2851</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="xmr"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="12" data-d-recency="4" data-h-recency="24">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">XMR</td>
+      <td data-sort="497.8778991699219">497.88</td>
+      <td data-sort="12"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 12 weeks — since 2026-08-24">12w</span> <span class="muted small">ST 451.00</span></span></td><td data-sort="4"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 4 days — since 2026-11-12">4d</span> <span class="muted small">ST 580.60</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 4H bars — since 2026-11-12 04:00">4.0d</span> <span class="muted small">ST 520.47</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="gmx"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="4" data-h-recency="8">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">GMX</td>
+      <td data-sort="7.324801921844482">7.325</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 5.761</span></span></td><td data-sort="4"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 4 days — since 2026-11-12">4d</span> <span class="muted small">ST 8.367</span></span></td><td data-sort="8"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 8 4H bars — since 2026-11-14 20:00">32h</span> <span class="muted small">ST 7.612</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="core"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="3" data-d-recency="8" data-h-recency="33">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">CORE</td>
+      <td data-sort="3876.975830078125">3,877</td>
+      <td data-sort="3"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 3 weeks — since 2026-10-26">3w</span> <span class="muted small">ST 5,424</span></span></td><td data-sort="8"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 8 days — since 2026-11-08">8d</span> <span class="muted small">ST 4,255</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 4H bars — since 2026-11-10 16:00">5.5d</span> <span class="muted small">ST 3,942</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="aero"
+        data-w-signal="none" data-d-signal="none" data-h-signal="buy"
+        data-w-flip="0" data-d-flip="0" data-h-flip="1"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="75" data-d-recency="8" data-h-recency="2">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▲</span></td>
+      <td class="col-ticker">AERO</td>
+      <td data-sort="1.9999999494757503e-05">0.00002000</td>
+      <td data-sort="75"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 75 weeks — since 2025-06-09">75w</span> <span class="muted small">ST 0.00001872</span></span></td><td data-sort="8"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 8 days — since 2026-11-08">8d</span> <span class="muted small">ST 0.00002267</span></span></td><td data-sort="2"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-buy">BUY</span> <span class="in-trend trend-bull" title="Bullish for 2 4H bars — since 2026-11-15 20:00">8h</span> <span class="muted small">ST 0.00001870</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="shib"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="9" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">SHIB</td>
+      <td data-sort="3.999999989900971e-06">0.000004000</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.000006443</span></span></td><td data-sort="9"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 9 days — since 2026-11-07">9d</span> <span class="muted small">ST 0.000004479</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.000004096</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ton"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="80" data-d-recency="10" data-h-recency="34">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">TON</td>
+      <td data-sort="0.0019839999731630087">0.001984</td>
+      <td data-sort="80"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 80 weeks — since 2025-05-05">80w</span> <span class="muted small">ST -0.008155263897459438</span></span></td><td data-sort="10"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 10 days — since 2026-11-06">10d</span> <span class="muted small">ST 0.002363</span></span></td><td data-sort="34"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 34 4H bars — since 2026-11-10 12:00">5.7d</span> <span class="muted small">ST 0.002029</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="inj"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="26" data-d-recency="14" data-h-recency="9">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">INJ</td>
+      <td data-sort="6.979518890380859">6.980</td>
+      <td data-sort="26"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 26 weeks — since 2026-05-18">26w</span> <span class="muted small">ST 5.122</span></span></td><td data-sort="14"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 14 days — since 2026-11-02">14d</span> <span class="muted small">ST 8.591</span></span></td><td data-sort="9"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 9 4H bars — since 2026-11-14 16:00">36h</span> <span class="muted small">ST 7.712</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="trx"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="23" data-d-recency="17" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">TRX</td>
+      <td data-sort="0.30525100231170654">0.3053</td>
+      <td data-sort="23"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 23 weeks — since 2026-06-08">23w</span> <span class="muted small">ST 0.3523</span></span></td><td data-sort="17"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 17 days — since 2026-10-30">17d</span> <span class="muted small">ST 0.3205</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.3094</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="near"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="18" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">NEAR</td>
+      <td data-sort="3.2121880054473877">3.212</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 5.528</span></span></td><td data-sort="18"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 18 days — since 2026-10-29">18d</span> <span class="muted small">ST 3.941</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 3.341</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="tia"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="89" data-d-recency="18" data-h-recency="14">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">TIA</td>
+      <td data-sort="0.36070701479911804">0.3607</td>
+      <td data-sort="89"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 89 weeks — since 2025-03-03">89w</span> <span class="muted small">ST 0.3467</span></span></td><td data-sort="18"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 18 days — since 2026-10-29">18d</span> <span class="muted small">ST 0.4514</span></span></td><td data-sort="14"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 14 4H bars — since 2026-11-13 20:00">2.3d</span> <span class="muted small">ST 0.3783</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ftm"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="98" data-d-recency="18" data-h-recency="10">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">FTM</td>
+      <td data-sort="0.03348800167441368">0.03349</td>
+      <td data-sort="98"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 98 weeks — since 2024-12-30">98w</span> <span class="muted small">ST 0.03191</span></span></td><td data-sort="18"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 18 days — since 2026-10-29">18d</span> <span class="muted small">ST 0.04164</span></span></td><td data-sort="10"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 10 4H bars — since 2026-11-14 12:00">40h</span> <span class="muted small">ST 0.03587</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="pyth"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="9" data-d-recency="18" data-h-recency="13">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">PYTH</td>
+      <td data-sort="0.05603399872779846">0.05603</td>
+      <td data-sort="9"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 9 weeks — since 2026-09-14">9w</span> <span class="muted small">ST 0.05137</span></span></td><td data-sort="18"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 18 days — since 2026-10-29">18d</span> <span class="muted small">ST 0.07026</span></span></td><td data-sort="13"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 13 4H bars — since 2026-11-14 00:00">2.2d</span> <span class="muted small">ST 0.06038</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="crv"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="18" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">CRV</td>
+      <td data-sort="0.20629100501537323">0.2063</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.3865</span></span></td><td data-sort="18"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 18 days — since 2026-10-29">18d</span> <span class="muted small">ST 0.2512</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.2191</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="bat"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="20" data-h-recency="26">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">BAT</td>
+      <td data-sort="0.09661400318145752">0.09661</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.1911</span></span></td><td data-sort="20"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 20 days — since 2026-10-27">20d</span> <span class="muted small">ST 0.1258</span></span></td><td data-sort="26"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 26 4H bars — since 2026-11-11 20:00">4.3d</span> <span class="muted small">ST 0.1056</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="btc"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="22" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">BTC</td>
+      <td data-sort="65305.0625">65,305</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 85,621</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 days — since 2026-10-25">22d</span> <span class="muted small">ST 71,151</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 67,766</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="dot"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="22" data-h-recency="140">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">DOT</td>
+      <td data-sort="0.7363280057907104">0.7363</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 1.247</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 days — since 2026-10-25">22d</span> <span class="muted small">ST 0.8547</span></span></td><td data-sort="140"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 140 4H bars — since 2026-10-23 20:00">23.3d</span> <span class="muted small">ST 0.7752</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="apt"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="22" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">APT</td>
+      <td data-sort="0.45695701241493225">0.4570</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.8890</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 days — since 2026-10-25">22d</span> <span class="muted small">ST 0.5608</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.4961</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="wld"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="7" data-d-recency="22" data-h-recency="148">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">WLD</td>
+      <td data-sort="0.2708429992198944">0.2708</td>
+      <td data-sort="7"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 7 weeks — since 2026-09-28">7w</span> <span class="muted small">ST 0.2665</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 days — since 2026-10-25">22d</span> <span class="muted small">ST 0.3316</span></span></td><td data-sort="148"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 148 4H bars — since 2026-10-22 12:00">24.7d</span> <span class="muted small">ST 0.2801</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="xtz"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="9" data-d-recency="22" data-h-recency="42">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">XTZ</td>
+      <td data-sort="0.21660900115966797">0.2166</td>
+      <td data-sort="9"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 9 weeks — since 2026-09-14">9w</span> <span class="muted small">ST 0.2136</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 days — since 2026-10-25">22d</span> <span class="muted small">ST 0.2581</span></span></td><td data-sort="42"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 42 4H bars — since 2026-11-09 04:00">7.0d</span> <span class="muted small">ST 0.2258</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="comp"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="22" data-h-recency="14">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">COMP</td>
+      <td data-sort="18.158315658569336">18.16</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 17.23</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 days — since 2026-10-25">22d</span> <span class="muted small">ST 20.53</span></span></td><td data-sort="14"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 14 4H bars — since 2026-11-13 20:00">2.3d</span> <span class="muted small">ST 19.00</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="atom"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="23" data-h-recency="13">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">ATOM</td>
+      <td data-sort="1.3101929426193237">1.310</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 1.195</span></span></td><td data-sort="23"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 23 days — since 2026-10-24">23d</span> <span class="muted small">ST 1.489</span></span></td><td data-sort="13"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 13 4H bars — since 2026-11-14 00:00">2.2d</span> <span class="muted small">ST 1.363</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="fil"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="24" data-h-recency="174">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">FIL</td>
+      <td data-sort="0.612617015838623">0.6126</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 1.167</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 days — since 2026-10-23">24d</span> <span class="muted small">ST 0.7472</span></span></td><td data-sort="174"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 174 4H bars — since 2026-10-18 04:00">29.0d</span> <span class="muted small">ST 0.6607</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="op"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="24" data-h-recency="64">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">OP</td>
+      <td data-sort="0.08185900002717972">0.08186</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 0.07286</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 days — since 2026-10-23">24d</span> <span class="muted small">ST 0.1007</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.08782</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="qnt"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="24" data-h-recency="62">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">QNT</td>
+      <td data-sort="156.7803192138672">156.78</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 148.77</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 days — since 2026-10-23">24d</span> <span class="muted small">ST 188.01</span></span></td><td data-sort="62"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 62 4H bars — since 2026-11-05 20:00">10.3d</span> <span class="muted small">ST 160.77</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="flow"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="96" data-d-recency="24" data-h-recency="24">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">FLOW</td>
+      <td data-sort="0.01743900030851364">0.01744</td>
+      <td data-sort="96"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 96 weeks — since 2025-01-13">96w</span> <span class="muted small">ST 0.03344</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 days — since 2026-10-23">24d</span> <span class="muted small">ST 0.02121</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 4H bars — since 2026-11-12 04:00">4.0d</span> <span class="muted small">ST 0.01921</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="rndr"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="25" data-h-recency="64">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">RNDR</td>
+      <td data-sort="1.404386043548584">1.404</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 1.302</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 days — since 2026-10-22">25d</span> <span class="muted small">ST 1.649</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 1.495</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="pepe"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="13" data-d-recency="25" data-h-recency="27">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">PEPE</td>
+      <td data-sort="3.999999989900971e-06">0.000004000</td>
+      <td data-sort="13"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 13 weeks — since 2026-08-17">13w</span> <span class="muted small">ST 0.000003071</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 days — since 2026-10-22">25d</span> <span class="muted small">ST 0.000005001</span></span></td><td data-sort="27"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 27 4H bars — since 2026-11-11 16:00">4.5d</span> <span class="muted small">ST 0.000004231</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ar"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="25" data-h-recency="24">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">AR</td>
+      <td data-sort="2.537148952484131">2.537</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 4.646</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 days — since 2026-10-22">25d</span> <span class="muted small">ST 3.217</span></span></td><td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 4H bars — since 2026-11-12 04:00">4.0d</span> <span class="muted small">ST 2.738</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="algo"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="25" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ALGO</td>
+      <td data-sort="0.07999899983406067">0.08000</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.1314</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 days — since 2026-10-22">25d</span> <span class="muted small">ST 0.09305</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.08260</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="eos"
+        data-w-signal="none" data-d-signal="none" data-h-signal="buy"
+        data-w-flip="0" data-d-flip="0" data-h-flip="1"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="60" data-d-recency="28" data-h-recency="1">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▼▼▲</span></td>
+      <td class="col-ticker">EOS</td>
+      <td data-sort="0.06681899726390839">0.06682</td>
+      <td data-sort="60"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 60 weeks — since 2025-09-22">60w</span> <span class="muted small">ST 0.1134</span></span></td><td data-sort="28"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 28 days — since 2026-10-19">28d</span> <span class="muted small">ST 0.07852</span></span></td><td data-sort="1"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-buy">BUY</span> <span class="in-trend trend-bull" title="Bullish for 1 4H bar — since 2026-11-16 00:00">4h</span> <span class="muted small">ST 0.06376</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="enj"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="24" data-d-recency="29" data-h-recency="25">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ENJ</td>
+      <td data-sort="0.019248999655246735">0.01925</td>
+      <td data-sort="24"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 24 weeks — since 2026-06-01">24w</span> <span class="muted small">ST 0.03584</span></span></td><td data-sort="29"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 29 days — since 2026-10-18">29d</span> <span class="muted small">ST 0.02291</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 4H bars — since 2026-11-12 00:00">4.2d</span> <span class="muted small">ST 0.02008</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="rose"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="29" data-h-recency="25">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ROSE</td>
+      <td data-sort="0.004674000199884176">0.004674</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.008610</span></span></td><td data-sort="29"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 29 days — since 2026-10-18">29d</span> <span class="muted small">ST 0.005557</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 4H bars — since 2026-11-12 00:00">4.2d</span> <span class="muted small">ST 0.004910</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="avax"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="30" data-h-recency="19">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">AVAX</td>
+      <td data-sort="7.297037124633789">7.297</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 11.64</span></span></td><td data-sort="30"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 30 days — since 2026-10-17">30d</span> <span class="muted small">ST 8.531</span></span></td><td data-sort="19"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 19 4H bars — since 2026-11-13 00:00">3.2d</span> <span class="muted small">ST 7.700</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ldo"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="30" data-h-recency="23">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">LDO</td>
+      <td data-sort="0.27901700139045715">0.2790</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 0.2709</span></span></td><td data-sort="30"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 30 days — since 2026-10-17">30d</span> <span class="muted small">ST 0.3278</span></span></td><td data-sort="23"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 23 4H bars — since 2026-11-12 08:00">3.8d</span> <span class="muted small">ST 0.2890</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="sui"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="30" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">SUI</td>
+      <td data-sort="0.7369089722633362">0.7369</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 1.206</span></span></td><td data-sort="30"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 30 days — since 2026-10-17">30d</span> <span class="muted small">ST 0.8533</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.7676</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="mana"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="30" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">MANA</td>
+      <td data-sort="0.06156500056385994">0.06157</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.09898</span></span></td><td data-sort="30"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 30 days — since 2026-10-17">30d</span> <span class="muted small">ST 0.07053</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.06422</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="snx"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="54" data-d-recency="31" data-h-recency="10">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">SNX</td>
+      <td data-sort="0.14895200729370117">0.1490</td>
+      <td data-sort="54"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 54 weeks — since 2025-11-03">54w</span> <span class="muted small">ST 0.2481</span></span></td><td data-sort="31"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 31 days — since 2026-10-16">31d</span> <span class="muted small">ST 0.1727</span></span></td><td data-sort="10"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 10 4H bars — since 2026-11-14 12:00">40h</span> <span class="muted small">ST 0.1566</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="mask"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="58" data-d-recency="31" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">MASK</td>
+      <td data-sort="0.3081989884376526">0.3082</td>
+      <td data-sort="58"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 58 weeks — since 2025-10-06">58w</span> <span class="muted small">ST 0.5067</span></span></td><td data-sort="31"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 31 days — since 2026-10-16">31d</span> <span class="muted small">ST 0.3552</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.3185</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="imx"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="32" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">IMX</td>
+      <td data-sort="0.09950999915599823">0.09951</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.1901</span></span></td><td data-sort="32"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 32 days — since 2026-10-15">32d</span> <span class="muted small">ST 0.1220</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.1080</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="dydx"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="25" data-d-recency="32" data-h-recency="13">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">DYDX</td>
+      <td data-sort="0.08001799881458282">0.08002</td>
+      <td data-sort="25"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 25 weeks — since 2026-05-25">25w</span> <span class="muted small">ST 0.07197</span></span></td><td data-sort="32"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 32 days — since 2026-10-15">32d</span> <span class="muted small">ST 0.09507</span></span></td><td data-sort="13"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 13 4H bars — since 2026-11-14 00:00">2.2d</span> <span class="muted small">ST 0.08565</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ilv"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="95" data-d-recency="32" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ILV</td>
+      <td data-sort="2.402184009552002">2.402</td>
+      <td data-sort="95"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 95 weeks — since 2025-01-20">95w</span> <span class="muted small">ST 4.089</span></span></td><td data-sort="32"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 32 days — since 2026-10-15">32d</span> <span class="muted small">ST 2.796</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 2.453</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="glm"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="32" data-h-recency="84">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">GLM</td>
+      <td data-sort="0.09200199693441391">0.09200</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 0.08829</span></span></td><td data-sort="32"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 32 days — since 2026-10-15">32d</span> <span class="muted small">ST 0.1040</span></span></td><td data-sort="84"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 84 4H bars — since 2026-11-02 04:00">14.0d</span> <span class="muted small">ST 0.09355</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="fet"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="33" data-h-recency="19">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">FET</td>
+      <td data-sort="0.1325100064277649">0.1325</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.2396</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 0.1592</span></span></td><td data-sort="19"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 19 4H bars — since 2026-11-13 00:00">3.2d</span> <span class="muted small">ST 0.1404</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="mkr"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="buy"
+        data-w-flip="1" data-d-flip="0" data-h-flip="1"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="1" data-d-recency="33" data-h-recency="6">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▼▼▲</span></td>
+      <td class="col-ticker">MKR</td>
+      <td data-sort="1248.6944580078125">1,249</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 2,140</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 1,445</span></span></td><td data-sort="6"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-buy">BUY</span> <span class="in-trend trend-bull" title="Bullish for 6 4H bars — since 2026-11-15 04:00">24h</span> <span class="muted small">ST 1,216</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="theta"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="33" data-h-recency="10">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">THETA</td>
+      <td data-sort="0.13391199707984924">0.1339</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.2177</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 0.1557</span></span></td><td data-sort="10"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 10 4H bars — since 2026-11-14 12:00">40h</span> <span class="muted small">ST 0.1369</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ondo"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="33" data-h-recency="23">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ONDO</td>
+      <td data-sort="0.31161800026893616">0.3116</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.5542</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 0.3708</span></span></td><td data-sort="23"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 23 4H bars — since 2026-11-12 08:00">3.8d</span> <span class="muted small">ST 0.3260</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="strk"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="6" data-d-recency="33" data-h-recency="64">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">STRK</td>
+      <td data-sort="0.034947000443935394">0.03495</td>
+      <td data-sort="6"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 6 weeks — since 2026-10-05">6w</span> <span class="muted small">ST 0.01820</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 0.04469</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.03638</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="neo"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="33" data-h-recency="23">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">NEO</td>
+      <td data-sort="1.6126630306243896">1.613</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 2.506</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 1.817</span></span></td><td data-sort="23"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 23 4H bars — since 2026-11-12 08:00">3.8d</span> <span class="muted small">ST 1.632</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="axs"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="33" data-h-recency="19">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">AXS</td>
+      <td data-sort="0.690343976020813">0.6903</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 1.216</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 days — since 2026-10-14">33d</span> <span class="muted small">ST 0.8039</span></span></td><td data-sort="19"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 19 4H bars — since 2026-11-13 00:00">3.2d</span> <span class="muted small">ST 0.7219</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="xrp"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">XRP</td>
+      <td data-sort="0.9746130108833313">0.9746</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 1.464</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 1.085</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.9946</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ltc"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">LTC</td>
+      <td data-sort="45.50838088989258">45.51</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 66.40</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 51.13</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 47.47</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="etc"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="35" data-h-recency="22">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ETC</td>
+      <td data-sort="6.018096923828125">6.018</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 9.112</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 6.741</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 4H bars — since 2026-11-12 12:00">3.7d</span> <span class="muted small">ST 6.263</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="grt"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">GRT</td>
+      <td data-sort="0.01693500019609928">0.01694</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.02876</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.01960</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.01744</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="rune"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="35" data-h-recency="22">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">RUNE</td>
+      <td data-sort="0.5221189856529236">0.5221</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.8365</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.6088</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 4H bars — since 2026-11-12 12:00">3.7d</span> <span class="muted small">ST 0.5390</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="sei"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="3" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">SEI</td>
+      <td data-sort="0.03964199870824814">0.03964</td>
+      <td data-sort="3"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 3 weeks — since 2026-10-26">3w</span> <span class="muted small">ST 0.06788</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.04637</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.04108</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="floki"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="57" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">FLOKI</td>
+      <td data-sort="1.8999999156221747e-05">0.00001900</td>
+      <td data-sort="57"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 57 weeks — since 2025-10-13">57w</span> <span class="muted small">ST 0.00002901</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.00002143</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.00001909</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="aave"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="buy"
+        data-w-flip="1" data-d-flip="0" data-h-flip="1"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="1" data-d-recency="35" data-h-recency="2">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▼▼▲</span></td>
+      <td class="col-ticker">AAVE</td>
+      <td data-sort="109.44739532470703">109.45</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 175.92</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 126.51</span></span></td><td data-sort="2"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-buy">BUY</span> <span class="in-trend trend-bull" title="Bullish for 2 4H bars — since 2026-11-15 20:00">8h</span> <span class="muted small">ST 100.64</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="egld"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="35" data-h-recency="13">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">EGLD</td>
+      <td data-sort="2.640856981277466">2.641</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 4.500</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 3.057</span></span></td><td data-sort="13"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 13 4H bars — since 2026-11-14 00:00">2.2d</span> <span class="muted small">ST 2.790</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ens"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ENS</td>
+      <td data-sort="3.9369819164276123">3.937</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 6.544</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 4.540</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 4.084</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="sand"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="35" data-h-recency="22">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">SAND</td>
+      <td data-sort="0.036072999238967896">0.03607</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.06884</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.04321</span></span></td><td data-sort="22"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 22 4H bars — since 2026-11-12 12:00">3.7d</span> <span class="muted small">ST 0.03812</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="blur"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="14" data-d-recency="35" data-h-recency="82">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">BLUR</td>
+      <td data-sort="0.006111000198870897">0.006111</td>
+      <td data-sort="14"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 14 weeks — since 2026-08-10">14w</span> <span class="muted small">ST 0.01538</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.007997</span></span></td><td data-sort="82"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 82 4H bars — since 2026-11-02 12:00">13.7d</span> <span class="muted small">ST 0.006313</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ankr"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="35" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ANKR</td>
+      <td data-sort="0.003260999917984009">0.003261</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.005256</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.003815</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.003372</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="cro"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="35" data-h-recency="19">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">CRO</td>
+      <td data-sort="0.043480999767780304">0.04348</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.06541</span></span></td><td data-sort="35"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 35 days — since 2026-10-12">35d</span> <span class="muted small">ST 0.04941</span></span></td><td data-sort="19"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 19 4H bars — since 2026-11-13 00:00">3.2d</span> <span class="muted small">ST 0.04582</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="eth"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ETH</td>
+      <td data-sort="1835.4952392578125">1,835</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 2,608</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 2,052</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 1,912</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="bnb"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">BNB</td>
+      <td data-sort="595.989013671875">595.99</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 789.70</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 649.05</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 615.07</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="sol"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">SOL</td>
+      <td data-sort="72.67892456054688">72.68</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 109.39</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 82.02</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 75.89</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="doge"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">DOGE</td>
+      <td data-sort="0.059856001287698746">0.05986</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.09232</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.06742</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.06259</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ada"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ADA</td>
+      <td data-sort="0.15524500608444214">0.1552</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.2546</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.1778</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.1610</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="bch"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="8" data-d-recency="39" data-h-recency="62">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">BCH</td>
+      <td data-sort="210.4683380126953">210.47</td>
+      <td data-sort="8"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 8 weeks — since 2026-09-21">8w</span> <span class="muted small">ST 194.59</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 240.19</span></span></td><td data-sort="62"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 62 4H bars — since 2026-11-05 20:00">10.3d</span> <span class="muted small">ST 218.99</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="link"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">LINK</td>
+      <td data-sort="9.283299446105957">9.283</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 14.06</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 10.62</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 9.574</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="icp"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="7" data-d-recency="39" data-h-recency="13">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">ICP</td>
+      <td data-sort="2.233552932739258">2.234</td>
+      <td data-sort="7"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 7 weeks — since 2026-09-28">7w</span> <span class="muted small">ST 2.126</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 2.623</span></span></td><td data-sort="13"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 13 4H bars — since 2026-11-14 00:00">2.2d</span> <span class="muted small">ST 2.401</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="uni"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">UNI</td>
+      <td data-sort="5.172410011291504">5.172</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 9.492</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 6.353</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 5.355</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="hbar"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="3" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">HBAR</td>
+      <td data-sort="0.0592849999666214">0.05928</td>
+      <td data-sort="3"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 3 weeks — since 2026-10-26">3w</span> <span class="muted small">ST 0.09511</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.06643</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.06084</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="vet"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="3" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">VET</td>
+      <td data-sort="0.004918999969959259">0.004919</td>
+      <td data-sort="3"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 3 weeks — since 2026-10-26">3w</span> <span class="muted small">ST 0.007781</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.005580</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.004923</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="kas"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="19">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">KAS</td>
+      <td data-sort="0.027439000084996223">0.02744</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.04267</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.03133</span></span></td><td data-sort="19"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 19 4H bars — since 2026-11-13 00:00">3.2d</span> <span class="muted small">ST 0.02797</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="wif"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">WIF</td>
+      <td data-sort="0.13343900442123413">0.1334</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.2435</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.1575</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.1411</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="tao"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="28" data-d-recency="39" data-h-recency="64">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">TAO</td>
+      <td data-sort="194.69912719726562">194.70</td>
+      <td data-sort="28"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 28 weeks — since 2026-05-04">28w</span> <span class="muted small">ST 189.38</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 227.56</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 204.57</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="bgb"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="11" data-d-recency="39" data-h-recency="64">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">BGB</td>
+      <td data-sort="1.617812991142273">1.618</td>
+      <td data-sort="11"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 11 weeks — since 2026-08-31">11w</span> <span class="muted small">ST 1.603</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 1.711</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 1.635</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="chz"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="39" data-d-recency="39" data-h-recency="149">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">CHZ</td>
+      <td data-sort="0.009829999879002571">0.009830</td>
+      <td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 weeks — since 2026-02-16">39w</span> <span class="muted small">ST 0.01732</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.01125</span></span></td><td data-sort="149"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 149 4H bars — since 2026-10-22 08:00">24.8d</span> <span class="muted small">ST 0.01029</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="pendle"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">PENDLE</td>
+      <td data-sort="1.4604190587997437">1.460</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 2.378</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 1.684</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 1.507</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="twt"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">TWT</td>
+      <td data-sort="0.3635860085487366">0.3636</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.5454</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.4103</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.3658</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="1inch"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="39" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">1INCH</td>
+      <td data-sort="0.0681070014834404">0.06811</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.1001</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.07550</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.06907</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="iota"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="39" data-h-recency="12">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">IOTA</td>
+      <td data-sort="0.031932998448610306">0.03193</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.05460</span></span></td><td data-sort="39"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 39 days — since 2026-10-08">39d</span> <span class="muted small">ST 0.03753</span></span></td><td data-sort="12"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 12 4H bars — since 2026-11-14 04:00">2.0d</span> <span class="muted small">ST 0.03326</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="pol"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="13" data-d-recency="40" data-h-recency="64">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">POL</td>
+      <td data-sort="0.08112800121307373">0.08113</td>
+      <td data-sort="13"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 13 weeks — since 2026-08-17">13w</span> <span class="muted small">ST 0.07419</span></span></td><td data-sort="40"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 40 days — since 2026-10-07">40d</span> <span class="muted small">ST 0.09204</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.08361</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="bsv"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="13" data-d-recency="40" data-h-recency="33">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▲▼▼</span></td>
+      <td class="col-ticker">BSV</td>
+      <td data-sort="14.65364933013916">14.65</td>
+      <td data-sort="13"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 13 weeks — since 2026-08-17">13w</span> <span class="muted small">ST 14.26</span></span></td><td data-sort="40"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 40 days — since 2026-10-07">40d</span> <span class="muted small">ST 16.18</span></span></td><td data-sort="33"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 33 4H bars — since 2026-11-10 16:00">5.5d</span> <span class="muted small">ST 14.96</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="mnt"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="2" data-d-recency="41" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">MNT</td>
+      <td data-sort="0.3748910129070282">0.3749</td>
+      <td data-sort="2"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 2 weeks — since 2026-11-02">2w</span> <span class="muted small">ST 0.6136</span></span></td><td data-sort="41"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 41 days — since 2026-10-06">41d</span> <span class="muted small">ST 0.4232</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 0.3911</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="mina"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="6" data-d-recency="41" data-h-recency="13">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">MINA</td>
+      <td data-sort="0.04623299837112427">0.04623</td>
+      <td data-sort="6"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 6 weeks — since 2026-10-05">6w</span> <span class="muted small">ST 0.1029</span></span></td><td data-sort="41"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 41 days — since 2026-10-06">41d</span> <span class="muted small">ST 0.05604</span></span></td><td data-sort="13"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 13 4H bars — since 2026-11-14 00:00">2.2d</span> <span class="muted small">ST 0.04903</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="cake"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="3" data-d-recency="41" data-h-recency="64">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">CAKE</td>
+      <td data-sort="1.593654990196228">1.594</td>
+      <td data-sort="3"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 3 weeks — since 2026-10-26">3w</span> <span class="muted small">ST 2.446</span></span></td><td data-sort="41"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 41 days — since 2026-10-06">41d</span> <span class="muted small">ST 1.826</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 4H bars — since 2026-11-05 12:00">10.7d</span> <span class="muted small">ST 1.652</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="zec"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="45" data-h-recency="44">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">ZEC</td>
+      <td data-sort="912.6158447265625">912.62</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 1,598</span></span></td><td data-sort="45"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 45 days — since 2026-10-02">45d</span> <span class="muted small">ST 1,150</span></span></td><td data-sort="44"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 44 4H bars — since 2026-11-08 20:00">7.3d</span> <span class="muted small">ST 942.99</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="ocean"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="3" data-d-recency="46" data-h-recency="34">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">OCEAN</td>
+      <td data-sort="0.11081299930810928">0.1108</td>
+      <td data-sort="3"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 3 weeks — since 2026-10-26">3w</span> <span class="muted small">ST 0.1564</span></span></td><td data-sort="46"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 46 days — since 2026-10-01">46d</span> <span class="muted small">ST 0.1302</span></span></td><td data-sort="34"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 34 4H bars — since 2026-11-10 12:00">5.7d</span> <span class="muted small">ST 0.1153</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="bonk"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="58" data-d-recency="49" data-h-recency="25">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">BONK</td>
+      <td data-sort="1.9999999949504854e-06">0.000002000</td>
+      <td data-sort="58"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 58 weeks — since 2025-10-06">58w</span> <span class="muted small">ST 0.000004272</span></span></td><td data-sort="49"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 49 days — since 2026-09-28">49d</span> <span class="muted small">ST 0.000002254</span></span></td><td data-sort="25"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 25 4H bars — since 2026-11-12 00:00">4.2d</span> <span class="muted small">ST 0.000002549</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="jup"
+        data-w-signal="none" data-d-signal="none" data-h-signal="none"
+        data-w-flip="0" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="mixed"
+        data-w-recency="88" data-d-recency="53" data-h-recency="11">
+      <td data-sort="2"><span class="confluence-cell conf-mixed" title="Weekly / Daily / 4H disagree">▼▼▲</span></td>
+      <td class="col-ticker">JUP</td>
+      <td data-sort="0.00019799999427050352">0.0001980</td>
+      <td data-sort="88"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 88 weeks — since 2025-03-10">88w</span> <span class="muted small">ST 0.001118</span></span></td><td data-sort="53"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 53 days — since 2026-09-24">53d</span> <span class="muted small">ST 0.001632</span></span></td><td data-sort="11"><span class="tf-cell"><span class="dir dir-bull">▲ Bullish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bull" title="Bullish for 11 4H bars — since 2026-11-14 08:00">44h</span> <span class="muted small">ST 0.0001397</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+    <tr data-ticker="kava"
+        data-w-signal="sell" data-d-signal="none" data-h-signal="none"
+        data-w-flip="1" data-d-flip="0" data-h-flip="0"
+        data-held="0" data-confluence="bear"
+        data-w-recency="1" data-d-recency="64" data-h-recency="81">
+      <td data-sort="1"><span class="confluence-cell conf-bear" title="Weekly, Daily and 4H all bearish">▼▼▼</span></td>
+      <td class="col-ticker">KAVA</td>
+      <td data-sort="0.03330500051379204">0.03331</td>
+      <td data-sort="1"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-sell">SELL</span> <span class="in-trend trend-bear" title="Bearish for 1 week — since 2026-11-09">1w</span> <span class="muted small">ST 0.07392</span></span></td><td data-sort="64"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 64 days — since 2026-09-13">64d</span> <span class="muted small">ST 0.04964</span></span></td><td data-sort="81"><span class="tf-cell"><span class="dir dir-bear">▼ Bearish</span> <span class="badge badge-none">—</span> <span class="in-trend trend-bear" title="Bearish for 81 4H bars — since 2026-11-02 16:00">13.5d</span> <span class="muted small">ST 0.04948</span></span></td>
+      <td><span class="muted">—</span></td>
+      <td data-sort="-99999">—</td>
+      <td class="muted small">2026-11-09</td>
+      <td class="muted small">2026-11-15</td>
+      <td class="muted small">2026-11-16 00:00</td>
+    </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <footer>
+    Parameters: ATR period 10, multiplier 2.5. Data via Yahoo Finance (yfinance), which aggregates
+    prices across exchanges, so levels can differ slightly from a single-exchange chart. All candles are UTC and only closed bars are used.
+    "Signal" is a fresh cross on the latest closed Weekly or Daily bar, or a 4H BUY on any 4H bar closed in the last 24 hours
+    (4H SELL flips are not signalled). "↺ Changed" means the direction differs from the last run even though the flip bar has
+    already passed, so nothing is missed if a run is skipped. "In-trend" counts consecutive bars in the current direction
+    (w = weeks, d = days, h = hours on 4H; hover for the start). Confluence ▲▲▲ means Weekly, Daily and 4H all agree.
+    Buying Opportunities and Recent Buy Flips show flips that meet at least 3 of 5 checks (volume vs the 20-bar average, RSI band,
+    7-day return vs BTC, price holding near the flip close, higher-timeframe trend) and are still tradeable (above stop, below TP1,
+    stop within the timeframe cap, liquid). Strong = 4-5 checks, Watch = 3. Thresholds: OPPORTUNITY_FILTERS in settings.py.
+    Buy cards: Entry = flip-bar close, SL = Supertrend line on that bar, TP1/TP2 = 2R/3R.
+    Quality (0-100, A 75+ / B 60+ / C 45+ / D) = trend alignment 30, BTC regime 15, volume 15, stop distance 15, candle 10, RSI 10,
+    cleanliness 5, minus 10 for thin liquidity; hover a badge for the breakdown. The table is sorted by Daily flip recency by default;
+    click any header to re-sort. Only the newest 30 reports are kept; older ones are deleted automatically.
+    This report is a personal analysis tool, not investment advice — verify signals independently before trading.
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    var currentFilter = 'all';
+    var searchTerm = '';
+
+    function applyFilters() {
+      var rows = document.querySelectorAll('#scan-table tbody tr');
+      rows.forEach(function(row) {
+        var g = function(k) { return row.getAttribute(k); };
+        var wSig = g('data-w-signal'), dSig = g('data-d-signal'), hSig = g('data-h-signal');
+        var wRec = parseInt(g('data-w-recency') || '9999', 10);
+        var dRec = parseInt(g('data-d-recency') || '9999', 10);
+        var hRec = parseInt(g('data-h-recency') || '9999', 10);
+        var m = true;
+        switch (currentFilter) {
+          case 'recent7':     m = dRec <= 7 || wRec <= 1 || hRec <= 42; break;  // 7 days on every timeframe
+          case 'any-buy':     m = wSig === 'buy' || dSig === 'buy' || hSig === 'buy'; break;
+          case 'any-sell':    m = wSig === 'sell' || dSig === 'sell'; break;
+          case 'conf-bull':   m = g('data-confluence') === 'bull'; break;
+          case 'conf-bear':   m = g('data-confluence') === 'bear'; break;
+          case 'weekly-flip': m = g('data-w-flip') === '1'; break;
+          case 'daily-flip':  m = g('data-d-flip') === '1'; break;
+          case 'h4-flip':     m = g('data-h-flip') === '1'; break;
+          case 'held':        m = g('data-held') === '1'; break;
+          default:            m = true;
+        }
+        var matchesSearch = (g('data-ticker') || '').indexOf(searchTerm) !== -1;
+        row.classList.toggle('hidden-row', !(m && matchesSearch));
+      });
+    }
+
+    document.querySelectorAll('.chip-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.chip-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        applyFilters();
+      });
+    });
+
+    var search = document.getElementById('search-box');
+    if (search) {
+      search.addEventListener('input', function() {
+        searchTerm = search.value.trim().toLowerCase();
+        applyFilters();
+      });
+    }
+
+    var sortState = {};
+    document.querySelectorAll('#scan-table thead th').forEach(function(th, colIndex) {
+      th.addEventListener('click', function() {
+        var tbody = document.querySelector('#scan-table tbody');
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+        var asc = !(sortState[colIndex] === 'asc');
+        sortState = {};
+        sortState[colIndex] = asc ? 'asc' : 'desc';
+        document.querySelectorAll('#scan-table thead th').forEach(function(h) {
+          h.classList.remove('sorted-asc', 'sorted-desc');
+        });
+        th.classList.add(asc ? 'sorted-asc' : 'sorted-desc');
+        rows.sort(function(a, b) {
+          var cellA = a.children[colIndex], cellB = b.children[colIndex];
+          if (!cellA || !cellB) return 0;
+          var va = cellA.getAttribute('data-sort'), vb = cellB.getAttribute('data-sort');
+          if (va !== null && vb !== null) {
+            va = parseFloat(va); vb = parseFloat(vb);
+            return asc ? va - vb : vb - va;
+          }
+          var ta = cellA.textContent.trim().toLowerCase(), tb = cellB.textContent.trim().toLowerCase();
+          if (ta < tb) return asc ? -1 : 1;
+          if (ta > tb) return asc ? 1 : -1;
+          return 0;
+        });
+        rows.forEach(function(r) { tbody.appendChild(r); });
+      });
+    });
+  })();
+
+</script>
+
+</body>
+</html>
